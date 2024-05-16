@@ -1,3 +1,4 @@
+SELECT "creando base de datos..."
 DROP DATABASE IF EXISTS PXNGAgency;
 CREATE DATABASE IF NOT EXISTS PXNGAgency;
 
@@ -80,6 +81,7 @@ ALTER TABLE `visit` ADD FOREIGN KEY (`clientId`) REFERENCES `account` (`id`);
 
 ALTER TABLE `visit` ADD FOREIGN KEY (`propertyId`) REFERENCES `property` (`id`);
 
+SELECT "agregando usuarios..."
 DROP USER IF EXISTS "clientePXNG"@"%";
 CREATE USER IF NOT EXISTS "clientePXNG" IDENTIFIED BY "papuCOIL";
 GRANT INSERT, SELECT, UPDATE on PXNGAgency.* to "clientePXNG"@"%";
@@ -87,3 +89,10 @@ GRANT INSERT, SELECT, UPDATE on PXNGAgency.* to "clientePXNG"@"%";
 DROP USER IF EXISTS "adminPXNG"@"%";
 CREATE USER IF NOT EXISTS "adminPXNG"@"%" IDENTIFIED BY "RobaloBurbuja";
 GRANT all on PXNGAgency.* to "adminPXNG"@"%";
+
+SELECT "agregando vistas y procedimentos almacenados..."
+SOURCE procedimientos.sql
+SOURCE vistas.sql
+
+SELECT "agregando datos predeterminados..."
+SOURCE datos.sql
