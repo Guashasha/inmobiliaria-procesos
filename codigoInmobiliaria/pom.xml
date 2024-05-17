@@ -46,6 +46,16 @@
       <artifactId>lombok</artifactId>
       <version>1.18.20</version>
     </dependency>
+    <dependency>
+      <groupId>org.jetbrains.kotlinx</groupId>
+      <artifactId>dataframe-jdbc</artifactId>
+      <version>LATEST</version>
+    </dependency>
+    <dependency>
+      <groupId>org.mariadb.jdbc</groupId>
+      <artifactId>mariadb-java-client</artifactId>
+      <version>LATEST</version>
+    </dependency>
   </dependencies>
 
   <build>

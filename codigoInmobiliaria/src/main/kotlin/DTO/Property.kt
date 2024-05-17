@@ -1,12 +1,14 @@
 package DTO
 
-import java.sql.ResultSet
+import org.jetbrains.kotlinx.dataframe.DataFrame
+import org.jetbrains.kotlinx.dataframe.DataRow
+import org.jetbrains.kotlinx.dataframe.api.forEach
 
-enum class PropertyState {AVAILABLE, OCCUPIED, SUSPENDED}
+enum class PropertyState {available, occupied, suspended}
 
-enum class PropertyType {ALL, BUILDING, HOUSE, APARTMENT, PREMISES}
+enum class PropertyType {all, building, house, apartment, premises}
 
-enum class PropertyAction {SELL, RENT}
+enum class PropertyAction {sell, rent}
 
 data class Property (
   val id: UInt?,
@@ -31,19 +33,28 @@ data class Property (
   }
 
   companion object {
-    fun fromResultSet (resultSet: ResultSet): Property {
-      val id: UInt = resultSet.getInt(1).toUInt()
-      val title = resultSet.getString(2)
-      val shortDescription = resultSet.getString(3)
-      val fullDescription = resultSet.getString(4)
-      val type = PropertyType.valueOf(resultSet.getString(5))
-      val price = resultSet.getFloat(6)
-      val state = PropertyState.valueOf(resultSet.getString(7))
-      val direction = resultSet.getString(8)
-      val houseOwner = resultSet.getInt(9).toUInt()
-      val action = PropertyAction.valueOf(resultSet.getString(10))
-
+    fun fromDataRow (result: DataRow<Any?>): Property {
+      val id: UInt = result[0].toString().toUInt()
+      val title = result[1].toString()
+      val shortDescription = result[2].toString()
+      val fullDescription = result[3].toString()
+      val type = PropertyType.valueOf(result[4].toString())
+      val price = result[5].toString().toFloat()
+      val state = PropertyState.valueOf(result[6] as String)
+      val direction = result[7].toString()
+      val houseOwner = result[8].toString().toUInt()
+      val action = PropertyAction.valueOf(result[9].toString())
       return Property(id, title, shortDescription, fullDescription, type, price, state, direction, houseOwner, action)
+    }
+
+    fun fromDataFrame (results: DataFrame<Any?>): ArrayList<Property> {
+      val properties: ArrayList<Property> = ArrayList()
+
+      results.forEach {
+        properties.add(fromDataRow(it))
+      }
+
+      return properties
     }
   }
 }
