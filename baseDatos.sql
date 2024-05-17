@@ -9,7 +9,7 @@ CREATE TABLE `property` (
   `title` varchar(150) NOT NULL,
   `shortDescription` varchar(200) NOT NULL,
   `fullDescription` varchar(500) NOT NULL,
-  `type` ENUM ('all', 'building', 'house', 'apartment', 'premises') NOT NULL,
+  `type` ENUM ('building', 'house', 'apartment', 'premises') NOT NULL,
   `price` float NOT NULL,
   `state` ENUM ('available', 'occupied', 'suspended') NOT NULL,
   `direction` varchar(400) NOT NULL,
