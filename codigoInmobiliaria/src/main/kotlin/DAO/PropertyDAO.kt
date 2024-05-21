@@ -4,6 +4,7 @@ import DTO.Property
 import DataAccess.DataBaseConnection
 import org.jetbrains.kotlinx.dataframe.DataFrame
 import org.jetbrains.kotlinx.dataframe.api.first
+import org.jetbrains.kotlinx.dataframe.api.isEmpty
 import org.jetbrains.kotlinx.dataframe.io.readSqlQuery
 import org.jetbrains.kotlinx.dataframe.io.readSqlTable
 import java.sql.SQLException
@@ -60,7 +61,7 @@ class PropertyDAO {
 
         return try {
             val query =
-                dbConnection.prepareStatement("UPDATE TABLE property SET title=?, shortDescription=?, fullDescription=?, type=?, price=?, state=?, direction=?, houseOwner=?, action=? where id=?;")
+                dbConnection.prepareStatement("UPDATE property SET title=?, shortDescription=?, fullDescription=?, type=?, price=?, state=?, direction=?, houseOwner=?, action=? where id=?;")
             query.setString(1, property.title)
             query.setString(2, property.shortDescription)
             query.setString(3, property.fullDescription)
@@ -91,10 +92,23 @@ class PropertyDAO {
         val query = "SELECT * FROM property WHERE id=${propertyId}"
         val result = DataFrame.readSqlQuery(dbConnection, query)
 
-        return PropertyResult.Found(Property.fromDataRow(result.first()))
+        return if (result.isEmpty()) {
+            PropertyResult.NotFound()
+        } else {
+            PropertyResult.Found(Property.fromDataRow(result.first()))
+        }
     }
 
-    //fun getByHouseOwner (houseOwnerId: Int): PropertyResult {}
+    fun getByHouseOwner (houseOwnerId: Int): PropertyResult {
+        if (houseOwnerId < 1) {
+            return PropertyResult.NotFound()
+        }
+
+        val query = "SELECT * FROM property WHERE id=${houseOwnerId}"
+        val result = DataFrame.readSqlQuery(dbConnection, query)
+
+        return PropertyResult.FoundList(Property.fromDataFrame(result))
+    }
 
     fun getAll (): PropertyResult {
         val result = DataFrame.readSqlTable(dbConnection, "property")

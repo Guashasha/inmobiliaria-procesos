@@ -36,8 +36,7 @@ CREATE TABLE `account` (
   `type` ENUM ('client', 'agent') NOT NULL,
   `email` varchar(70) NOT NULL,
   `phone` char(10) NOT NULL,
-  `password` varchar(300) NOT NULL,
-  `profileImage` blob
+  `password` varchar(300) NOT NULL
 );
 
 CREATE TABLE `agent` (
@@ -46,7 +45,8 @@ CREATE TABLE `agent` (
 );
 
 CREATE TABLE `search` (
-  `clientId` int PRIMARY KEY NOT NULL,
+  id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `clientId` int NOT NULL,
   `searchTerm` varchar(100),
   `propertyType` ENUM ('all', 'building', 'house', 'apartment', 'premises') NOT NULL
 );
