@@ -4,7 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="294fccbf-6c6f-42e0-a859-a22d98047ebc" name="Changes" comment="" />
+    <list default="true" id="294fccbf-6c6f-42e0-a859-a22d98047ebc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/DAO/AccountDAO.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/DAO/AgentDAO.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/DAO/QueryDAO.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/DAO/SearchDAO.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/GUI/PropertyInfo.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/DAO/PropertyDAO.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/DAO/PropertyDAO.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/DAO/VisitDAO.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/DAO/VisitDAO.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/DTO/Account.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/DTO/Account.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/DTO/Agent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/DTO/Agent.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/DTO/Query.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/DTO/Query.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/DTO/Search.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/DTO/Search.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/DTO/Visit.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/DTO/Visit.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/pruebas.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/pruebas.kt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -38,23 +54,31 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Downloaded.Files.Path.Enabled": "false",
     "Kotlin.MainKt.executor": "Run",
+    "Kotlin.PropertyInfo.executor": "Run",
     "Kotlin.PruebasKt.executor": "Run",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "david",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/guashasha/Documents/escuela/semestres/cuarto_semestre/procesos_ingenieria/inmobiliaria/codigoInmobiliaria",
+    "last_opened_file_path": "/home/guashasha/Documents/escuela/semestres/cuarto_semestre/procesos_ingenieria/inmobiliaria/codigoInmobiliaria/lib/JavaFX/lib/javafx.web.jar",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Kotlin.PropertyInfo">
     <configuration name="HelloApplicationKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.codigoinmobiliaria.HelloApplicationKt" />
       <module name="codigoInmobiliaria" />
@@ -69,8 +93,23 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="PropertyInfo" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="main.kotlin.GUI.PropertyInfo" />
+      <module name="codigoInmobiliaria" />
+      <shortenClasspath name="NONE" />
+      <option name="VM_PARAMETERS" value="--module-path ./lib/JavaFX/lib --add-modules=javafx.controls, javafx.fxml" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Kotlin.HelloApplicationKt" />
+      <item itemvalue="Kotlin.MainKt" />
+      <item itemvalue="Kotlin.PropertyInfo" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Kotlin.PropertyInfo" />
         <item itemvalue="Kotlin.MainKt" />
         <item itemvalue="Kotlin.HelloApplicationKt" />
       </list>

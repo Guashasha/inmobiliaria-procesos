@@ -1,4 +1,4 @@
-import DAO.PropertyResult
+import DAO.VisitResult
 import DTO.Property
 import org.jetbrains.kotlinx.dataframe.DataFrame
 import org.jetbrains.kotlinx.dataframe.api.first

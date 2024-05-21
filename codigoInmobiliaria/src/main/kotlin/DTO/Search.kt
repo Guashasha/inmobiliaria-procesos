@@ -1,24 +1,37 @@
 package DTO
 
-import java.sql.ResultSet
+import org.jetbrains.kotlinx.dataframe.DataFrame
+import org.jetbrains.kotlinx.dataframe.DataRow
+import org.jetbrains.kotlinx.dataframe.api.forEach
 
 data class Search (
-    val clientId: UInt?,
+    val id: UInt?,
+    val clientId: UInt,
     val propertyType: PropertyType,
-    val searchTerm : String
+    val searchTerm: String?
 ) {
-    fun isVaid () : Boolean {
-        return searchTerm.isNotBlank() &&
-                this.clientId != null && this.clientId > 0u
+    fun isValid () : Boolean {
+        return (if (searchTerm != null) searchTerm.isNotBlank() else true) &&
+                (if (id != null) this.id > 0u else true) && this.clientId > 0u
     }
 
     companion object {
-        fun fromResulSet (resultSet: ResultSet) : Search {
-            val clientId : UInt = resultSet.getInt(1).toUInt()
-            val searchTerm : String = resultSet.getString(2)
-            val propertyType : PropertyType = PropertyType.valueOf(resultSet.getString(3))
+        fun fromDataRow (result: DataRow<Any?>): Search {
+            val id: UInt = result[0].toString().toUInt()
+            val clientId: UInt = result[1].toString().toUInt()
+            val propertyType = PropertyType.valueOf(result[2].toString())
+            val searchTerm = result[3].toString()
+            return Search(id, clientId, propertyType, searchTerm)
+        }
 
-            return Search(clientId, propertyType, searchTerm)
+        fun fromDataFrame (results: DataFrame<Any?>): ArrayList<Search> {
+            val searches: ArrayList<Search> = ArrayList()
+
+            results.forEach {
+                searches.add(fromDataRow(it))
+            }
+
+            return searches
         }
     }
 }

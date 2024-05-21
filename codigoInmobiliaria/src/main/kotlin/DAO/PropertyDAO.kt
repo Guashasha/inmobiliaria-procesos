@@ -5,6 +5,7 @@ import DataAccess.DataBaseConnection
 import org.jetbrains.kotlinx.dataframe.DataFrame
 import org.jetbrains.kotlinx.dataframe.api.first
 import org.jetbrains.kotlinx.dataframe.io.readSqlQuery
+import org.jetbrains.kotlinx.dataframe.io.readSqlTable
 import java.sql.SQLException
 
 sealed class PropertyResult (val message: String) {
@@ -50,23 +51,35 @@ class PropertyDAO {
     }
 
     fun modify (property: Property): PropertyResult {
-        // validar datos
+        if (!property.isValid()) {
+            return PropertyResult.WrongProperty()
+        }
+        else if (property.id == null) {
+            return PropertyResult.NotFound()
+        }
 
-        // ejecutar consulta a base de datos
-        var result: Int = -1
+        return try {
+            val query =
+                dbConnection.prepareStatement("UPDATE TABLE property SET title=?, shortDescription=?, fullDescription=?, type=?, price=?, state=?, direction=?, houseOwner=?, action=? where id=?;")
+            query.setString(1, property.title)
+            query.setString(2, property.shortDescription)
+            query.setString(3, property.fullDescription)
+            query.setString(4, property.type.toString())
+            query.setFloat(5, property.price)
+            query.setString(6, property.state.toString())
+            query.setString(7, property.direction)
+            query.setInt(8, property.houseOwner.toInt())
+            query.setString(9, property.action.toString())
+            query.setInt(10, property.id.toInt())
 
-        try {
-
+            if (query.executeUpdate() > 0) {
+                PropertyResult.Success()
+            } else {
+                PropertyResult.Failure()
+            }
         }
         catch (error: SQLException) {
-
-        }
-
-        if (result > 0) {
-            return PropertyResult.Success()
-        }
-        else {
-            return PropertyResult.Failure()
+            PropertyResult.DBError(error.message.toString())
         }
     }
 
@@ -83,7 +96,11 @@ class PropertyDAO {
 
     //fun getByHouseOwner (houseOwnerId: Int): PropertyResult {}
 
-    //fun getAll (): PropertyResult {}
+    fun getAll (): PropertyResult {
+        val result = DataFrame.readSqlTable(dbConnection, "property")
+
+        return PropertyResult.FoundList(Property.fromDataFrame(result))
+    }
 
     //fun remove (propertyId: Int): PropertyResult {}
 }
