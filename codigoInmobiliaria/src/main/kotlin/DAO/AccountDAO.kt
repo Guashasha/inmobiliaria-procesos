@@ -65,6 +65,4 @@ class AccountDAO {
 
         return AccountResult.FoundList(Account.fromDataFrame(result))
     }
-
-    // fun delete (accountId: UInt): AccountResult {}
 }

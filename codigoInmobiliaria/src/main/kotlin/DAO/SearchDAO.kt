@@ -1,6 +1,13 @@
 package main.kotlin.DAO
 
 import DTO.Search
+import DataAccess.DataBaseConnection
+import org.jetbrains.kotlinx.dataframe.DataFrame
+import org.jetbrains.kotlinx.dataframe.api.first
+import org.jetbrains.kotlinx.dataframe.api.isEmpty
+import org.jetbrains.kotlinx.dataframe.io.readSqlQuery
+import org.jetbrains.kotlinx.dataframe.io.readSqlTable
+import java.sql.SQLException
 
 sealed class SearchResult (val message: String) {
     class Success: SearchResult("La operación se realizó correctamente")
@@ -13,9 +20,70 @@ sealed class SearchResult (val message: String) {
 }
 
 class SearchDAO {
-    // fun add (search: Search): SearchResult {}
-    // fun modify (search: Search): SearchResult {}
-    // fun getById (searchId: UInt): SearchResult {}
-    // fun getAll (): SearchResult {}
-    // fun delete (searchId: UInt): SearchResult {}
+    private val dbConnection = DataBaseConnection().connection
+
+    fun add (search: Search): SearchResult {
+        if (!search.isValid()) {
+            return SearchResult.WrongSearch()
+        }
+
+        return try {
+            val query = dbConnection.prepareStatement("INSERT INTO search (title, shortDescription, fullDescription, type, price, state, direction, houseOwner, action) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);")
+
+            query.setInt(1, search.clientId.toInt())
+            query.setString(2, search.propertyType.toString())
+            query.setString(3, search.searchTerm)
+
+            if (query.executeUpdate() > 0) {
+                SearchResult.Success()
+            } else {
+                SearchResult.Failure()
+            }
+        }
+        catch (error: SQLException) {
+            SearchResult.DBError(error.message.toString())
+        }
+    }
+
+    fun getById (searchId: UInt): SearchResult {
+        if (searchId < 1u) {
+            return SearchResult.WrongSearch()
+        }
+
+        val query = "SELECT id, clientId, propertyType, searchTerm FROM search WHERE id=?;"
+        val result = DataFrame.readSqlQuery(dbConnection, query)
+
+        return if (result.isEmpty()) {
+            SearchResult.NotFound()
+        }
+        else SearchResult.Found(Search.fromDataRow(result.first()))
+    }
+
+    fun getAll (): SearchResult {
+        val result = DataFrame.readSqlTable(dbConnection, "search")
+
+        return SearchResult.FoundList(Search.fromDataFrame(result))
+    }
+
+    fun delete (searchId: UInt): SearchResult {
+       if (searchId < 1u) {
+           return SearchResult.WrongSearch()
+       }
+
+        return try {
+            val query = dbConnection.prepareStatement("DELETE FROM search WHERE id=?;")
+
+            query.setInt(1, searchId.toInt())
+
+            if (query.executeUpdate() < 1) {
+                SearchResult.Failure()
+            }
+            else {
+                SearchResult.Success()
+            }
+        }
+        catch (error: SQLException) {
+            SearchResult.DBError(error.message.toString())
+        }
+    }
 }

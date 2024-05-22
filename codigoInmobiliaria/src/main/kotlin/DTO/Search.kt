@@ -11,7 +11,7 @@ data class Search (
     val searchTerm: String?
 ) {
     fun isValid () : Boolean {
-        return (if (searchTerm != null) searchTerm.isNotBlank() else true) &&
+        return (searchTerm?.isNotBlank() ?: true) &&
                 (if (id != null) this.id > 0u else true) && this.clientId > 0u
     }
 

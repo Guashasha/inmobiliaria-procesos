@@ -3,6 +3,7 @@ package DTO
 import org.jetbrains.kotlinx.dataframe.DataFrame
 import org.jetbrains.kotlinx.dataframe.DataRow
 import org.jetbrains.kotlinx.dataframe.api.forEach
+import java.awt.Image
 
 enum class PropertyState {available, occupied, suspended}
 
@@ -20,7 +21,8 @@ data class Property (
   var state: PropertyState,
   val direction: String,
   val houseOwner: UInt,
-  var action: PropertyAction
+  var action: PropertyAction,
+  val images: ArrayList<Image>?
 ) {
   fun isValid (): Boolean {
     return  this.title.isNotBlank() &&
@@ -44,7 +46,7 @@ data class Property (
       val direction = result[7].toString()
       val houseOwner = result[8].toString().toUInt()
       val action = PropertyAction.valueOf(result[9].toString())
-      return Property(id, title, shortDescription, fullDescription, type, price, state, direction, houseOwner, action)
+      return Property(id, title, shortDescription, fullDescription, type, price, state, direction, houseOwner, action, null)
     }
 
     fun fromDataFrame (results: DataFrame<Any?>): ArrayList<Property> {

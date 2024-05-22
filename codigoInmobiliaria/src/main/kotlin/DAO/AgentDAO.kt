@@ -1,6 +1,13 @@
 package main.kotlin.DAO
 
 import DTO.Agent
+import DataAccess.DataBaseConnection
+import org.jetbrains.kotlinx.dataframe.DataFrame
+import org.jetbrains.kotlinx.dataframe.api.first
+import org.jetbrains.kotlinx.dataframe.api.isEmpty
+import org.jetbrains.kotlinx.dataframe.io.readSqlQuery
+import org.jetbrains.kotlinx.dataframe.io.readSqlTable
+import java.sql.SQLException
 
 sealed class AgentResult (val message: String) {
     class Success: AgentResult("La operación se realizó correctamente")
@@ -13,9 +20,46 @@ sealed class AgentResult (val message: String) {
 }
 
 class AgentDAO {
-    // fun add (agent: Agent): AgentResult {}
-    // fun modify (agent: Agent): AgentResult {}
-    // fun getById (agentId: UInt): AgentResult {}
-    // fun getAll (): AgentResult {}
-    // fun delete (agentId: UInt): AgentResult {}
+    private val dbConnection = DataBaseConnection().connection
+
+     fun add (agent: Agent): AgentResult {
+         if (!agent.isValid()) {
+             return AgentResult.WrongAgent()
+         }
+
+         return try {
+             val query = dbConnection.prepareStatement("INSERT INTO agent (accountId, personelNumber) VALUES (?, ?);")
+
+             query.setInt(1, agent.accountId.toInt())
+             query.setString(2, agent.personelNumber)
+
+
+             if (query.executeUpdate() > 0) {
+                 AgentResult.Success()
+             }
+             else {
+                 AgentResult.Failure()
+             }
+         }
+         catch (error: SQLException) {
+             AgentResult.DBError(error.message.toString())
+         }
+     }
+
+     fun getById (agentId: UInt): AgentResult {
+         val query = "SELECT accountId, personelNumber FROM agent WHERE id=${agentId};"
+         val result = DataFrame.readSqlQuery(dbConnection, query)
+
+         return if (result.isEmpty()) {
+             AgentResult.NotFound()
+         } else {
+             AgentResult.Found(Agent.fromDataRow(result.first()))
+         }
+     }
+
+     fun getAll (): AgentResult {
+         val result = DataFrame.readSqlTable(dbConnection, "agent")
+
+         return AgentResult.FoundList(Agent.fromDataFrame(result))
+     }
 }
