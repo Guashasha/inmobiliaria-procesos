@@ -1,4 +1,4 @@
-package main.kotlin.DAO
+package DAO
 
 import DTO.Account
 import DataAccess.DataBaseConnection

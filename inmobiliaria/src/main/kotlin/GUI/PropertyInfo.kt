@@ -16,12 +16,7 @@ class PropertyInfo : Application() {
 
     override fun start (primaryStage: Stage) {
         try {
-            val parent: Parent? = FXMLLoader.load<Parent>(javaClass.classLoader.getResource("PropertyInfo.fxml"))
-
-            if (parent == null) {
-                print("no se cargó fxml")
-                return
-            }
+            val parent: Parent? = FXMLLoader.load<Parent>(javaClass.getResource("/FXML/PropertyInfo.fxml"))
 
             primaryStage.run {
                 title = "Todas las propiedades"

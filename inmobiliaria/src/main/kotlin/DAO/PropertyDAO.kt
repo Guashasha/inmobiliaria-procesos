@@ -1,6 +1,7 @@
-package DAO
+package main.kotlin.DAO
 
 import DTO.Property
+import DTO.PropertyType
 import DataAccess.DataBaseConnection
 import org.jetbrains.kotlinx.dataframe.DataFrame
 import org.jetbrains.kotlinx.dataframe.api.first
@@ -51,7 +52,7 @@ class PropertyDAO {
             }
         }
         catch (error: SQLException) {
-             PropertyResult.DBError(error.message.toString())
+            PropertyResult.DBError(error.message.toString())
         }
     }
 
@@ -99,6 +100,11 @@ class PropertyDAO {
         } else {
             PropertyResult.Found(Property.fromDataRow(result.first()))
         }
+    }
+
+    fun getByQuery (query: String, propertyType: PropertyType): PropertyResult {
+        val query = "SELECT * FROM property WHERE type=${propertyType} AND (fullDescription LIKE \"%${query}%\" OR shortDescription LIKE \"%${query}%\" OR LIKE \"%${query}%\" title);"
+        return PropertyResult.WrongProperty()
     }
 
     fun getByHouseOwner (houseOwnerId: Int): PropertyResult {

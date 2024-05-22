@@ -1,7 +1,5 @@
 package main.kotlin.DAO
 
-import DAO.PropertyResult
-import DTO.Property
 import DataAccess.DataBaseConnection
 import main.kotlin.DTO.Query
 import org.jetbrains.kotlinx.dataframe.DataFrame
