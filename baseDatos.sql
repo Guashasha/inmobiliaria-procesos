@@ -83,12 +83,14 @@ ALTER TABLE `visit` ADD FOREIGN KEY (`propertyId`) REFERENCES `property` (`id`);
 
 SELECT "agregando usuarios...";
 DROP USER IF EXISTS "clientePXNG"@"localhost";
+DROP USER IF EXISTS "clientePXNG"@"%";
 CREATE USER IF NOT EXISTS "clientePXNG"@"localhost" IDENTIFIED BY "papuCOIL";
 GRANT INSERT, SELECT, UPDATE, DELETE on PXNGAgency.* to "clientePXNG"@"localhost";
 
 DROP USER IF EXISTS "adminPXNG"@"%";
-CREATE USER IF NOT EXISTS "adminPXNG"@"%" IDENTIFIED BY "RobaloBurbuja";
-GRANT all on PXNGAgency.* to "adminPXNG"@"%";
+DROP USER IF EXISTS "adminPXNG"@"localhost";
+CREATE USER IF NOT EXISTS "adminPXNG"@"localhost" IDENTIFIED BY "RobaloBurbuja";
+GRANT all on PXNGAgency.* to "adminPXNG"@"localhost";
 
 SELECT "agregando vistas y procedimentos almacenados...";
 SOURCE procedimientos.sql

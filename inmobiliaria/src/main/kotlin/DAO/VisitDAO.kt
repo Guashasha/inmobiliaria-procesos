@@ -1,6 +1,7 @@
 package DAO
 
 import DTO.Property
+import DataAccess.DataBaseConnection
 import main.kotlin.DTO.Visit
 
 sealed class VisitResult (val message: String) {
@@ -14,7 +15,10 @@ sealed class VisitResult (val message: String) {
 }
 
 class VisitDAO {
-    // fun add (visit: Visit): VisitResult {}
+    val dbConnection = DataBaseConnection().connection
+    fun add (visit: Visit): VisitResult {
+return VisitResult.WrongVisit()
+    }
     // fun modify (visit: Visit): VisitResult {}
     // fun getById (visitId: UInt): VisitResult {}
     // fun getAll (): VisitResult {}
