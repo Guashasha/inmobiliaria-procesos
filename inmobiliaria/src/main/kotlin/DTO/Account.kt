@@ -1,6 +1,7 @@
 package DTO
 
 import java.sql.ResultSet
+import java.util.*
 
 enum class AccountType { CLIENT, AGENT }
 
@@ -22,11 +23,11 @@ data class Account(
 
     companion object {
         fun fromResultSet (result: ResultSet): Account {
-            val id: UInt = result.getInt(0).toUInt()
-            val name = result.getString(1)
-            val type = AccountType.valueOf(result.getString(2))
-            val email = result.getString(3)
-            val phone = result.getString(4)
+            val id: UInt = result.getInt(1).toUInt()
+            val name = result.getString(2)
+            val type = AccountType.valueOf(result.getString(3).uppercase(Locale.getDefault()))
+            val email = result.getString(4)
+            val phone = result.getString(5)
 
             return Account(id, email, type, name, phone, null)
         }

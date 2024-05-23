@@ -21,10 +21,14 @@ class AccountDAO {
         if (!account.isValid() || account.password == null) {
             return AccountResult.WrongAccount()
         }
+        val emailResult = getByEmail(account.email)
+        if (emailResult is AccountResult.Found) {
+            return AccountResult.Failure()
+        }
 
         return try {
             val query =
-                dbConnection.prepareStatement("INSERT INTO account (name, type, email, phone, password) VALUES (?, ?, ?, ?, ?, ?);")
+                dbConnection.prepareStatement("INSERT INTO account (name, type, email, phone, password) VALUES (?, ?, ?, ?, ?);")
             query.setString(1, account.name)
             query.setString(2, account.type.toString())
             query.setString(3, account.email)
@@ -108,6 +112,49 @@ class AccountDAO {
         }
         else {
             AccountResult.NotFound()
+        }
+    }
+
+    fun getByEmail(email: String): AccountResult {
+        if (email.isBlank()) {
+            return AccountResult.WrongAccount()
+        }
+
+        return try {
+            val query = dbConnection.prepareStatement("SELECT * FROM account WHERE email = ?;")
+            query.setString(1, email)
+
+            val result = query.executeQuery()
+
+            if (result.next()) {
+                AccountResult.Found(Account.fromResultSet(result))
+            } else {
+                AccountResult.NotFound()
+            }
+        } catch (error: SQLException) {
+            AccountResult.DBError(error.message.toString())
+        }
+    }
+
+    fun validateCredentials(email: String, password: String): AccountResult {
+        if (email.isBlank() || password.isBlank()) {
+            return AccountResult.WrongAccount()
+        }
+
+        return try {
+            val query = dbConnection.prepareStatement("SELECT * FROM account WHERE email = ? AND BINARY password = BINARY ?;")
+            query.setString(1, email)
+            query.setString(2, password)
+
+            val result = query.executeQuery()
+
+            if (result.next()) {
+                AccountResult.Found(Account.fromResultSet(result))
+            } else {
+                AccountResult.NotFound()
+            }
+        } catch (error: SQLException) {
+            AccountResult.DBError(error.message.toString())
         }
     }
 }

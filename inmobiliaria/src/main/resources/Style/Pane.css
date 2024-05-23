@@ -1,0 +1,21 @@
+.mainPane {
+    -fx-background-color: #CDC9FF;
+}
+
+.informationPane {
+    -fx-background-color: linear-gradient(to bottom, #AFA9F3 29.8%, #AFA9F3 50%, #9F99E3 90%);
+    -fx-background-radius: 25px;
+}
+
+.agencyInformation {
+    -fx-background-color: #F3E4FF;
+    -fx-background-radius: 10px;
+}
+
+.textFieldDataAccount {
+    -fx-pref-height: 48px;
+    -fx-background-radius: 8px;
+    -fx-font-size: 24px;
+    -fx-prompt-text-fill: gray;
+}
+
