@@ -44,7 +44,7 @@
                         </ImageView>
                      </right>
                      <center>
-                        <DatePicker fx:id="dpFecha" editable="false" prefHeight="44.0" prefWidth="201.0" BorderPane.alignment="CENTER_RIGHT">
+                        <DatePicker fx:id="dpDate" editable="false" prefHeight="44.0" prefWidth="201.0" BorderPane.alignment="CENTER_RIGHT">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
@@ -75,7 +75,7 @@
             </HBox>
          </top>
          <bottom>
-            <GridPane fx:id="gpHorarios" prefHeight="328.0" prefWidth="779.0" BorderPane.alignment="CENTER">
+            <GridPane fx:id="gpSchedule" prefHeight="328.0" prefWidth="779.0" BorderPane.alignment="CENTER">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="391.5999755859375" minWidth="10.0" prefWidth="391.5999755859375" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="398.0" minWidth="10.0" prefWidth="388.4000244140625" />

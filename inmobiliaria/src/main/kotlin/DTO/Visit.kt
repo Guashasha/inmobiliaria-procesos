@@ -7,8 +7,8 @@ import java.sql.Time
 class Visit (
     val id: UInt?,
     val clientId: UInt,
-    val date: Date,
     val propertyId: UInt,
+    val date: Date,
     val time: Time
 ) {
     fun isValid () : Boolean {
@@ -20,11 +20,11 @@ class Visit (
         fun fromResultSet (result: ResultSet): Visit {
             val id: UInt = result.getInt(0).toUInt()
             val client: UInt = result.getInt(1).toUInt()
-            val date: Date = result.getDate(2)
-            val property: UInt = result.getInt(3).toUInt()
-            val time: Time = result.getTime(4)
+            val property: UInt = result.getInt(2).toUInt()
+            val date: Date = result.getDate(4)
+            val time: Time = result.getTime(5)
 
-            return Visit(id, client, date, property, time)
+            return Visit(id, client, property, date, time)
         }
     }
 }
