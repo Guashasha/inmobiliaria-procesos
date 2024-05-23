@@ -66,7 +66,7 @@
                         </Label>
                      </top>
                   </BorderPane>
-                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#buscarHorarios" prefHeight="40.0" prefWidth="161.0" style="-fx-background-color: #8F57BB;" text="Buscar horarios" textFill="WHITE">
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#searchSchedule" prefHeight="40.0" prefWidth="161.0" style="-fx-background-color: #8F57BB;" text="Buscar horarios" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
@@ -75,7 +75,7 @@
             </HBox>
          </top>
          <bottom>
-            <GridPane fx:id="gpSchedule" prefHeight="328.0" prefWidth="779.0" BorderPane.alignment="CENTER">
+            <GridPane fx:id="gpSchedule" alignment="CENTER" prefHeight="328.0" prefWidth="779.0" BorderPane.alignment="CENTER">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="391.5999755859375" minWidth="10.0" prefWidth="391.5999755859375" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="398.0" minWidth="10.0" prefWidth="388.4000244140625" />
@@ -92,43 +92,6 @@
                <BorderPane.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </BorderPane.margin>
-               <children>
-                  <BorderPane prefHeight="78.0" prefWidth="203.0" style="-fx-background-color: rgba(255, 255, 255, 0.6); -fx-background-radius: 20;">
-                     <top>
-                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="62.0" text="Hora" textFill="#000000a6" BorderPane.alignment="CENTER_LEFT">
-                           <font>
-                              <Font name="Franklin Gothic Demi" size="20.0" />
-                           </font>
-                           <BorderPane.margin>
-                              <Insets left="15.0" />
-                           </BorderPane.margin>
-                        </Label>
-                     </top>
-                     <GridPane.margin>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                     </GridPane.margin>
-                     <right>
-                        <Button mnemonicParsing="false" style="-fx-background-color: #EBBFFF;" text="Agendar" BorderPane.alignment="CENTER">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                           <BorderPane.margin>
-                              <Insets bottom="10.0" right="10.0" />
-                           </BorderPane.margin>
-                        </Button>
-                     </right>
-                     <center>
-                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="138.0" text="Hora" BorderPane.alignment="CENTER">
-                           <font>
-                              <Font name="Franklin Gothic Demi" size="20.0" />
-                           </font>
-                           <BorderPane.margin>
-                              <Insets bottom="10.0" />
-                           </BorderPane.margin>
-                        </Label>
-                     </center>
-                  </BorderPane>
-               </children>
             </GridPane>
          </bottom>
          <center>

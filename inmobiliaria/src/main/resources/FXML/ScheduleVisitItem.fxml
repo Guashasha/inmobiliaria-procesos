@@ -6,35 +6,39 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="78.0" prefWidth="203.0" style="-fx-background-color: rgba(255, 255, 255, 0.6); -fx-background-radius: 20;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ScheduleVisitItemController">
-   <top>
-      <Label alignment="CENTER" prefHeight="30.0" prefWidth="62.0" text="Hora" textFill="#000000a6" BorderPane.alignment="CENTER_LEFT">
-         <font>
-            <Font name="Franklin Gothic Demi" size="20.0" />
-         </font>
-         <BorderPane.margin>
-            <Insets left="15.0" />
-         </BorderPane.margin>
-      </Label>
-   </top>
-   <right>
-      <Button mnemonicParsing="false" onAction="#agendar" style="-fx-background-color: #EBBFFF;" text="Agendar" BorderPane.alignment="CENTER">
-         <font>
-            <Font size="16.0" />
-         </font>
-         <BorderPane.margin>
-            <Insets bottom="10.0" right="10.0" />
-         </BorderPane.margin>
-      </Button>
-   </right>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="240.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ScheduleVisitItemController">
    <center>
-      <Label fx:id="lbHora" alignment="CENTER" prefHeight="30.0" prefWidth="138.0" text="Hora" BorderPane.alignment="CENTER">
-         <font>
-            <Font name="Franklin Gothic Demi" size="20.0" />
-         </font>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-radius: 20; -fx-background-color: rgba(255, 255, 255, 0.6);" BorderPane.alignment="CENTER">
+         <top>
+                    <Label prefHeight="30.0" prefWidth="151.0" text="Hora" textFill="#000000a6" BorderPane.alignment="CENTER">
+                        <font>
+                            <Font name="Franklin Gothic Demi" size="20.0" />
+                        </font>
+                        <BorderPane.margin>
+                            <Insets left="15.0" />
+                        </BorderPane.margin>
+                    </Label>
+         </top>
          <BorderPane.margin>
-            <Insets bottom="10.0" />
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </BorderPane.margin>
-      </Label>
+         <left>
+            <Label fx:id="lbTime" alignment="CENTER" contentDisplay="CENTER" prefHeight="24.0" prefWidth="131.0" text="Hora" BorderPane.alignment="CENTER_RIGHT">
+               <font>
+                  <Font name="Franklin Gothic Demi" size="20.0" />
+               </font>
+            </Label>
+         </left>
+         <right>
+            <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#agendar" prefHeight="31.0" prefWidth="78.0" style="-fx-background-color: #EBBFFF; -fx-background-radius: 10;" text="Agendar" BorderPane.alignment="CENTER">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <BorderPane.margin>
+                  <Insets right="10.0" />
+               </BorderPane.margin>
+            </Button>
+         </right>
+      </BorderPane>
    </center>
 </BorderPane>
