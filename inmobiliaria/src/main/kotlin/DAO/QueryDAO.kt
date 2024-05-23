@@ -1,12 +1,7 @@
-package main.kotlin.DAO
+package DAO
 
 import DataAccess.DataBaseConnection
 import main.kotlin.DTO.Query
-import org.jetbrains.kotlinx.dataframe.DataFrame
-import org.jetbrains.kotlinx.dataframe.api.first
-import org.jetbrains.kotlinx.dataframe.api.isEmpty
-import org.jetbrains.kotlinx.dataframe.io.readSqlQuery
-import org.jetbrains.kotlinx.dataframe.io.readSqlTable
 import java.sql.SQLException
 
 sealed class QueryResult (val message: String) {
@@ -49,20 +44,39 @@ class QueryDAO {
              return QueryResult.NotFound()
          }
 
-         val dbQuery = "SELECT * FROM property WHERE id=${queryId};"
-         val result = DataFrame.readSqlQuery(dbConnection, dbQuery)
+         return try {
+             val dbQuery = "SELECT * FROM property WHERE id=${queryId};"
+             val result = dbConnection.prepareStatement(dbQuery).executeQuery()
 
-         return if (result.isEmpty()) {
-             QueryResult.NotFound()
-         } else {
-             QueryResult.Found(Query.fromResultSet(result.first()))
+             if (result.next()) {
+                 QueryResult.Found(Query.fromResultSet(result))
+             } else {
+                 QueryResult.NotFound()
+             }
+         }
+         catch (error: SQLException) {
+             QueryResult.DBError(error.message.toString())
          }
      }
 
      fun getAll (): QueryResult {
-         val result = DataFrame.readSqlTable(dbConnection, "property")
+         return try {
+             val result = dbConnection.prepareStatement("SELECT * FROM query;").executeQuery()
+             val list = ArrayList<Query>()
 
-         return QueryResult.FoundList(Query.fromDataFrame(result))
+             while (result.next()) {
+                 list.add(Query.fromResultSet(result))
+             }
+
+             if (list.isNotEmpty()) {
+                 QueryResult.FoundList(list)
+             } else {
+                 QueryResult.NotFound()
+             }
+         }
+         catch (error: SQLException) {
+             QueryResult.DBError(error.message.toString())
+         }
      }
 
      fun delete (queryId: UInt): QueryResult {

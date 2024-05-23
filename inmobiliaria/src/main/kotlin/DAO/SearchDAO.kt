@@ -50,19 +50,43 @@ class SearchDAO {
             return SearchResult.WrongSearch()
         }
 
-        val query = "SELECT id, clientId, propertyType, searchTerm FROM search WHERE id=?;"
-        val result = DataFrame.readSqlQuery(dbConnection, query)
+        return try {
+            val query =
+                dbConnection.prepareStatement("SELECT id, clientId, propertyType, searchTerm FROM search WHERE id=?;")
+            query.setInt(1, searchId.toInt())
 
-        return if (result.isEmpty()) {
-            SearchResult.NotFound()
+            val result = query.executeQuery()
+
+            if (result.next()) {
+                SearchResult.Found(Search.fromResultSet(result))
+            } else {
+                SearchResult.NotFound()
+            }
         }
-        else SearchResult.Found(Search.fromResultSet(result.first()))
+        catch (error: SQLException) {
+            SearchResult.DBError(error.message.toString())
+        }
     }
 
     fun getAll (): SearchResult {
-        val result = DataFrame.readSqlTable(dbConnection, "search")
+        return try {
+            val result = dbConnection.prepareStatement("SELECT * FROM search;").executeQuery()
+            val list = ArrayList<Search>()
 
-        return SearchResult.FoundList(Search.fromDataFrame(result))
+            while (result.next()) {
+                list.add(Search.fromResultSet(result))
+            }
+
+            if (list.isNotEmpty()) {
+                SearchResult.FoundList(list)
+            }
+            else {
+                SearchResult.NotFound()
+            }
+        }
+        catch (error: SQLException) {
+            SearchResult.DBError(error.message.toString())
+        }
     }
 
     fun delete (searchId: UInt): SearchResult {
