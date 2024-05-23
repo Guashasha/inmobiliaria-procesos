@@ -2,9 +2,11 @@ package GUI
 
 import DTO.Account
 import GUI.Utility.PopUpAlert
+import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
 import javafx.scene.control.Alert
 import javafx.scene.control.Label
+import javafx.scene.layout.AnchorPane
 import javafx.scene.layout.BorderPane
 import javafx.scene.layout.Pane
 import javafx.stage.Stage
@@ -15,11 +17,12 @@ class MainMenu {
     private lateinit var bpMain: BorderPane
     private lateinit var pnMain: Pane
     private lateinit var lbHeader: Label
+    @FXML
+    private lateinit var mainAnchorPaneMenu: AnchorPane
 
 
-    fun initialize(bpMain: BorderPane, originalPane: Pane, account: Account, lbHeader : Label) {
+    fun initialize(bpMain: BorderPane, account: Account, lbHeader : Label) {
         this.bpMain = bpMain
-        this.pnMain = originalPane
         this.account = account
         this.lbHeader = lbHeader
     }
@@ -40,13 +43,13 @@ class MainMenu {
             this.lbHeader.text = "Lista de propiedades"
             this.bpMain.center = bpPropertyList
             val stage = bpMain.scene.window as Stage
-            propertyListController.initialize(bpMain, pnMain, account, lbHeader)
+            propertyListController.initialize(bpMain, mainAnchorPaneMenu, account, lbHeader)
             stage.title = "Lista propiedades"
         }
     }
 
     fun openScheduleVisit () {
-
+        //todo
     }
 
     fun openEditProfile () {
@@ -63,7 +66,7 @@ class MainMenu {
             this.lbHeader.text = "Editar perfil"
             this.bpMain.center = pnEditAccount
             val stage = bpMain.scene.window as Stage
-            editAccountController.initialize(bpMain, pnMain, account, lbHeader)
+            editAccountController.initialize(bpMain, mainAnchorPaneMenu, account, lbHeader)
             stage.title = "Lista propiedades"
         }
     }

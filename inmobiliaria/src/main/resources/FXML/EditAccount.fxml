@@ -56,7 +56,7 @@
                <font>
                   <Font size="16.0" />
                </font></Button>
-            <Button layoutX="907.0" layoutY="383.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="102.0" styleClass="btnSecondary" stylesheets="@../Style/ButtonStyle.css" text="Cancelar">
+            <Button layoutX="907.0" layoutY="383.0" mnemonicParsing="false" onAction="#backToMainMenu" prefHeight="47.0" prefWidth="102.0" styleClass="btnSecondary" stylesheets="@../Style/ButtonStyle.css" text="Cancelar">
                <font>
                   <Font size="16.0" />
                </font></Button>

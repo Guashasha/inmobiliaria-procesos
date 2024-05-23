@@ -145,7 +145,7 @@ class Login : Application() {
             this.lbHeader.text = "Menu principal"
             this.bpMain.center = aPaneMainMenu
             val stage = bpMain.scene.window as Stage
-            mainMenuController.initialize(bpMain, pnMain, account, lbHeader)
+            mainMenuController.initialize(bpMain, account, lbHeader)
             stage.title = "Menu principal"
         }
 

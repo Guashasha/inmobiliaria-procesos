@@ -13,10 +13,7 @@ import javafx.scene.Scene
 import javafx.scene.control.Alert
 import javafx.scene.control.Button
 import javafx.scene.control.Label
-import javafx.scene.layout.BorderPane
-import javafx.scene.layout.HBox
-import javafx.scene.layout.Pane
-import javafx.scene.layout.VBox
+import javafx.scene.layout.*
 import javafx.scene.text.Text
 import javafx.stage.Stage
 import main.kotlin.DAO.PropertyDAO
@@ -29,7 +26,7 @@ fun main (args: Array<String>) {
 
 class PropertyList : Application() {
     private lateinit var mainPane: BorderPane
-    private lateinit var originalPane: Pane
+    private lateinit var mainAnchorPaneMenu: AnchorPane
     private lateinit var account: Account
     private lateinit var lbHeader: Label
     @FXML
@@ -55,9 +52,9 @@ class PropertyList : Application() {
         }
     }
 
-    fun initialize (bpMain: BorderPane, pnMain: Pane, account: Account, lbHeader: Label) {
+    fun initialize (bpMain: BorderPane,  mainAnchorPaneMenu: AnchorPane, account: Account, lbHeader: Label) {
         this.bpMain = bpMain
-        this.originalPane = pnMain
+        this.mainAnchorPaneMenu = mainAnchorPaneMenu
         this.account = account
         this.lbHeader = lbHeader
         setProperties()
