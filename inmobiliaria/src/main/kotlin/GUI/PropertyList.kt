@@ -1,5 +1,6 @@
 package GUI
 
+import DTO.Account
 import DTO.Property
 import DTO.PropertyType
 import GUI.Utility.PopUpAlert
@@ -11,10 +12,8 @@ import javafx.scene.Parent
 import javafx.scene.Scene
 import javafx.scene.control.Alert
 import javafx.scene.control.Button
-import javafx.scene.layout.BorderPane
-import javafx.scene.layout.HBox
-import javafx.scene.layout.Pane
-import javafx.scene.layout.VBox
+import javafx.scene.control.Label
+import javafx.scene.layout.*
 import javafx.scene.text.Text
 import javafx.stage.Stage
 import main.kotlin.DAO.PropertyDAO
@@ -26,6 +25,10 @@ fun main (args: Array<String>) {
 }
 
 class PropertyList : Application() {
+    private lateinit var mainPane: BorderPane
+    private lateinit var mainAnchorPaneMenu: AnchorPane
+    private lateinit var account: Account
+    private lateinit var lbHeader: Label
     @FXML
     lateinit var vboxProperties: VBox
 
@@ -49,9 +52,11 @@ class PropertyList : Application() {
         }
     }
 
-    fun initialize (bpMain: BorderPane) {
+    fun initialize (bpMain: BorderPane,  mainAnchorPaneMenu: AnchorPane, account: Account, lbHeader: Label) {
         this.bpMain = bpMain
-
+        this.mainAnchorPaneMenu = mainAnchorPaneMenu
+        this.account = account
+        this.lbHeader = lbHeader
         setProperties()
     }
 
@@ -90,7 +95,7 @@ class PropertyList : Application() {
                         val propertyInfoController = fxmlLoader.getController<PropertyInfo>()
                         //this.bpMain.center = pnPropertyInfo
                         val stage = bpMain.scene.window as Stage
-                        propertyInfoController.initialize(bpMain)
+                        //propertyInfoController.initialize(bpMain, )
                         stage.title = "Información de propiedades"
                     }
                 }

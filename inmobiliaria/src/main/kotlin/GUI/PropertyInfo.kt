@@ -1,21 +1,26 @@
 package GUI;
 
+import DTO.Account
 import DTO.Property
 import DTO.PropertyAction
 import GUI.Utility.PopUpAlert
 import javafx.fxml.FXML
 import javafx.scene.control.Alert
+import javafx.scene.control.Label
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
 import javafx.scene.layout.BorderPane
 import javafx.scene.layout.HBox
+import javafx.scene.layout.Pane
 import javafx.scene.text.Text
 import main.kotlin.DAO.PropertyDAO
 import main.kotlin.DAO.PropertyResult
 
 class PropertyInfo {
-    private lateinit var mainPanel: BorderPane
-
+    private lateinit var mainPane: BorderPane
+    private lateinit var originalPane: Pane
+    private lateinit var account: Account
+    private lateinit var lbHeader: Label
     @FXML
     private lateinit var hboxImages: HBox
     @FXML
@@ -42,8 +47,11 @@ class PropertyInfo {
 
     private var property: Property? = null
 
-    fun initialize(mainPanel: BorderPane) {
-        this.mainPanel = mainPanel
+    fun initialize(mainPane: BorderPane, originalPane: Pane, account: Account, lbHeader : Label) {
+        this.mainPane = mainPane
+        this.originalPane = originalPane
+        this.account= account
+        this.lbHeader = lbHeader
         setPropertyData()
     }
 
