@@ -56,7 +56,7 @@ class SearchDAO {
         return if (result.isEmpty()) {
             SearchResult.NotFound()
         }
-        else SearchResult.Found(Search.fromDataRow(result.first()))
+        else SearchResult.Found(Search.fromResultSet(result.first()))
     }
 
     fun getAll (): SearchResult {

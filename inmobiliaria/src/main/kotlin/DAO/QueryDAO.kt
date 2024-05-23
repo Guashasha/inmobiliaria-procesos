@@ -55,7 +55,7 @@ class QueryDAO {
          return if (result.isEmpty()) {
              QueryResult.NotFound()
          } else {
-             QueryResult.Found(Query.fromDataRow(result.first()))
+             QueryResult.Found(Query.fromResultSet(result.first()))
          }
      }
 

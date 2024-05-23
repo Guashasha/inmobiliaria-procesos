@@ -1,8 +1,6 @@
 package DTO
 
-import org.jetbrains.kotlinx.dataframe.DataFrame
-import org.jetbrains.kotlinx.dataframe.DataRow
-import org.jetbrains.kotlinx.dataframe.api.forEach
+import java.sql.ResultSet
 
 enum class AccountType { CLIENT, AGENT }
 
@@ -23,23 +21,14 @@ data class Account(
     }
 
     companion object {
-        fun fromDataRow (result: DataRow<Any?>): Account {
-            val id: UInt = result[0].toString().toUInt()
-            val name = result[1].toString()
-            val type = AccountType.valueOf(result[2].toString())
-            val email = result[3].toString()
-            val phone = result[4].toString()
+        fun fromResultSet (result: ResultSet): Account {
+            val id: UInt = result.getInt(0).toUInt()
+            val name = result.getString(1)
+            val type = AccountType.valueOf(result.getString(2))
+            val email = result.getString(3)
+            val phone = result.getString(4)
+
             return Account(id, email, type, name, phone, null)
-        }
-
-        fun fromDataFrame (results: DataFrame<Any?>): ArrayList<Account> {
-            val accounts: ArrayList<Account> = ArrayList()
-
-            results.forEach {
-                accounts.add(fromDataRow(it))
-            }
-
-            return accounts
         }
     }
 }

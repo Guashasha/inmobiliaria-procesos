@@ -4,6 +4,7 @@ import org.jetbrains.kotlinx.dataframe.DataFrame
 import org.jetbrains.kotlinx.dataframe.DataRow
 import org.jetbrains.kotlinx.dataframe.api.forEach
 import java.awt.Image
+import java.sql.ResultSet
 
 enum class PropertyState {available, occupied, suspended}
 
@@ -34,29 +35,54 @@ data class Property (
             if (this.id != null) this.id > 0u else true
   }
 
+  override fun equals (other: Any?): Boolean {
+    if (this === other) return true
+    if (javaClass != other?.javaClass) return false
+
+    other as Property
+
+    if (title != other.title) return false
+    if (shortDescription != other.shortDescription) return false
+    if (fullDescription != other.fullDescription) return false
+    if (type != other.type) return false
+    if (price != other.price) return false
+    if (state != other.state) return false
+    if (direction != other.direction) return false
+    if (houseOwner != other.houseOwner) return false
+    if (action != other.action) return false
+
+    return true
+  }
+
+  override fun hashCode (): Int {
+    var result = id?.hashCode() ?: 0
+    result = 31 * result + title.hashCode()
+    result = 31 * result + shortDescription.hashCode()
+    result = 31 * result + fullDescription.hashCode()
+    result = 31 * result + type.hashCode()
+    result = 31 * result + price.hashCode()
+    result = 31 * result + state.hashCode()
+    result = 31 * result + direction.hashCode()
+    result = 31 * result + houseOwner.hashCode()
+    result = 31 * result + action.hashCode()
+    result = 31 * result + (images?.hashCode() ?: 0)
+    return result
+  }
+
   companion object {
-    fun fromDataRow (result: DataRow<Any?>): Property {
-      val id: UInt = result[0].toString().toUInt()
-      val title = result[1].toString()
-      val shortDescription = result[2].toString()
-      val fullDescription = result[3].toString()
-      val type = PropertyType.valueOf(result[4].toString())
-      val price = result[5].toString().toFloat()
-      val state = PropertyState.valueOf(result[6] as String)
-      val direction = result[7].toString()
-      val houseOwner = result[8].toString().toUInt()
-      val action = PropertyAction.valueOf(result[9].toString())
+    fun fromResultSet (result: ResultSet): Property {
+      val id: UInt = result.getInt(1).toUInt()
+      val title = result.getString(2)
+      val shortDescription = result.getString(3)
+      val fullDescription = result.getString(4)
+      val type = PropertyType.valueOf(result.getString(5))
+      val price = result.getFloat(6)
+      val state = PropertyState.valueOf(result.getString(7))
+      val direction = result.getString(8)
+      val houseOwner = result.getInt(9).toUInt()
+      val action = PropertyAction.valueOf(result.getString(10))
+
       return Property(id, title, shortDescription, fullDescription, type, price, state, direction, houseOwner, action, null)
-    }
-
-    fun fromDataFrame (results: DataFrame<Any?>): ArrayList<Property> {
-      val properties: ArrayList<Property> = ArrayList()
-
-      results.forEach {
-        properties.add(fromDataRow(it))
-      }
-
-      return properties
     }
   }
 }
