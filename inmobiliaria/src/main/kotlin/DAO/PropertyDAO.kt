@@ -86,7 +86,7 @@ class PropertyDAO {
 
     fun getById (propertyId: UInt): PropertyResult {
         if (propertyId < 1u) {
-            return PropertyResult.NotFound()
+            return PropertyResult.WrongProperty()
         }
 
         return try {

@@ -1,14 +1,7 @@
 package DAO
 
 import DTO.Account
-import DTO.Property
 import DataAccess.DataBaseConnection
-import main.kotlin.DAO.PropertyResult
-import org.jetbrains.kotlinx.dataframe.DataFrame
-import org.jetbrains.kotlinx.dataframe.api.first
-import org.jetbrains.kotlinx.dataframe.api.isEmpty
-import org.jetbrains.kotlinx.dataframe.io.readSqlQuery
-import org.jetbrains.kotlinx.dataframe.io.readSqlTable
 import java.sql.SQLException
 
 sealed class AccountResult (val message: String) {
@@ -49,16 +42,56 @@ class AccountDAO {
         }
     }
 
-    // fun modify (account: Account): AccountResult {}
+    fun modify (account: Account): AccountResult {
+        if (!account.isValid()) {
+            return AccountResult.WrongAccount()
+        }
+        else if (account.id == null) {
+            return AccountResult.NotFound()
+        }
+
+        return try {
+            val query =
+                dbConnection.prepareStatement("UPDATE account SET name=?, type=?, email=?, phone=?, password=? where id=?;")
+
+            query.setString(1, account.name)
+            query.setString(2, account.type.toString())
+            query.setString(3, account.email)
+            query.setString(4, account.phone)
+            query.setString(5, account.password)
+            query.setInt(6, account.id.toInt())
+
+            if (query.executeUpdate() > 0) {
+                AccountResult.Success()
+            } else {
+                AccountResult.Failure()
+            }
+        }
+        catch (error: SQLException) {
+            AccountResult.DBError(error.message.toString())
+        }
+    }
 
     fun getById (accountId: UInt): AccountResult {
-        val query = "SELECT id, name, type, email, phone FROM account WHERE id=${accountId};"
-        val result = DataFrame.readSqlQuery(dbConnection, query)
+        if (accountId < 1u) {
+            return AccountResult.WrongAccount()
+        }
 
-        return if (result.isEmpty()) {
-            AccountResult.NotFound()
-        } else {
-            AccountResult.Found(Account.fromResultSet(result.first()))
+        return try {
+            val query = dbConnection.prepareStatement("SELECT * FROM account WHERE id=?;")
+
+            query.setInt(1, accountId.toInt())
+
+            val result = query.executeQuery()
+
+            if (result.next()) {
+                AccountResult.Found(Account.fromResultSet(result))
+            } else {
+                AccountResult.NotFound()
+            }
+        }
+        catch (error: SQLException) {
+            AccountResult.DBError(error.message.toString())
         }
     }
 
@@ -70,7 +103,7 @@ class AccountDAO {
             list.add(Account.fromResultSet(result))
         }
 
-        if (list.isNotEmpty()) {
+        return if (list.isNotEmpty()) {
             AccountResult.FoundList(list)
         }
         else {

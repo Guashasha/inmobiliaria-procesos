@@ -47,19 +47,43 @@ class AgentDAO {
      }
 
      fun getById (agentId: UInt): AgentResult {
-         val query = "SELECT accountId, personelNumber FROM agent WHERE id=${agentId};"
-         val result = DataFrame.readSqlQuery(dbConnection, query)
+         return try {
+             val query = dbConnection.prepareStatement("SELECT accountId, personelNumber FROM agent WHERE id=?;")
 
-         return if (result.isEmpty()) {
-             AgentResult.NotFound()
-         } else {
-             AgentResult.Found(Agent.fromDataRow(result.first()))
+             query.setInt(1, agentId.toInt())
+
+             val result = query.executeQuery()
+
+             return if (result.next()) {
+                 AgentResult.Found(Agent.fromResultSet(result))
+             } else {
+                 AgentResult.NotFound()
+             }
+         }
+         catch (error: SQLException) {
+             AgentResult.DBError(error.message.toString())
          }
      }
 
      fun getAll (): AgentResult {
-         val result = DataFrame.readSqlTable(dbConnection, "agent")
+         return try {
+             val result = dbConnection.prepareStatement("SELECT * FROM agent;").executeQuery()
 
-         return AgentResult.FoundList(Agent.fromDataFrame(result))
+             val list = ArrayList<Agent>()
+
+             while (result.next()) {
+                 list.add(Agent.fromResultSet(result))
+             }
+
+             if (list.isNotEmpty()) {
+                 AgentResult.FoundList(list)
+             }
+             else {
+                 AgentResult.NotFound()
+             }
+         }
+         catch (error: SQLException) {
+             AgentResult.DBError(error.message.toString())
+         }
      }
 }
