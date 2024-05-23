@@ -1,18 +1,23 @@
-package DAO
+package main.kotlin.DAO
 
 import DTO.Property
+import DTO.PropertyType
 import DataAccess.DataBaseConnection
 import org.jetbrains.kotlinx.dataframe.DataFrame
 import org.jetbrains.kotlinx.dataframe.api.first
 import org.jetbrains.kotlinx.dataframe.api.isEmpty
 import org.jetbrains.kotlinx.dataframe.io.readSqlQuery
 import org.jetbrains.kotlinx.dataframe.io.readSqlTable
+import java.awt.Image
+import java.io.File
+import java.io.FileInputStream
+import javax.imageio.ImageIO
 import java.sql.SQLException
 
 sealed class PropertyResult (val message: String) {
     class Success: PropertyResult("La operación se realizó correctamente")
     class Failure: PropertyResult("La operación no se pudo realizar")
-    class FoundList(val properties: List<Property>): PropertyResult("Se encontraron multiples propiedades")
+    class FoundList<T>(val list: List<T>): PropertyResult("Se encontraron multiples propiedades")
     class Found(val property: Property): PropertyResult("Se encontró la propiedad")
     class NotFound: PropertyResult("La propiedad a buscar no existe")
     class DBError(private val errorMessage: String): PropertyResult(errorMessage)
@@ -47,7 +52,7 @@ class PropertyDAO {
             }
         }
         catch (error: SQLException) {
-             PropertyResult.DBError(error.message.toString())
+            PropertyResult.DBError(error.message.toString())
         }
     }
 
@@ -61,17 +66,15 @@ class PropertyDAO {
 
         return try {
             val query =
-                dbConnection.prepareStatement("UPDATE property SET title=?, shortDescription=?, fullDescription=?, type=?, price=?, state=?, direction=?, houseOwner=?, action=? where id=?;")
+                dbConnection.prepareStatement("UPDATE property SET title=?, shortDescription=?, fullDescription=?, type=?, price=?, state=?, action=? where id=?;")
             query.setString(1, property.title)
             query.setString(2, property.shortDescription)
             query.setString(3, property.fullDescription)
             query.setString(4, property.type.toString())
             query.setFloat(5, property.price)
             query.setString(6, property.state.toString())
-            query.setString(7, property.direction)
-            query.setInt(8, property.houseOwner.toInt())
-            query.setString(9, property.action.toString())
-            query.setInt(10, property.id.toInt())
+            query.setString(7, property.action.toString())
+            query.setInt(8, property.id.toInt())
 
             if (query.executeUpdate() > 0) {
                 PropertyResult.Success()
@@ -84,8 +87,8 @@ class PropertyDAO {
         }
     }
 
-    fun getById (propertyId: Int): PropertyResult {
-        if (propertyId < 1) {
+    fun getById (propertyId: UInt): PropertyResult {
+        if (propertyId < 1u) {
             return PropertyResult.NotFound()
         }
 
@@ -97,6 +100,11 @@ class PropertyDAO {
         } else {
             PropertyResult.Found(Property.fromDataRow(result.first()))
         }
+    }
+
+    fun getByQuery (query: String, propertyType: PropertyType): PropertyResult {
+        val query = "SELECT * FROM property WHERE type=${propertyType} AND (fullDescription LIKE \"%${query}%\" OR shortDescription LIKE \"%${query}%\" OR LIKE \"%${query}%\" title);"
+        return PropertyResult.WrongProperty()
     }
 
     fun getByHouseOwner (houseOwnerId: Int): PropertyResult {
@@ -116,5 +124,49 @@ class PropertyDAO {
         return PropertyResult.FoundList(Property.fromDataFrame(result))
     }
 
-    //fun remove (propertyId: Int): PropertyResult {}
+    fun addImage (propertyId: UInt, image: File): PropertyResult {
+        val imageStream = FileInputStream(image)
+
+        return try {
+            val query = dbConnection.prepareStatement("INSERT INTO propertyPictures (picture, propertyId) VALUES (?, ?);")
+
+            query.setBinaryStream(1, imageStream, image.length())
+            query.setInt(2, propertyId.toInt())
+
+            if (query.executeUpdate() < 1) {
+                PropertyResult.Failure()
+            }
+            else {
+                PropertyResult.Success()
+            }
+        }
+        catch (error: SQLException) {
+            PropertyResult.DBError(error.message.toString())
+        }
+    }
+
+    fun getImages (propertyId: UInt): PropertyResult {
+        val pictures = ArrayList<Image>()
+
+        return try {
+            val query = dbConnection.prepareStatement("SELECT picture FROM propertyPictures WHERE propertyId=?")
+
+            query.setInt(1, propertyId.toInt())
+
+            val result = query.executeQuery()
+
+            while (result.next()) {
+                val image: Image = ImageIO.read(result.getBinaryStream(1))
+                pictures.add(image)
+            }
+
+            if (pictures.isEmpty())
+                PropertyResult.NotFound()
+            else
+                PropertyResult.FoundList(pictures)
+        }
+        catch (error: SQLException) {
+            PropertyResult.DBError(error.message.toString())
+        }
+    }
 }

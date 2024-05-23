@@ -54,7 +54,7 @@ CREATE TABLE `search` (
 CREATE TABLE `query` (
   `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `clientId` int NOT NULL,
-  `idProperty` int NOT NULL
+  `propertyId` int NOT NULL
 );
 
 CREATE TABLE `visit` (
@@ -75,7 +75,7 @@ ALTER TABLE `search` ADD FOREIGN KEY (`clientId`) REFERENCES `account` (`id`);
 
 ALTER TABLE `query` ADD FOREIGN KEY (`clientId`) REFERENCES `account` (`id`);
 
-ALTER TABLE `query` ADD FOREIGN KEY (`idProperty`) REFERENCES `property` (`id`);
+ALTER TABLE `query` ADD FOREIGN KEY (`propertyId`) REFERENCES `property` (`id`);
 
 ALTER TABLE `visit` ADD FOREIGN KEY (`clientId`) REFERENCES `account` (`id`);
 
