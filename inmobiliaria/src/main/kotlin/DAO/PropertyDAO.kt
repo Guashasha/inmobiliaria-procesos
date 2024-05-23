@@ -108,21 +108,21 @@ class PropertyDAO {
     }
 
     fun getByQuery (query: String, propertyType: PropertyType): PropertyResult {
-        val unsafeString = Regex("[-*/\"'#]+")
+        val unsafeString = Regex("""[-*/\"'#]+""")
 
         if (unsafeString.containsMatchIn(query)) {
             return PropertyResult.WrongQuery()
-        };
+        }
 
         return try {
             val result = if (propertyType == PropertyType.all) {
                 val dbQuery =
-                    dbConnection.prepareStatement("SELECT * FROM property WHERE state=\"available\" AND (fullDescription LIKE \"%$query%\" OR shortDescription LIKE \"%$query%\" OR title LIKE \"%$query%\");")
+                    dbConnection.prepareStatement("SELECT * FROM property WHERE state=\"available\" AND (fullDescription LIKE \"%$query%\" OR shortDescription LIKE \"%$query%\" OR title LIKE \"%$query%\" OR direction LIKE \"%$query%\");")
 
                 dbQuery.executeQuery()
             } else {
                 val dbQuery =
-                    dbConnection.prepareStatement("SELECT * FROM property WHERE type=$propertyType AND state=\"available\" AND (fullDescription LIKE \"%$query%\" OR shortDescription LIKE \"%$query%\" OR title LIKE \"%$query%\");")
+                    dbConnection.prepareStatement("SELECT * FROM property WHERE type=$propertyType AND state=\"available\" AND (fullDescription LIKE \"%$query%\" OR shortDescription LIKE \"%$query%\" OR title LIKE \"%$query%\" OR direction LIKE \"%$query%\");")
 
                 dbQuery.executeQuery()
             }
