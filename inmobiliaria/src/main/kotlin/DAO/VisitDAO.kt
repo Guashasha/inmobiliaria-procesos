@@ -16,9 +16,9 @@ sealed class VisitResult (val message: String) {
 
 class VisitDAO {
     val dbConnection = DataBaseConnection().connection
-    fun add (visit: Visit): VisitResult {
+    /*fun add (visit: Visit): VisitResult {
 
-    }
+    }*/
     // fun modify (visit: Visit): VisitResult {}
     // fun getById (visitId: UInt): VisitResult {}
     // fun getAll (): VisitResult {}

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #CDC9FF;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ScheduleVisitController">
+   <center>
+      <BorderPane prefHeight="571.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+         <top>
+            <HBox alignment="CENTER_LEFT" prefHeight="66.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#salir" prefHeight="40.0" prefWidth="72.0" style="-fx-background-color: #8F57BB;" text="Salir" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <BorderPane prefHeight="118.0" prefWidth="222.0" />
+                  <BorderPane prefHeight="78.0" prefWidth="282.0" style="-fx-background-color: rgba(255, 255, 255, 0.6); -fx-background-radius: 20;">
+                     <HBox.margin>
+                        <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
+                     </HBox.margin>
+                     <right>
+                        <ImageView fitHeight="51.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER_LEFT">
+                           <BorderPane.margin>
+                              <Insets left="5.0" right="10.0" />
+                           </BorderPane.margin>
+                           <image>
+                              <Image url="@../calendar-days.png" />
+                           </image>
+                        </ImageView>
+                     </right>
+                     <center>
+                        <DatePicker fx:id="dpFecha" editable="false" prefHeight="44.0" prefWidth="201.0" BorderPane.alignment="CENTER_RIGHT">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <BorderPane.margin>
+                              <Insets bottom="10.0" />
+                           </BorderPane.margin></DatePicker>
+                     </center>
+                     <top>
+                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="62.0" text="Fecha" textFill="#000000a6" BorderPane.alignment="CENTER_LEFT">
+                           <font>
+                              <Font name="Franklin Gothic Demi" size="20.0" />
+                           </font>
+                           <BorderPane.margin>
+                              <Insets left="15.0" />
+                           </BorderPane.margin>
+                        </Label>
+                     </top>
+                  </BorderPane>
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#buscarHorarios" prefHeight="40.0" prefWidth="161.0" style="-fx-background-color: #8F57BB;" text="Buscar horarios" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+         </top>
+         <bottom>
+            <GridPane fx:id="gpHorarios" prefHeight="328.0" prefWidth="779.0" BorderPane.alignment="CENTER">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="391.5999755859375" minWidth="10.0" prefWidth="391.5999755859375" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="398.0" minWidth="10.0" prefWidth="388.4000244140625" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="398.0" minWidth="10.0" prefWidth="388.4000244140625" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <BorderPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </BorderPane.margin>
+               <children>
+                  <BorderPane prefHeight="78.0" prefWidth="203.0" style="-fx-background-color: rgba(255, 255, 255, 0.6); -fx-background-radius: 20;">
+                     <top>
+                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="62.0" text="Hora" textFill="#000000a6" BorderPane.alignment="CENTER_LEFT">
+                           <font>
+                              <Font name="Franklin Gothic Demi" size="20.0" />
+                           </font>
+                           <BorderPane.margin>
+                              <Insets left="15.0" />
+                           </BorderPane.margin>
+                        </Label>
+                     </top>
+                     <GridPane.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </GridPane.margin>
+                     <right>
+                        <Button mnemonicParsing="false" style="-fx-background-color: #EBBFFF;" text="Agendar" BorderPane.alignment="CENTER">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                           <BorderPane.margin>
+                              <Insets bottom="10.0" right="10.0" />
+                           </BorderPane.margin>
+                        </Button>
+                     </right>
+                     <center>
+                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="138.0" text="Hora" BorderPane.alignment="CENTER">
+                           <font>
+                              <Font name="Franklin Gothic Demi" size="20.0" />
+                           </font>
+                           <BorderPane.margin>
+                              <Insets bottom="10.0" />
+                           </BorderPane.margin>
+                        </Label>
+                     </center>
+                  </BorderPane>
+               </children>
+            </GridPane>
+         </bottom>
+         <center>
+            <Label prefHeight="50.0" prefWidth="259.0" text="Horarios disponibles" BorderPane.alignment="CENTER">
+               <font>
+                  <Font name="Franklin Gothic Book" size="30.0" />
+               </font>
+            </Label>
+         </center>
+      </BorderPane>
+   </center>
+   <top>
+      <Label alignment="CENTER" prefHeight="75.0" prefWidth="800.0" style="-fx-background-color: #BDB7FF;" text="Agendar Visita a la propiedad" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="Franklin Gothic Demi" size="35.0" />
+         </font>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </Label>
+   </top>
+</BorderPane>
