@@ -1,0 +1,18 @@
+.btnPrincipal {
+    -fx-background-color: #8F57BB;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-border-width: 1px;
+    -fx-border-color: black;
+    -fx-text-fill: white;
+
+}
+
+.btnSecondary {
+    -fx-background-color: #CDC9FF;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-border-width: 1px;
+    -fx-border-color: black;
+    -fx-text-fill: black;
+}

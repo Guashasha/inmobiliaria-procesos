@@ -24,7 +24,7 @@ class AccountDAO {
 
         return try {
             val query =
-                dbConnection.prepareStatement("INSERT INTO account (name, type, email, phone, password) VALUES (?, ?, ?, ?, ?, ?);")
+                dbConnection.prepareStatement("INSERT INTO account (name, type, email, phone, password) VALUES (?, ?, ?, ?, ?);")
             query.setString(1, account.name)
             query.setString(2, account.type.toString())
             query.setString(3, account.email)
@@ -110,4 +110,27 @@ class AccountDAO {
             AccountResult.NotFound()
         }
     }
+
+    fun getByEmail(email: String): AccountResult {
+        if (email.isBlank()) {
+            return AccountResult.WrongAccount()
+        }
+
+        return try {
+            val query = dbConnection.prepareStatement("SELECT * FROM account WHERE email = ?;")
+            query.setString(1, email)
+
+            val result = query.executeQuery()
+
+            if (result.next()) {
+                AccountResult.Found(Account.fromResultSet(result))
+            } else {
+                AccountResult.NotFound()
+            }
+        } catch (error: SQLException) {
+            AccountResult.DBError(error.message.toString())
+        }
+    }
+
+
 }

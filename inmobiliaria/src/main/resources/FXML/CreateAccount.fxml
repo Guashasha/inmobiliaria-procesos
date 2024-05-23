@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="698.0" prefWidth="1201.0" styleClass="mainPane" stylesheets="@../Style/Pane.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.CreateAccount">
+   <children>
+      <Pane layoutX="14.0" layoutY="24.0" prefHeight="507.0" prefWidth="835.0" styleClass="informationPane">
+         <children>
+            <Label layoutX="37.0" layoutY="24.0" text="Datos personales">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="28.0" />
+               </font>
+            </Label>
+            <Label layoutX="37.0" layoutY="82.0" text="Nombre">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfName" layoutX="37.0" layoutY="114.0" prefHeight="51.0" prefWidth="302.0" promptText="Nombre" styleClass="textFieldDataAccount" />
+            <Label layoutX="418.0" layoutY="82.0" text="Apellidos">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfLastName" layoutX="418.0" layoutY="114.0" prefHeight="51.0" prefWidth="398.0" promptText="Apellidos" styleClass="textFieldDataAccount" />
+            <Label layoutX="37.0" layoutY="196.0" text="Numero telefónico">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfPhoneNumber" layoutX="37.0" layoutY="236.0" prefWidth="302.0" promptText="2288557788" styleClass="textFieldDataAccount" />
+            <Label layoutX="418.0" layoutY="196.0" text="Correo electrónico">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfEmail" layoutX="418.0" layoutY="236.0" prefHeight="51.0" prefWidth="398.0" promptText="correo@ejemplo.com" styleClass="textFieldDataAccount" />
+            <Label layoutX="37.0" layoutY="308.0" text="Datos de cuenta">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="28.0" />
+               </font>
+            </Label>
+            <PasswordField fx:id="pwPassword" layoutX="37.0" layoutY="425.0" prefWidth="314.0" promptText="**********" styleClass="textFieldDataAccount" />
+            <PasswordField fx:id="pwRepeatPassword" layoutX="418.0" layoutY="425.0" prefHeight="51.0" prefWidth="398.0" promptText="********" styleClass="textFieldDataAccount" />
+            <Label layoutX="37.0" layoutY="376.0" text="Contraseña">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="418.0" layoutY="376.0" text="Repetir contraseña">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane layoutX="885.0" layoutY="24.0" prefHeight="118.0" prefWidth="302.0" styleClass="agencyInformation">
+         <children>
+            <Label layoutX="14.0" layoutY="14.0" text="Propiedas Xalapa Nueva Generación" />
+            <Label layoutX="14.0" layoutY="51.0" text="2288557788" />
+            <Label layoutX="14.0" layoutY="87.0" text="info@PXalapaNG.com.mx" />
+            <ImageView fitHeight="55.0" fitWidth="54.0" layoutX="220.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Image/PXNG-removebg.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Button fx:id="btnConfirm" layoutX="943.0" layoutY="211.0" mnemonicParsing="false" onAction="#handleConfirm" prefHeight="52.0" prefWidth="187.0" styleClass="btnPrincipal" stylesheets="@../Style/ButtonStyle.css" text="Confirmar">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnCancel" layoutX="984.0" layoutY="303.0" mnemonicParsing="false" onAction="#handleCancel" styleClass="btnSecondary" stylesheets="@../Style/ButtonStyle.css" text="Cancelar">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Hyperlink fx:id="hpHaveAccount" layoutX="941.0" layoutY="373.0" onAction="#backToLogin" text="¿Ya tienes una cuenta?" textFill="#8f57bb">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Hyperlink>
+   </children>
+</Pane>
