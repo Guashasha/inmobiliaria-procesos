@@ -21,6 +21,10 @@ class AccountDAO {
         if (!account.isValid() || account.password == null) {
             return AccountResult.WrongAccount()
         }
+        val emailResult = getByEmail(account.email)
+        if (emailResult is AccountResult.Found) {
+            return AccountResult.Failure()
+        }
 
         return try {
             val query =
@@ -132,5 +136,25 @@ class AccountDAO {
         }
     }
 
+    fun validateCredentials(email: String, password: String): AccountResult {
+        if (email.isBlank() || password.isBlank()) {
+            return AccountResult.WrongAccount()
+        }
 
+        return try {
+            val query = dbConnection.prepareStatement("SELECT * FROM account WHERE email = ? AND BINARY password = BINARY ?;")
+            query.setString(1, email)
+            query.setString(2, password)
+
+            val result = query.executeQuery()
+
+            if (result.next()) {
+                AccountResult.Found(Account.fromResultSet(result))
+            } else {
+                AccountResult.NotFound()
+            }
+        } catch (error: SQLException) {
+            AccountResult.DBError(error.message.toString())
+        }
+    }
 }

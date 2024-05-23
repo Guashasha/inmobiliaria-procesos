@@ -33,7 +33,7 @@ class CreateAccount {
         this.originalPane = originalPane
     }
 
-    private fun obtenerDatosDeCuenta(): Account {
+    private fun getData(): Account {
         val name = tfName.text
         val lastName = tfLastName.text
         val email = tfEmail.text
@@ -60,7 +60,7 @@ class CreateAccount {
     @FXML
     fun handleConfirm() {
         try {
-            val account = obtenerDatosDeCuenta()
+            val account = getData()
             val accountDAO = AccountDAO()
             val result = accountDAO.add(account)
             when (result) {
@@ -69,7 +69,7 @@ class CreateAccount {
                     backToLogin()
                 }
                 is AccountResult.Failure -> {
-                    PopUpAlert.showAlert("No se pudo crear la cuenta", Alert.AlertType.ERROR)
+                    PopUpAlert.showAlert("El correo electrónico ya se encuentra registrado", Alert.AlertType.ERROR)
                 }
                 is AccountResult.WrongAccount -> {
                     PopUpAlert.showAlert("Datos de la cuenta incorrectos", Alert.AlertType.WARNING)

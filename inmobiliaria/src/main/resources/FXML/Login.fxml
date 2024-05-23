@@ -54,17 +54,17 @@
                   <Font name="Arial Rounded MT Bold" size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="btnEmail" layoutX="400.0" layoutY="211.0" prefHeight="40.0" prefWidth="400.0" promptText="correo@ejemplo.com" style="-fx-background-radius: 16;">
+            <TextField fx:id="tfEmail" layoutX="400.0" layoutY="211.0" prefHeight="40.0" prefWidth="400.0" promptText="correo@ejemplo.com" style="-fx-background-radius: 16;">
                <font>
                   <Font size="20.0" />
                </font>
             </TextField>
-            <PasswordField fx:id="btnPassword" layoutX="401.0" layoutY="282.0" prefHeight="40.0" prefWidth="400.0" promptText="*******" style="-fx-background-radius: 16;">
+            <PasswordField fx:id="pwPassword" layoutX="401.0" layoutY="282.0" prefHeight="40.0" prefWidth="400.0" promptText="*******" style="-fx-background-radius: 16;">
                <font>
                   <Font size="20.0" />
                </font>
             </PasswordField>
-            <Button fx:id="btnSession" layoutX="516.0" layoutY="365.0" mnemonicParsing="false" style="-fx-background-color: #8F57BB; -fx-background-radius: 8; -fx-border-color: black; -fx-border-radius: 8;" text="Iniciar sesión" textFill="WHITE">
+            <Button fx:id="btnSession" layoutX="516.0" layoutY="365.0" mnemonicParsing="false" onAction="#handleSession" style="-fx-background-color: #8F57BB; -fx-background-radius: 8; -fx-border-color: black; -fx-border-radius: 8;" text="Iniciar sesión" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
