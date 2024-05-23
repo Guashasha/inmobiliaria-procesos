@@ -39,6 +39,7 @@ class TestHelper {
         }
 
         private fun addQuery () {
+            dbConnection.prepareStatement("""insert into query () values ();""")
         }
 
         private fun addSearch () {
