@@ -15,6 +15,8 @@ import javafx.scene.layout.Pane
 import javafx.stage.Stage
 import java.io.IOException
 import GUI.Utility.PopUpAlert
+import javafx.scene.layout.AnchorPane
+import java.util.*
 
 fun main (args: Array<String>) {
     Application.launch(Login::class.java)
@@ -82,13 +84,11 @@ class Login : Application() {
 
 
     private fun openAgentView () {
-        //todo
-        println("Hacer en un boarderpane")
+        openMainMenu()
     }
 
     private fun openClientView () {
-        //todo
-        println("Hacer en un boarderpane")
+        openMainMenu()
     }
 
     private fun openViewForType () {
@@ -129,6 +129,26 @@ class Login : Application() {
                 false
             }
         }
+    }
+
+    private fun openMainMenu () {
+        val fxmlLoader = FXMLLoader(javaClass.getResource("/FXML/MainMenu.fxml"))
+        var aPaneMainMenu  : AnchorPane? = null
+        try {
+            aPaneMainMenu = fxmlLoader.load()
+        }
+        catch (error: IOException) {
+            PopUpAlert.showAlert("Error al cargar la ventana principal", Alert.AlertType.WARNING)
+        }
+        if (aPaneMainMenu != null) {
+            val mainMenuController = fxmlLoader.getController<MainMenu>()
+            this.lbHeader.text = "Menu principal"
+            this.bpMain.center = aPaneMainMenu
+            val stage = bpMain.scene.window as Stage
+            mainMenuController.initialize(bpMain, pnMain, account, lbHeader)
+            stage.title = "Menu principal"
+        }
+
     }
 
 
