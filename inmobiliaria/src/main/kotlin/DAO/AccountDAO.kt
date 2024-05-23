@@ -1,7 +1,9 @@
 package DAO
 
 import DTO.Account
+import DTO.Property
 import DataAccess.DataBaseConnection
+import main.kotlin.DAO.PropertyResult
 import org.jetbrains.kotlinx.dataframe.DataFrame
 import org.jetbrains.kotlinx.dataframe.api.first
 import org.jetbrains.kotlinx.dataframe.api.isEmpty
@@ -56,13 +58,23 @@ class AccountDAO {
         return if (result.isEmpty()) {
             AccountResult.NotFound()
         } else {
-            AccountResult.Found(Account.fromDataRow(result.first()))
+            AccountResult.Found(Account.fromResultSet(result.first()))
         }
     }
 
     fun getAll (): AccountResult {
-        val result = DataFrame.readSqlTable(dbConnection, "account")
+        val result = dbConnection.prepareStatement("SELECT * FROM account;").executeQuery()
+        val list = ArrayList<Account>()
 
-        return AccountResult.FoundList(Account.fromDataFrame(result))
+        while (result.next()) {
+            list.add(Account.fromResultSet(result))
+        }
+
+        if (list.isNotEmpty()) {
+            AccountResult.FoundList(list)
+        }
+        else {
+            AccountResult.NotFound()
+        }
     }
 }

@@ -1,8 +1,6 @@
 package main.kotlin.DTO
 
-import org.jetbrains.kotlinx.dataframe.DataFrame
-import org.jetbrains.kotlinx.dataframe.DataRow
-import org.jetbrains.kotlinx.dataframe.api.forEach
+import java.sql.ResultSet
 
 class Query (
   val id: UInt?,
@@ -15,21 +13,12 @@ class Query (
   }
 
   companion object {
-    fun fromDataRow (result: DataRow<Any?>): Query {
-      val id = result[0].toString().toUInt()
-      val client = result[1].toString().toUInt()
-      val property = result[2].toString().toUInt()
+    fun fromResultSet (result: ResultSet): Query {
+      val id = result.getInt(0).toUInt()
+      val client = result.getInt(1).toUInt()
+      val property = result.getInt(2).toUInt()
+
       return Query(id, client, property)
-    }
-
-    fun fromDataFrame (results: DataFrame<Any?>): ArrayList<Query> {
-      val queries: ArrayList<Query> = ArrayList()
-
-      results.forEach {
-        queries.add(fromDataRow(it))
-      }
-
-      return queries
     }
   }
 }

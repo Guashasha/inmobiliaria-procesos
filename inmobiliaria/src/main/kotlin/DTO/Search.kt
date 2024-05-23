@@ -1,8 +1,6 @@
 package DTO
 
-import org.jetbrains.kotlinx.dataframe.DataFrame
-import org.jetbrains.kotlinx.dataframe.DataRow
-import org.jetbrains.kotlinx.dataframe.api.forEach
+import java.sql.ResultSet
 
 data class Search (
     val id: UInt?,
@@ -16,22 +14,13 @@ data class Search (
     }
 
     companion object {
-        fun fromDataRow (result: DataRow<Any?>): Search {
-            val id: UInt = result[0].toString().toUInt()
-            val clientId: UInt = result[1].toString().toUInt()
-            val propertyType = PropertyType.valueOf(result[2].toString())
-            val searchTerm = result[3].toString()
+        fun fromResultSet (result: ResultSet): Search {
+            val id: UInt = result.getInt(0).toString().toUInt()
+            val clientId: UInt = result.getInt(1).toUInt()
+            val propertyType = PropertyType.valueOf(result.getString(2))
+            val searchTerm = result.getString(3)
+
             return Search(id, clientId, propertyType, searchTerm)
-        }
-
-        fun fromDataFrame (results: DataFrame<Any?>): ArrayList<Search> {
-            val searches: ArrayList<Search> = ArrayList()
-
-            results.forEach {
-                searches.add(fromDataRow(it))
-            }
-
-            return searches
         }
     }
 }

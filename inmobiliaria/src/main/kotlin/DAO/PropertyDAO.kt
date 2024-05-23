@@ -3,11 +3,6 @@ package main.kotlin.DAO
 import DTO.Property
 import DTO.PropertyType
 import DataAccess.DataBaseConnection
-import org.jetbrains.kotlinx.dataframe.DataFrame
-import org.jetbrains.kotlinx.dataframe.api.first
-import org.jetbrains.kotlinx.dataframe.api.isEmpty
-import org.jetbrains.kotlinx.dataframe.io.readSqlQuery
-import org.jetbrains.kotlinx.dataframe.io.readSqlTable
 import java.awt.Image
 import java.io.File
 import java.io.FileInputStream
@@ -22,6 +17,7 @@ sealed class PropertyResult (val message: String) {
     class NotFound: PropertyResult("La propiedad a buscar no existe")
     class DBError(private val errorMessage: String): PropertyResult(errorMessage)
     class WrongProperty: PropertyResult("Los datos de la propiedad son incorrectos")
+    class WrongQuery: PropertyResult("Por favor borre cualquiera de los siguientes caracteres: ', \", -, #, / y *")
 }
 
 class PropertyDAO {
@@ -67,6 +63,7 @@ class PropertyDAO {
         return try {
             val query =
                 dbConnection.prepareStatement("UPDATE property SET title=?, shortDescription=?, fullDescription=?, type=?, price=?, state=?, action=? where id=?;")
+
             query.setString(1, property.title)
             query.setString(2, property.shortDescription)
             query.setString(3, property.fullDescription)
@@ -92,19 +89,59 @@ class PropertyDAO {
             return PropertyResult.NotFound()
         }
 
-        val query = "SELECT * FROM property WHERE id=${propertyId}"
-        val result = DataFrame.readSqlQuery(dbConnection, query)
+        return try {
+            val query = dbConnection.prepareStatement("SELECT * FROM property WHERE id=?;")
 
-        return if (result.isEmpty()) {
-            PropertyResult.NotFound()
-        } else {
-            PropertyResult.Found(Property.fromDataRow(result.first()))
+            query.setInt(1, propertyId.toInt())
+
+            val result = query.executeQuery()
+
+            if (result.next()) {
+                PropertyResult.Found(Property.fromResultSet(result))
+            } else {
+                PropertyResult.NotFound()
+            }
+        }
+        catch (error: SQLException) {
+            PropertyResult.DBError(error.message.toString())
         }
     }
 
     fun getByQuery (query: String, propertyType: PropertyType): PropertyResult {
-        val query = "SELECT * FROM property WHERE type=${propertyType} AND (fullDescription LIKE \"%${query}%\" OR shortDescription LIKE \"%${query}%\" OR LIKE \"%${query}%\" title);"
-        return PropertyResult.WrongProperty()
+        val unsafeString = Regex("[-*/\"'#]+")
+
+        if (unsafeString.containsMatchIn(query)) {
+            return PropertyResult.WrongQuery()
+        };
+
+        return try {
+            val result = if (propertyType == PropertyType.all) {
+                val dbQuery =
+                    dbConnection.prepareStatement("SELECT * FROM property WHERE state=\"available\" AND (fullDescription LIKE \"%$query%\" OR shortDescription LIKE \"%$query%\" OR title LIKE \"%$query%\");")
+
+                dbQuery.executeQuery()
+            } else {
+                val dbQuery =
+                    dbConnection.prepareStatement("SELECT * FROM property WHERE type=$propertyType AND state=\"available\" AND (fullDescription LIKE \"%$query%\" OR shortDescription LIKE \"%$query%\" OR title LIKE \"%$query%\");")
+
+                dbQuery.executeQuery()
+            }
+
+            val list = ArrayList<Property>()
+
+            while (result.next()) {
+                list.add(Property.fromResultSet(result))
+            }
+
+            if (list.isNotEmpty()) {
+                PropertyResult.FoundList(list)
+            } else {
+                PropertyResult.NotFound()
+            }
+        }
+        catch (error: SQLException) {
+            PropertyResult.DBError(error.message.toString())
+        }
     }
 
     fun getByHouseOwner (houseOwnerId: Int): PropertyResult {
@@ -112,16 +149,48 @@ class PropertyDAO {
             return PropertyResult.NotFound()
         }
 
-        val query = "SELECT * FROM property WHERE id=${houseOwnerId}"
-        val result = DataFrame.readSqlQuery(dbConnection, query)
+        return try {
+            val query = dbConnection.prepareStatement("SELECT * FROM property WHERE id=?;")
 
-        return PropertyResult.FoundList(Property.fromDataFrame(result))
+            query.setInt(1, houseOwnerId)
+
+            val result = query.executeQuery()
+            val list = ArrayList<Property>()
+
+            while (result.next()) {
+                list.add(Property.fromResultSet(result))
+            }
+
+            if (list.isNotEmpty()) {
+                PropertyResult.FoundList(list)
+            } else {
+                PropertyResult.NotFound()
+            }
+        }
+        catch (error: SQLException) {
+            PropertyResult.DBError(error.message.toString())
+        }
     }
 
     fun getAll (): PropertyResult {
-        val result = DataFrame.readSqlTable(dbConnection, "property")
+        return try {
+            val result = dbConnection.prepareStatement("SELECT * FROM property;").executeQuery()
+            val list = ArrayList<Property>()
 
-        return PropertyResult.FoundList(Property.fromDataFrame(result))
+            while (result.next()) {
+                list.add(Property.fromResultSet(result))
+            }
+
+            if (list.isNotEmpty()) {
+                PropertyResult.FoundList(list)
+            }
+            else {
+                PropertyResult.NotFound()
+            }
+        }
+        catch (error: SQLException) {
+            PropertyResult.DBError(error.message.toString())
+        }
     }
 
     fun addImage (propertyId: UInt, image: File): PropertyResult {
@@ -149,7 +218,7 @@ class PropertyDAO {
         val pictures = ArrayList<Image>()
 
         return try {
-            val query = dbConnection.prepareStatement("SELECT picture FROM propertyPictures WHERE propertyId=?")
+            val query = dbConnection.prepareStatement("SELECT picture FROM propertyPictures WHERE propertyId=?;")
 
             query.setInt(1, propertyId.toInt())
 
