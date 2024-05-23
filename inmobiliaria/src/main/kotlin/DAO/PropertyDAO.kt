@@ -3,7 +3,8 @@ package main.kotlin.DAO
 import DTO.Property
 import DTO.PropertyType
 import DataAccess.DataBaseConnection
-import java.awt.Image
+import javafx.embed.swing.SwingFXUtils
+import javafx.scene.image.Image
 import java.io.File
 import java.io.FileInputStream
 import javax.imageio.ImageIO
@@ -122,7 +123,7 @@ class PropertyDAO {
                 dbQuery.executeQuery()
             } else {
                 val dbQuery =
-                    dbConnection.prepareStatement("SELECT * FROM property WHERE type=$propertyType AND state=\"available\" AND (fullDescription LIKE \"%$query%\" OR shortDescription LIKE \"%$query%\" OR title LIKE \"%$query%\" OR direction LIKE \"%$query%\");")
+                    dbConnection.prepareStatement("SELECT * FROM property WHERE type=\"$propertyType\" AND state=\"available\" AND (fullDescription LIKE \"%$query%\" OR shortDescription LIKE \"%$query%\" OR title LIKE \"%$query%\" OR direction LIKE \"%$query%\");")
 
                 dbQuery.executeQuery()
             }
@@ -225,7 +226,8 @@ class PropertyDAO {
             val result = query.executeQuery()
 
             while (result.next()) {
-                val image: Image = ImageIO.read(result.getBinaryStream(1))
+                val bufferedImage = ImageIO.read(result.getBinaryStream(1))
+                val image: Image = SwingFXUtils.toFXImage(bufferedImage, null)
                 pictures.add(image)
             }
 

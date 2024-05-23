@@ -1,12 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.PropertyInfo">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" styleClass="mainPane" stylesheets="@../Style/Pane.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.PropertyInfo">
    <children>
-      <ImageView fx:id="image" fitHeight="150.0" fitWidth="200.0" layoutX="126.0" layoutY="94.0" pickOnBounds="true" preserveRatio="true" />
-      <Button layoutX="240.0" layoutY="181.0" mnemonicParsing="false" text="Button" />
+      <SplitPane dividerPositions="0.7414330218068536" layoutX="136.0" layoutY="118.0" orientation="VERTICAL" prefHeight="323.0" prefWidth="472.0" styleClass="informationPane">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="235.0" prefWidth="448.0">
+               <children>
+                  <ImageView fx:id="imgPrincipal" fitHeight="226.0" fitWidth="346.0" layoutX="62.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </AnchorPane>
+            <BorderPane prefHeight="200.0" prefWidth="200.0">
+               <top>
+                  <HBox fx:id="hboxImages" alignment="CENTER" focusTraversable="true" prefHeight="60.0" prefWidth="470.0" BorderPane.alignment="CENTER" />
+               </top>
+               <bottom>
+                  <ScrollBar fx:id="scrollImages" BorderPane.alignment="CENTER" />
+               </bottom>
+            </BorderPane>
+        </items>
+      </SplitPane>
+      <VBox alignment="CENTER" layoutX="827.0" layoutY="126.0" prefHeight="177.0" prefWidth="272.0" spacing="6.0" styleClass="informationPane">
+         <children>
+            <Text fx:id="lbPropertyAction" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+               <font>
+                  <Font name="System Bold" size="28.0" />
+               </font>
+            </Text>
+            <Text fx:id="lbPrice" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+               <font>
+                  <Font name="System Bold" size="26.0" />
+               </font>
+            </Text>
+            <Button mnemonicParsing="false" onAction="#modifyProperty" prefHeight="44.0" prefWidth="180.0" styleClass="btnPrincipal" stylesheets="@../Style/ButtonStyle.css" text="Actualizar detalles">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+         </children>
+         <padding>
+            <Insets bottom="5.0" />
+         </padding>
+      </VBox>
+      <AnchorPane layoutX="807.0" layoutY="335.0" prefHeight="113.0" prefWidth="312.0" styleClass="agencyInformation">
+         <children>
+            <Text layoutX="22.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Propiedas Xalapa Nueva Generación" />
+            <Text layoutX="22.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="info@PXalapaNG.com.mx" />
+            <Text layoutX="22.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2288557788" />
+            <ImageView fitHeight="50.0" fitWidth="57.0" layoutX="244.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Image/PXNG-removebg.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <Text fx:id="lbTitle" layoutX="102.0" layoutY="491.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="568.2799987792969">
+         <font>
+            <Font name="System Bold" size="40.0" />
+         </font>
+      </Text>
+      <Text fx:id="lbFullDescription" layoutX="110.0" layoutY="520.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="915.1300010681152">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>
