@@ -37,7 +37,7 @@
                   <Font name="System Bold" size="26.0" />
                </font>
             </Text>
-            <Button mnemonicParsing="false" onAction="#modifyProperty" prefHeight="44.0" prefWidth="180.0" styleClass="btnPrincipal" stylesheets="@../Style/ButtonStyle.css" text="Actualizar detalles">
+            <Button mnemonicParsing="false" onAction="#modifyProperty" prefHeight="44.0" prefWidth="180.0" styleClass="btnPrincipal" stylesheets="@../Style/ButtonStyle.css" text="Agendar visita">
                <font>
                   <Font size="18.0" />
                </font>
@@ -69,5 +69,6 @@
             <Font size="16.0" />
          </font>
       </Text>
+      <Button layoutX="34.0" layoutY="37.0" mnemonicParsing="false" onAction="#returnToList" styleClass="btnPrincipal" stylesheets="@../Style/ButtonStyle.css" text="Regresar" />
    </children>
 </AnchorPane>
