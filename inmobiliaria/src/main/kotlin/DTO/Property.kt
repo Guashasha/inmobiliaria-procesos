@@ -1,9 +1,6 @@
 package DTO
 
-import org.jetbrains.kotlinx.dataframe.DataFrame
-import org.jetbrains.kotlinx.dataframe.DataRow
-import org.jetbrains.kotlinx.dataframe.api.forEach
-import java.awt.Image
+import javafx.scene.image.Image
 import java.sql.ResultSet
 
 enum class PropertyState {available, occupied, suspended}
@@ -23,7 +20,7 @@ data class Property (
   val direction: String,
   val houseOwner: UInt,
   var action: PropertyAction,
-  val images: ArrayList<Image>?
+  var images: ArrayList<Image>?
 ) {
   fun isValid (): Boolean {
     return  this.title.isNotBlank() &&

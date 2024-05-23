@@ -9,6 +9,7 @@ dependencies {
     testImplementation(kotlin("test"))
     implementation("org.jetbrains.kotlinx:dataframe:0.13.1")
     implementation("org.mariadb.jdbc:mariadb-java-client:2.1.2")
+    implementation("org.openjfx:javafx-swing:11-ea+24")
 }
 
 plugins {

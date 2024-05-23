@@ -2,7 +2,6 @@ import DTO.Property
 import DTO.PropertyAction
 import DTO.PropertyState
 import DTO.PropertyType
-import DataAccess.DataBaseConnection
 import main.kotlin.DAO.PropertyDAO
 import main.kotlin.DAO.PropertyResult
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -70,7 +69,7 @@ class PropertyCUsTest {
         val resultProperty = dao.getByQuery("edificio ejecutivo de 4 pisos", PropertyType.building)
 
         if (resultProperty is PropertyResult.FoundList<*>) {
-            assertEquals(property, resultProperty.list.get(0))
+            assertEquals(property, resultProperty.list.last())
         }
         else {
             fail(resultProperty.message)
