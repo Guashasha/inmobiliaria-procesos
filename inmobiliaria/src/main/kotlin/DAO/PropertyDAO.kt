@@ -1,5 +1,6 @@
 package main.kotlin.DAO
 
+import DTO.HouseOwner
 import DTO.Property
 import DTO.PropertyType
 import DataAccess.DataBaseConnection
@@ -13,6 +14,7 @@ import java.sql.SQLException
 sealed class PropertyResult (val message: String) {
     class Success: PropertyResult("La operación se realizó correctamente")
     class Failure: PropertyResult("La operación no se pudo realizar")
+    class OwnerFound(val houseOwner: HouseOwner): PropertyResult("Se encontró el propietario")
     class FoundList<T>(val list: List<T>): PropertyResult("Se encontraron multiples propiedades")
     class Found(val property: Property): PropertyResult("Se encontró la propiedad")
     class NotFound: PropertyResult("La propiedad a buscar no existe")
@@ -165,6 +167,25 @@ class PropertyDAO {
             if (list.isNotEmpty()) {
                 PropertyResult.FoundList(list)
             } else {
+                PropertyResult.NotFound()
+            }
+        }
+        catch (error: SQLException) {
+            PropertyResult.DBError(error.message.toString())
+        }
+    }
+
+    fun getOwnerByEmail (email: String): PropertyResult {
+        return try {
+            val query = dbConnection.prepareStatement("""SELECT * FROM houseOwner WHERE email="?";""")
+            query.setString(1, email)
+
+            val result = query.executeQuery();
+
+            return if (result.next()) {
+                PropertyResult.OwnerFound(HouseOwner.fromResultSet(result))
+            }
+            else {
                 PropertyResult.NotFound()
             }
         }

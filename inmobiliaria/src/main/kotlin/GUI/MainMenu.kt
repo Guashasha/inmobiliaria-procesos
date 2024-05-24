@@ -47,8 +47,27 @@ class MainMenu {
         }
     }
 
-    fun openScheduleVisit () {
+    fun openAddProperty () {
+        val fxmlLoader = FXMLLoader(javaClass.getResource("/FXML/AddProperty.fxml"))
+        var bpAddProperty : BorderPane? = null
+        try {
+            bpAddProperty = fxmlLoader.load()
+        }
+        catch (error : IOException) {
+            PopUpAlert.showAlert("Error al cargar la ventana de registro", Alert.AlertType.WARNING)
+        }
+        if (bpAddProperty != null) {
+            val propertyListController = fxmlLoader.getController<AddProperty>()
+            this.lbHeader.text = "Lista de propiedades"
+            this.bpMain.center = bpAddProperty
+            val stage = bpMain.scene.window as Stage
+            propertyListController.initialize(mainAnchorPaneMenu, bpMain, lbHeader)
+            stage.title = "Lista propiedades"
+        }
+    }
 
+    fun openScheduleVisit () {
+        // TODO
     }
 
     fun openEditProfile () {
