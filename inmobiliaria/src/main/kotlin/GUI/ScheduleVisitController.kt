@@ -2,48 +2,42 @@ package GUI
 
 import DAO.VisitDAO
 import DAO.VisitResult
-import javafx.application.Application
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
-import javafx.scene.Parent
-import javafx.scene.Scene
 import javafx.scene.control.Alert
 import javafx.scene.control.Alert.AlertType
 import javafx.scene.control.DatePicker
+import javafx.scene.control.Label
 import javafx.scene.layout.BorderPane
 import javafx.scene.layout.GridPane
-import javafx.stage.Stage
+import javafx.scene.layout.Pane
 import main.kotlin.DTO.Visit
+import org.checkerframework.checker.guieffect.qual.UI
 import java.io.IOException
 import java.sql.Date
 import java.time.LocalDate
 
-fun main (args: Array<String>) {
-    Application.launch(ScheduleVisitController::class.java)
-}
+class ScheduleVisitController {
+    private lateinit var bpMain: BorderPane
+    private lateinit var lastPane: Pane
+    private lateinit var lbHeader: Label
+    private var propertyId : UInt = 0U
+    private var clientId : UInt = 0U
 
-class ScheduleVisitController : Application() {
     @FXML lateinit var gpSchedule : GridPane
     @FXML lateinit var dpDate : DatePicker
-    var propertyId : UInt = 1U
-    var clientId : UInt = 1U
-    override fun start (primaryStage: Stage) {
-        try {
-            val parent: Parent? = FXMLLoader.load<Parent>(javaClass.getResource("/FXML/ScheduleVisit.fxml"))
 
-            primaryStage.run {
-                title = "Agendar visita"
-                scene = Scene(parent)
-                show()
-            }
-        }
-        catch (error: IOException) {
-            throw RuntimeException(error)
-        }
+    fun initialize (bpMain: BorderPane, lastPane: Pane, lbHeader: Label, propertyId: UInt, clientId: UInt) {
+        this.bpMain = bpMain
+        this.lastPane = lastPane
+        this.lbHeader = lbHeader
+        this.propertyId = propertyId
+        this.clientId = clientId
     }
 
     @FXML fun salir () {
-
+        this.lbHeader.text = "Información de propiedad"
+        this.bpMain.center = lastPane
     }
 
     @FXML fun searchSchedule () {

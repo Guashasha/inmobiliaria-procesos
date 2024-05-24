@@ -14,24 +14,19 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #CDC9FF;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ScheduleVisitController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #CDC9FF;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ScheduleVisitController">
    <center>
       <BorderPane prefHeight="571.0" prefWidth="800.0" BorderPane.alignment="CENTER">
          <top>
-            <HBox alignment="CENTER_LEFT" prefHeight="66.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+            <HBox alignment="CENTER_LEFT" prefHeight="173.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#salir" prefHeight="40.0" prefWidth="72.0" style="-fx-background-color: #8F57BB;" text="Salir" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
+                  <BorderPane prefHeight="153.0" prefWidth="585.0" style="-fx-background-color: #AFA9F3; -fx-background-radius: 20;">
                      <HBox.margin>
-                        <Insets left="10.0" right="10.0" />
-                     </HBox.margin>
-                  </Button>
-                  <BorderPane prefHeight="118.0" prefWidth="222.0" />
-                  <BorderPane prefHeight="78.0" prefWidth="282.0" style="-fx-background-color: rgba(255, 255, 255, 0.6); -fx-background-radius: 20;">
+                        <Insets bottom="10.0" left="10.0" right="60.0" top="10.0" />
+                     </HBox.margin></BorderPane>
+                  <BorderPane prefHeight="94.0" prefWidth="283.0" style="-fx-background-color: rgba(255, 255, 255, 0.6); -fx-background-radius: 20;">
                      <HBox.margin>
-                        <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
+                        <Insets bottom="20.0" left="60.0" right="20.0" top="60.0" />
                      </HBox.margin>
                      <right>
                         <ImageView fitHeight="51.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER_LEFT">
@@ -70,12 +65,15 @@
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
+                     <HBox.margin>
+                        <Insets top="60.0" />
+                     </HBox.margin>
                   </Button>
                </children>
             </HBox>
          </top>
          <bottom>
-            <GridPane fx:id="gpSchedule" alignment="CENTER" prefHeight="328.0" prefWidth="779.0" BorderPane.alignment="CENTER">
+            <GridPane fx:id="gpSchedule" alignment="CENTER" prefHeight="269.0" prefWidth="1000.0" style="-fx-background-color: #AFA9F3; -fx-background-radius: 20;" BorderPane.alignment="CENTER">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="391.5999755859375" minWidth="10.0" prefWidth="391.5999755859375" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="398.0" minWidth="10.0" prefWidth="388.4000244140625" />
@@ -90,12 +88,12 @@
                   <Insets />
                </opaqueInsets>
                <BorderPane.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  <Insets bottom="80.0" left="80.0" right="80.0" />
                </BorderPane.margin>
             </GridPane>
          </bottom>
          <center>
-            <Label prefHeight="50.0" prefWidth="259.0" text="Horarios disponibles" BorderPane.alignment="CENTER">
+            <Label prefHeight="45.0" prefWidth="259.0" text="Horarios disponibles" BorderPane.alignment="CENTER">
                <font>
                   <Font name="Franklin Gothic Book" size="30.0" />
                </font>
@@ -104,13 +102,25 @@
       </BorderPane>
    </center>
    <top>
-      <Label alignment="CENTER" prefHeight="75.0" prefWidth="800.0" style="-fx-background-color: #BDB7FF;" text="Agendar Visita a la propiedad" BorderPane.alignment="CENTER">
-         <font>
-            <Font name="Franklin Gothic Demi" size="35.0" />
-         </font>
+      <HBox alignment="CENTER" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets />
          </BorderPane.margin>
-      </Label>
+         <children>
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#salir" prefHeight="40.0" prefWidth="78.0" style="-fx-background-color: #8F57BB;" text="Salir" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </HBox.margin>
+            </Button>
+            <Label alignment="CENTER" prefHeight="82.0" prefWidth="1087.0" text="Agendar Visita a la propiedad">
+               <font>
+                  <Font name="Franklin Gothic Demi" size="35.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
    </top>
 </BorderPane>

@@ -48,7 +48,7 @@ class MainMenu {
     }
 
     fun openScheduleVisit () {
-        //todo
+
     }
 
     fun openEditProfile () {
