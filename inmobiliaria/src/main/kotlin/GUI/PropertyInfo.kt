@@ -67,7 +67,7 @@ class PropertyInfo {
 
         property.images = when (result) {
             is PropertyResult.DBError -> {
-                PopUpAlert.showAlert(result.message, Alert.AlertType.ERROR)
+                PopUpAlert.showAlert("No se pudo conectar con la base de datos, intente de nuevo más tarde", Alert.AlertType.ERROR)
                 null
             }
             is PropertyResult.FoundList<*> -> {

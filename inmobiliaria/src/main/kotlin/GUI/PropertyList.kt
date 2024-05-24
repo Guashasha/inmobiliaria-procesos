@@ -14,6 +14,7 @@ import javafx.scene.Scene
 import javafx.scene.control.Alert
 import javafx.scene.control.Button
 import javafx.scene.control.Label
+import javafx.scene.image.Image
 import javafx.scene.image.ImageView
 import javafx.scene.layout.*
 import javafx.scene.text.Text
@@ -27,15 +28,14 @@ fun main (args: Array<String>) {
 }
 
 class PropertyList : Application() {
-    private lateinit var mainPane: BorderPane
     private lateinit var mainAnchorPaneMenu: AnchorPane
     private lateinit var account: Account
     private lateinit var lbHeader: Label
+    lateinit var bpMain: BorderPane
 
     @FXML
     lateinit var vboxProperties: VBox
 
-    lateinit var bpMain: BorderPane
     private val query: String? = null
     private val propertyType: PropertyType = PropertyType.all
 
@@ -63,14 +63,26 @@ class PropertyList : Application() {
         setProperties()
     }
 
+    private fun getImages (property: Property) {
+        val dao = PropertyDAO()
+        val result = dao.getImages(property.id!!)
+
+        property.images = when (result) {
+            is PropertyResult.FoundList<*> -> result.list as ArrayList<Image>
+            else -> null
+        }
+    }
+
     private fun setProperties () {
         val properties = getProperties()
 
         for (property in properties) {
             val pane = HBox()
             pane.spacing = 20.0
-            
+
+            getImages(property)
             val image = ImageView()
+            image.image = property.images?.first()
 
             val info = VBox()
             info.spacing = 10.0
@@ -94,7 +106,7 @@ class PropertyList : Application() {
                 }
             }
 
-            pane.children.addAll(info, infoPrice, details)
+            pane.children.addAll(image, info, infoPrice, details)
 
             vboxProperties.children.add(pane)
         }
