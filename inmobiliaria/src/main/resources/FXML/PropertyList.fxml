@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="bpMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.PropertyList">
-   <top>
-      <HBox prefHeight="82.0" prefWidth="1200.0" styleClass="informationPane" stylesheets="@../Style/Pane.css" BorderPane.alignment="CENTER" />
-   </top>
+<BorderPane fx:id="bpMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" styleClass="mainPane" stylesheets="@../Style/Pane.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.PropertyList">
    <center>
       <VBox fx:id="vboxProperties" prefHeight="200.0" prefWidth="100.0" spacing="20.0" styleClass="mainPane" stylesheets="@../Style/Pane.css" BorderPane.alignment="CENTER" />
    </center>
+   <top>
+      <Button mnemonicParsing="false" onAction="#returnToList" styleClass="btnPrincipal" stylesheets="@../Style/ButtonStyle.css" text="Regresar" BorderPane.alignment="TOP_LEFT">
+         <BorderPane.margin>
+            <Insets left="10.0" top="10.0" />
+         </BorderPane.margin>
+      </Button>
+   </top>
 </BorderPane>

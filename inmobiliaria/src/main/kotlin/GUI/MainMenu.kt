@@ -15,7 +15,6 @@ import java.io.IOException
 class MainMenu {
     private lateinit var account: Account
     private lateinit var bpMain: BorderPane
-    private lateinit var pnMain: Pane
     private lateinit var lbHeader: Label
     @FXML
     private lateinit var mainAnchorPaneMenu: AnchorPane

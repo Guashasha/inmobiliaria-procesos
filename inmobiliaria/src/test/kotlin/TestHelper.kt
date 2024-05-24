@@ -17,6 +17,8 @@ class TestHelper {
             addQuery()
             addSearch()
             addVisit()
+
+            dbConnection.close()
         }
 
         private fun addHouseOwners () {
@@ -26,6 +28,7 @@ class TestHelper {
         private fun addAccounts () {
             dbConnection.prepareStatement("""insert into account (name, type, email, phone, password) values ("pale molina", "client", "pale@hotmail.com", "2255447788", "habitacionDeVuelo");""").execute()
             dbConnection.prepareStatement("""insert into account (name, type, email, phone, password) values ("fer molina", "agent", "fer@hotmail.com", "2255447788", "habitacionDeVuelo2");""").execute()
+            dbConnection.prepareStatement("""insert into account (name, type, email, phone, password) values ("david carrion", "agent", "david@hotmail.com", "2554445555", "contrasena")""").execute()
         }
 
         private fun addProperties () {
@@ -39,6 +42,7 @@ class TestHelper {
         }
 
         private fun addQuery () {
+            dbConnection.prepareStatement("""insert into query () values ();""")
         }
 
         private fun addSearch () {

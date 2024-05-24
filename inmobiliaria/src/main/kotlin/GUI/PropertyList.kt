@@ -1,6 +1,7 @@
 package GUI
 
 import DTO.Account
+import DTO.AccountType
 import DTO.Property
 import DTO.PropertyType
 import GUI.Utility.PopUpAlert
@@ -13,6 +14,7 @@ import javafx.scene.Scene
 import javafx.scene.control.Alert
 import javafx.scene.control.Button
 import javafx.scene.control.Label
+import javafx.scene.image.ImageView
 import javafx.scene.layout.*
 import javafx.scene.text.Text
 import javafx.stage.Stage
@@ -29,12 +31,13 @@ class PropertyList : Application() {
     private lateinit var mainAnchorPaneMenu: AnchorPane
     private lateinit var account: Account
     private lateinit var lbHeader: Label
+
     @FXML
     lateinit var vboxProperties: VBox
 
     lateinit var bpMain: BorderPane
-    val query: String? = null
-    val propertyType: PropertyType = PropertyType.all
+    private val query: String? = null
+    private val propertyType: PropertyType = PropertyType.all
 
     override fun start(primaryStage: Stage) {
         try {
@@ -60,13 +63,14 @@ class PropertyList : Application() {
         setProperties()
     }
 
-    fun setProperties () {
+    private fun setProperties () {
         val properties = getProperties()
 
         for (property in properties) {
             val pane = HBox()
             pane.spacing = 20.0
-            //val image = ImageView()
+            
+            val image = ImageView()
 
             val info = VBox()
             info.spacing = 10.0
@@ -83,20 +87,9 @@ class PropertyList : Application() {
             val details = Button("Ver detalles")
             details.setOnAction {
                 run {
-                    val fxmlLoader = FXMLLoader(javaClass.getResource("/FXML/PropertyInfo.fxml"))
-                    var pnPropertyInfo: Pane? = null
-
-                    try {
-                        pnPropertyInfo = fxmlLoader.load()
-                    } catch (error: IOException) {
-                        PopUpAlert.showAlert("Error al cargar la ventana de información", Alert.AlertType.WARNING)
-                    }
-                    if (pnPropertyInfo != null) {
-                        val propertyInfoController = fxmlLoader.getController<PropertyInfo>()
-                        //this.bpMain.center = pnPropertyInfo
-                        val stage = bpMain.scene.window as Stage
-                        //propertyInfoController.initialize(bpMain, )
-                        stage.title = "Información de propiedades"
+                    when (account.type) {
+                        AccountType.CLIENT -> openPropertyInfo(property)
+                        AccountType.AGENT -> openAdminPropertyInfo(property)
                     }
                 }
             }
@@ -107,7 +100,32 @@ class PropertyList : Application() {
         }
     }
 
-    fun getProperties (): ArrayList<Property> {
+    private fun openPropertyInfo (property: Property) {
+        val fxmlLoader = FXMLLoader(javaClass.getResource("/FXML/PropertyInfo.fxml"))
+        var bpPropertyList : AnchorPane? = null
+
+        try {
+            bpPropertyList = fxmlLoader.load()
+        }
+        catch (error : IOException) {
+            PopUpAlert.showAlert("Error al cargar la ventana de información", Alert.AlertType.WARNING)
+        }
+
+        if (bpPropertyList != null) {
+            val propertyInfoController = fxmlLoader.getController<PropertyInfo>()
+            this.lbHeader.text = "Información de propiedad"
+            this.bpMain.center = bpPropertyList
+            val stage = bpMain.scene.window as Stage
+            propertyInfoController.initialize(bpMain, mainAnchorPaneMenu, account, lbHeader, property)
+            stage.title = "Información de propiedad"
+        }
+    }
+
+    private fun openAdminPropertyInfo (property: Property) {
+
+    }
+
+    private fun getProperties (): ArrayList<Property> {
         val dao = PropertyDAO()
         val result = dao.getByQuery(query?: "", propertyType)
 
@@ -117,5 +135,10 @@ class PropertyList : Application() {
         }
 
         return list
+    }
+
+    fun returnToList () {
+        this.lbHeader.text = "Lista de propiedades"
+        this.bpMain.center = mainAnchorPaneMenu
     }
 }
