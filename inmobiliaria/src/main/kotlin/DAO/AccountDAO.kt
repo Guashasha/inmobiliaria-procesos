@@ -53,17 +53,20 @@ class AccountDAO {
         else if (account.id == null) {
             return AccountResult.NotFound()
         }
+        val emailResult = getByEmail(account.email)
+        if (emailResult is AccountResult.Found) {
+            return AccountResult.Failure()
+        }
 
         return try {
             val query =
-                dbConnection.prepareStatement("UPDATE account SET name=?, type=?, email=?, phone=?, password=? where id=?;")
+                dbConnection.prepareStatement("UPDATE account SET name=?, type=?, email=?, phone=? where id=?;")
 
             query.setString(1, account.name)
             query.setString(2, account.type.toString())
             query.setString(3, account.email)
             query.setString(4, account.phone)
-            query.setString(5, account.password)
-            query.setInt(6, account.id.toInt())
+            query.setInt(5, account.id.toInt())
 
             if (query.executeUpdate() > 0) {
                 AccountResult.Success()

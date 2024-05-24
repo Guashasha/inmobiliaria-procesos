@@ -16,7 +16,7 @@
             <Font name="Arial Rounded MT Bold" size="32.0" />
          </font>
       </Label>
-      <Pane layoutX="36.0" layoutY="39.0" prefHeight="50.0" prefWidth="50.0">
+      <Pane layoutX="36.0" layoutY="39.0" onMouseClicked="#backArrow" prefHeight="50.0" prefWidth="50.0">
          <children>
             <Circle fill="#928be4" layoutX="25.0" layoutY="25.0" radius="25.0" stroke="BLACK" strokeType="INSIDE" />
             <ImageView fitHeight="31.0" fitWidth="47.0" layoutX="-10.0" layoutY="10.0" pickOnBounds="true" rotate="270.0" x="10.0">
@@ -28,12 +28,7 @@
       </Pane>
       <Pane layoutX="36.0" layoutY="109.0" prefHeight="495.0" prefWidth="1089.0" styleClass="informationPane" stylesheets="@../Style/Pane.css">
          <children>
-            <Label layoutX="76.0" layoutY="44.0" text="Nombre">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="16.0" />
-               </font>
-            </Label>
-            <Label layoutX="499.0" layoutY="44.0" text="Apellidos">
+            <Label layoutX="76.0" layoutY="44.0" text="Nombre completo">
                <font>
                   <Font name="Arial Rounded MT Bold" size="16.0" />
                </font>
@@ -48,11 +43,10 @@
                   <Font name="Arial Rounded MT Bold" size="16.0" />
                </font>
             </Label>
-            <TextField fx:id="tfName" layoutX="70.0" layoutY="102.0" promptText="Nombre" styleClass="textFieldDataAccount" stylesheets="@../Style/Pane.css" />
-            <TextField fx:id="tfLastName" layoutX="497.0" layoutY="102.0" prefHeight="51.0" prefWidth="560.0" promptText="Apellidos" styleClass="textFieldDataAccount" stylesheets="@../Style/Pane.css" />
-            <TextField fx:id="tfPassword" layoutX="67.0" layoutY="248.0" promptText="2288557788" styleClass="textFieldDataAccount" />
+            <TextField fx:id="tfName" layoutX="70.0" layoutY="102.0" prefHeight="51.0" prefWidth="986.0" promptText="Nombre completo" styleClass="textFieldDataAccount" stylesheets="@../Style/Pane.css" />
+            <TextField fx:id="tfNumber" layoutX="67.0" layoutY="248.0" promptText="2288557788" styleClass="textFieldDataAccount" />
             <TextField fx:id="tfEmail" layoutX="497.0" layoutY="248.0" prefHeight="51.0" prefWidth="560.0" promptText="correo@ejemplo.com" styleClass="textFieldDataAccount" />
-            <Button layoutX="669.0" layoutY="383.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="176.0" styleClass="btnPrincipal" stylesheets="@../Style/ButtonStyle.css" text="Guardar cambios">
+            <Button layoutX="669.0" layoutY="383.0" mnemonicParsing="false" onAction="#HandleSave" prefHeight="47.0" prefWidth="176.0" styleClass="btnPrincipal" stylesheets="@../Style/ButtonStyle.css" text="Guardar cambios">
                <font>
                   <Font size="16.0" />
                </font></Button>
