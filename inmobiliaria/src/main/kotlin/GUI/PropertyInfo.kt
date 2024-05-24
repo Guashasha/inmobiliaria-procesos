@@ -21,6 +21,7 @@ class PropertyInfo {
     private lateinit var originalPane: Pane
     private lateinit var account: Account
     private lateinit var lbHeader: Label
+
     @FXML
     private lateinit var hboxImages: HBox
     @FXML
@@ -34,24 +35,15 @@ class PropertyInfo {
     @FXML
     private lateinit var lbPrice: Text
 
-    private var propertyId: UInt? = 1u
-        set (value) {
-            if (value != null) {
-                field = if (value < 1u) {
-                    null
-                } else {
-                    value
-                }
-            }
-        }
+    private lateinit var property: Property
 
-    private var property: Property? = null
-
-    fun initialize(mainPane: BorderPane, originalPane: Pane, account: Account, lbHeader : Label) {
+    fun initialize(mainPane: BorderPane, originalPane: Pane, account: Account, lbHeader : Label, property: Property) {
         this.mainPane = mainPane
         this.originalPane = originalPane
         this.account= account
         this.lbHeader = lbHeader
+        this.property = property
+
         setPropertyData()
     }
 
@@ -59,27 +51,21 @@ class PropertyInfo {
         print("crear ventana de modificación")
     }
 
+    fun returnToList () {
+        this.lbHeader.text = "Lista de propiedades"
+        this.mainPane.center = originalPane
+    }
+
     private fun getPropertyData () {
         val dao = PropertyDAO()
 
-        if (propertyId == null) {
-            PopUpAlert.showAlert("No se puede realizar la operación, intente recargar la aplicación.", Alert.AlertType.ERROR)
+        if (property.id == null) {
             return
         }
 
-        var result = dao.getById(propertyId!!)
+        val result = dao.getImages(property.id!!)
 
-        when (result) {
-            is PropertyResult.DBError -> PopUpAlert.showAlert(result.message, Alert.AlertType.ERROR)
-            is PropertyResult.Found -> this.property = result.property
-            is PropertyResult.NotFound -> PopUpAlert.showAlert(result.message, Alert.AlertType.INFORMATION)
-            is PropertyResult.WrongProperty -> PopUpAlert.showAlert(result.message, Alert.AlertType.WARNING)
-            else -> PopUpAlert.showAlert("Ocurrió un error inesperado al recuperar la información de la propiedad.", Alert.AlertType.ERROR)
-        }
-
-        result = dao.getImages(propertyId!!)
-
-        property?.images = when (result) {
+        property.images = when (result) {
             is PropertyResult.DBError -> {
                 PopUpAlert.showAlert(result.message, Alert.AlertType.ERROR)
                 null
@@ -106,17 +92,13 @@ class PropertyInfo {
     private fun setPropertyData () {
         getPropertyData()
 
-        if (property == null) {
-            return
-        }
+        imgPrincipal.image = property.images?.first()
 
-        imgPrincipal.image = property?.images?.first()
+        lbTitle.text = property.title
+        lbFullDescription.text = property.fullDescription
+        lbPrice.text = property.price.toString()
 
-        lbTitle.text = property?.title ?: "No titulo"
-        lbFullDescription.text = property?.fullDescription ?: "No descripción"
-        lbPrice.text = property?.price.toString()
-
-        lbPropertyAction.text = when (property!!.action) {
+        lbPropertyAction.text = when (property.action) {
             PropertyAction.sell -> "venta"
             PropertyAction.rent -> "renta"
         }.toString()
