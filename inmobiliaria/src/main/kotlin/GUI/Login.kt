@@ -133,11 +133,12 @@ class Login : Application() {
 
     private fun openMainMenu () {
         val fxmlLoader = FXMLLoader(javaClass.getResource("/FXML/MainMenu.fxml"))
-        var aPaneMainMenu  : AnchorPane? = null
+        var aPaneMainMenu  : Pane? = null
         try {
             aPaneMainMenu = fxmlLoader.load()
         }
         catch (error: IOException) {
+            print(error.message)
             PopUpAlert.showAlert("Error al cargar la ventana principal", Alert.AlertType.WARNING)
         }
         if (aPaneMainMenu != null) {

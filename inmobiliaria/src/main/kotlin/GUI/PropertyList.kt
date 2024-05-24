@@ -28,7 +28,7 @@ fun main (args: Array<String>) {
 }
 
 class PropertyList : Application() {
-    private lateinit var mainAnchorPaneMenu: AnchorPane
+    private lateinit var mainAnchorPaneMenu: Pane
     private lateinit var account: Account
     private lateinit var lbHeader: Label
     lateinit var bpMain: BorderPane
@@ -36,8 +36,8 @@ class PropertyList : Application() {
     @FXML
     lateinit var vboxProperties: VBox
 
-    private val query: String? = null
-    private val propertyType: PropertyType = PropertyType.all
+    private var query: String? = null
+    private var propertyType: PropertyType = PropertyType.all
 
     override fun start(primaryStage: Stage) {
         try {
@@ -55,11 +55,14 @@ class PropertyList : Application() {
         }
     }
 
-    fun initialize (bpMain: BorderPane,  mainAnchorPaneMenu: AnchorPane, account: Account, lbHeader: Label) {
+    fun initialize (bpMain: BorderPane, mainAnchorPaneMenu: Pane, account: Account, lbHeader: Label, query: String, propertyType: PropertyType) {
         this.bpMain = bpMain
         this.mainAnchorPaneMenu = mainAnchorPaneMenu
         this.account = account
         this.lbHeader = lbHeader
+        this.query = query
+        this.propertyType = propertyType
+
         setProperties()
     }
 
