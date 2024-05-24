@@ -31,7 +31,7 @@ class AddProperty {
     @FXML
     private lateinit var tfShortDescription: TextField
     @FXML
-    private lateinit var tfFullDescription: TextField
+    private lateinit var tfFullDescription: TextArea
     @FXML
     private lateinit var tfDirection: TextField
     @FXML

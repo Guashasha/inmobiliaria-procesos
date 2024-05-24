@@ -16,7 +16,7 @@ import java.io.IOException
 
 class MainMenu {
     private lateinit var account: Account
-    private lateinit var bpMain: BorderPane
+    private lateinit var bpMain: Pane
     private lateinit var lbHeader: Label
 
     @FXML
@@ -58,11 +58,12 @@ class MainMenu {
 
     fun openAddProperty () {
         val fxmlLoader = FXMLLoader(javaClass.getResource("/FXML/AddProperty.fxml"))
-        var bpAddProperty : BorderPane? = null
+        var bpAddProperty : Pane? = null
         try {
             bpAddProperty = fxmlLoader.load()
         }
         catch (error : IOException) {
+            print(error.message)
             PopUpAlert.showAlert("Error al cargar la ventana de registro", Alert.AlertType.WARNING)
         }
         if (bpAddProperty != null) {
