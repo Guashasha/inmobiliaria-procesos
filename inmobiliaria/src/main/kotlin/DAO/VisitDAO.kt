@@ -1,19 +1,14 @@
 package DAO
 
-import DTO.Property
 import DataAccess.DataBaseConnection
-import main.kotlin.DAO.PropertyResult
 import main.kotlin.DTO.Visit
-import org.checkerframework.checker.guieffect.qual.UI
 import java.sql.Date
 import java.sql.SQLException
-import java.sql.Time
 
 sealed class VisitResult (val message: String) {
     class Success: VisitResult("La operación se realizó correctamente")
     class Failure: VisitResult("La operación no se pudo realizar")
     class FoundList(val visits: List<Visit>): VisitResult("Se encontraron multiples visitas")
-    class Found(val visit: Visit): VisitResult("Se encontró la visita buscada")
     class NotFound: VisitResult("La visita a buscar no existe")
     class DBError(private val errorMessage: String): VisitResult(errorMessage)
     class WrongVisit: VisitResult("Los datos de la visita son incorrectos")
@@ -47,7 +42,7 @@ class VisitDAO {
         if (!visit.isValidForAdd()) return VisitResult.Failure()
 
         return try {
-            val query = dbConnection.prepareStatement("INSERT INTO visit (clientId,propertyId,DATE,TIME) VALUES (?,?,?,?)")
+            val query = dbConnection.prepareStatement("INSERT INTO visit (clientId,propertyId,date,time) VALUES (?,?,?,?)")
             query.setInt(1,visit.clientId.toInt())
             query.setInt(2,visit.propertyId.toInt())
             query.setDate(3,visit.date)
@@ -59,8 +54,4 @@ class VisitDAO {
             VisitResult.DBError(error.message.toString())
         }
     }
-    // fun modify (visit: Visit): VisitResult {}
-    // fun getById (visitId: UInt): VisitResult {}
-    // fun getAll (): VisitResult {}
-    // fun delete (visitId: UInt): VisitResult {}
 }

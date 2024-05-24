@@ -12,7 +12,6 @@ import javafx.scene.layout.BorderPane
 import javafx.scene.layout.GridPane
 import javafx.scene.layout.Pane
 import main.kotlin.DTO.Visit
-import org.checkerframework.checker.guieffect.qual.UI
 import java.io.IOException
 import java.sql.Date
 import java.time.LocalDate
@@ -68,6 +67,10 @@ class ScheduleVisitController {
         var row = 0
         gpSchedule.children.clear()
 
+        if (availableSchedule.isEmpty()) {
+            showAlert("Ya no quedan más horarios disponibles para esta fecha",AlertType.INFORMATION)
+        }
+
         for (time in availableSchedule) {
             val fxmlLoader = FXMLLoader(javaClass.getResource("/FXML/ScheduleVisitItem.fxml"))
 
@@ -96,6 +99,6 @@ class ScheduleVisitController {
     private fun showAlert (message : String, type : AlertType) {
         val alert = Alert(type)
         alert.contentText = message
-        alert.show()
+        alert.showAndWait()
     }
 }
