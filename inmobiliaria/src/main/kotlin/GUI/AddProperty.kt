@@ -2,7 +2,12 @@ package GUI
 
 import DTO.*
 import GUI.Utility.PopUpAlert
+import javafx.application.Application
+import javafx.application.Application.launch
 import javafx.fxml.FXML
+import javafx.fxml.FXMLLoader
+import javafx.scene.Parent
+import javafx.scene.Scene
 import javafx.scene.control.*
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
@@ -14,11 +19,12 @@ import javafx.stage.Stage
 import main.kotlin.DAO.PropertyDAO
 import main.kotlin.DAO.PropertyResult
 import java.io.File
+import java.io.IOException
 
-class AddProperty {
-    private lateinit var lastWindow: Pane
-    private lateinit var lbHeader: Label
-    private lateinit var bpMain: BorderPane
+fun main (args: Array<String>) {
+    launch(AddProperty::class.java)
+}
+class AddProperty : Application() {
 
     var propertyImages = ArrayList<File>()
 
@@ -41,19 +47,31 @@ class AddProperty {
     @FXML
     private lateinit var pnImages: GridPane
 
-    fun initialize (lastWindow: Pane, bpMain: BorderPane, lbHeader: Label) {
-        this.bpMain = bpMain
-        this.lastWindow = lastWindow
-        this.lbHeader = lbHeader
+    override fun start(primaryStage: Stage) {
+        try {
+            val parent: Parent? = FXMLLoader.load<Parent>(javaClass.getResource("/FXML/AddProperty.fxml"))
+
+            primaryStage.run {
+                title = "Todas las propiedades"
+
+                scene = Scene(parent)
+                show()
+            }
+        }
+        catch (error: IOException) {
+            throw RuntimeException(error)
+        }
+    }
+
+
+    fun initialize () {
 
         cbPropertyType.items.addAll(PropertyType.house, PropertyType.building, PropertyType.premises, PropertyType.apartment)
         cbPropertyAction.items.addAll(PropertyAction.sell, PropertyAction.rent)
     }
 
-    fun returnToMainMenu () {
-        this.lbHeader.text = "Menu principal"
-        this.bpMain.center = lastWindow
-    }
+    fun returnToMainMenu(){}
+
 
     fun addImage () {
         val chooser = FileChooser()
@@ -133,7 +151,6 @@ class AddProperty {
             }
             is PropertyResult.WrongProperty -> {
                 PopUpAlert.showAlert("Los datos ingresados para la propiedad son incorrectos, verifiquelos e intente de nuevo", Alert.AlertType.WARNING)
-                returnToMainMenu()
                 return
             }
             else -> {
@@ -191,8 +208,7 @@ class AddProperty {
                 tfFullDescription.text.isBlank() &&
                 tfDirection.text.isBlank() &&
                 tfPrice.text.isBlank() &&
-                tfOwnerEmail.text.isBlank() &&
-                pnImages.children.isEmpty()
+                tfOwnerEmail.text.isBlank()
     }
 
     private fun wrongFieldsValues (): Boolean {

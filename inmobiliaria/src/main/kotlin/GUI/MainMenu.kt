@@ -30,7 +30,7 @@ class MainMenu {
 
 
     fun openProperties () {
-        val fxmlLoader = FXMLLoader(javaClass.getResource("/FXML/PropertyList.fxml"))
+        val fxmlLoader = FXMLLoader(javaClass.getResource("/FXML/AddProperty.fxml"))
         var bpPropertyList : BorderPane? = null
         try {
             bpPropertyList = fxmlLoader.load()
@@ -39,11 +39,11 @@ class MainMenu {
             PopUpAlert.showAlert("Error al cargar la ventana de registro", Alert.AlertType.WARNING)
         }
         if (bpPropertyList != null) {
-            val propertyListController = fxmlLoader.getController<PropertyList>()
+            val propertyListController = fxmlLoader.getController<AddProperty>()
             this.lbHeader.text = "Lista de propiedades"
             this.bpMain.center = bpPropertyList
             val stage = bpMain.scene.window as Stage
-            propertyListController.initialize(bpMain, mainAnchorPaneMenu, account, lbHeader, "", PropertyType.all)
+            //propertyListController.initialize(mainAnchorPaneMenu, bpMain, lbHeader)
             stage.title = "Lista propiedades"
         }
     }
