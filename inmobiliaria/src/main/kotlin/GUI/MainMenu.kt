@@ -1,14 +1,12 @@
 package GUI
 
 import DTO.Account
+import DTO.AccountType
 import DTO.PropertyType
 import GUI.Utility.PopUpAlert
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
-import javafx.scene.control.Alert
-import javafx.scene.control.ComboBox
-import javafx.scene.control.Label
-import javafx.scene.control.TextField
+import javafx.scene.control.*
 import javafx.scene.layout.BorderPane
 import javafx.scene.layout.Pane
 import javafx.stage.Stage
@@ -25,6 +23,8 @@ class MainMenu {
     private lateinit var cbPropertyType: ComboBox<String>
     @FXML
     private lateinit var tfSearchQuery: TextField
+    @FXML
+    private lateinit var btnAgregarPropiedad: Button
 
 
     fun initialize(bpMain: BorderPane, account: Account, lbHeader: Label) {
@@ -34,6 +34,10 @@ class MainMenu {
 
         cbPropertyType.items.addAll(PropertyType.all.toString(), PropertyType.building.toString(), PropertyType.house.toString(), PropertyType.apartment.toString(), PropertyType.premises.toString())
         cbPropertyType.value = PropertyType.all.toString()
+
+        if (account.type == AccountType.CLIENT) {
+            btnAgregarPropiedad.isVisible = false
+        }
     }
 
     fun openProperties () {

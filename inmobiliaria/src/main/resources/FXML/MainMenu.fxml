@@ -19,7 +19,7 @@
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
             <ComboBox fx:id="cbPropertyType" prefWidth="150.0" />
             <Button mnemonicParsing="false" onAction="#openProperties" styleClass="btnPrincipal" stylesheets="@../Style/ButtonStyle.css" text="Buscar propiedades" />
-            <Button mnemonicParsing="false" onAction="#openAddProperty" styleClass="btnSecondary" stylesheets="@../Style/ButtonStyle.css" text="Agregar propiedad" />
+            <Button fx:id="btnAgregarPropiedad" mnemonicParsing="false" onAction="#openAddProperty" styleClass="btnSecondary" stylesheets="@../Style/ButtonStyle.css" text="Agregar propiedad" />
          </children>
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
