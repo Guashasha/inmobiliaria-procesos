@@ -143,7 +143,7 @@ class Login : Application() {
         }
         if (aPaneMainMenu != null) {
             val mainMenuController = fxmlLoader.getController<MainMenu>()
-            this.lbHeader.text = "Menu principal"
+            this.lbHeader.text = "Propiedades Xalapa Nueva Generación"
             this.bpMain.center = aPaneMainMenu
             val stage = bpMain.scene.window as Stage
             mainMenuController.initialize(bpMain, account, lbHeader)

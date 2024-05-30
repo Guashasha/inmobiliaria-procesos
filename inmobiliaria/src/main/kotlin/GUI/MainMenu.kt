@@ -35,8 +35,6 @@ class MainMenu {
         cbPropertyType.items.addAll(PropertyType.all, PropertyType.building, PropertyType.house, PropertyType.apartment, PropertyType.premises)
     }
 
-
-
     fun openProperties () {
         val fxmlLoader = FXMLLoader(javaClass.getResource("/FXML/PropertyList.fxml"))
         var bpPropertyList : BorderPane? = null
@@ -51,9 +49,7 @@ class MainMenu {
             this.lbHeader.text = "Lista de propiedades"
             this.bpMain.center = bpPropertyList
             val stage = bpMain.scene.window as Stage
-            propertyListController.initialize(this.bpMain, this.mainPane, account, this.lbHeader, tfSearchQuery.text, PropertyType.valueOf(
-                cbPropertyType.value.toString()
-            ))
+            propertyListController.initialize(this.bpMain, this.mainPane, account, this.lbHeader, "xalapa", PropertyType.house)
             stage.title = "Lista propiedades"
         }
     }

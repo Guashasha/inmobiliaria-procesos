@@ -19,3 +19,8 @@
     -fx-prompt-text-fill: gray;
 }
 
+.mainMenuPane {
+    -fx-background-image: url("/Image/mainMenuBg.jpg");
+    -fx-background-repeat: stretch;
+    -fx-background-position: center center;
+}

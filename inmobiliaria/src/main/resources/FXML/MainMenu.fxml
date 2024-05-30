@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="mainPane" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MainMenu">
+<AnchorPane fx:id="mainPane" prefHeight="700.0" prefWidth="1200.0" styleClass="mainMenuPane" stylesheets="@../Style/Pane.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MainMenu">
    <children>
       <Button layoutX="284.0" layoutY="247.0" mnemonicParsing="false" onAction="#openProperties" text="properties" />
       <Button layoutX="284.0" layoutY="324.0" mnemonicParsing="false" onAction="#openEditProfile" text="profile" />
