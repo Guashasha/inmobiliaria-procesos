@@ -56,9 +56,9 @@ class PropertyList : Application() {
         }
     }
 
-    fun initialize (bpMain: BorderPane, mainAnchorPaneMenu: Pane, account: Account, lbHeader: Label, query: String, propertyType: PropertyType) {
-        this.bpMain = bpMain
-        this.mainAnchorPaneMenu = mainAnchorPaneMenu
+    fun initialize (mainWindow: BorderPane, previousPane: Pane, account: Account, lbHeader: Label, query: String, propertyType: PropertyType) {
+        this.bpMain = mainWindow
+        this.mainAnchorPaneMenu = previousPane
         this.account = account
         this.lbHeader = lbHeader
         this.query = query
@@ -156,8 +156,8 @@ class PropertyList : Application() {
         return list
     }
 
-    fun returnToList () {
-        this.lbHeader.text = "Lista de propiedades"
+    fun returnToMenu () {
+        this.lbHeader.text = "Menu principal"
         this.bpMain.center = mainAnchorPaneMenu
     }
 }

@@ -177,7 +177,7 @@ class PropertyDAO {
 
     fun getOwnerByEmail (email: String): PropertyResult {
         return try {
-            val query = dbConnection.prepareStatement("""SELECT * FROM houseOwner WHERE email="?";""")
+            val query = dbConnection.prepareStatement("""SELECT * FROM houseOwner WHERE email=?;""")
             query.setString(1, email)
 
             val result = query.executeQuery();

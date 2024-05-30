@@ -37,6 +37,7 @@ class Login : Application() {
     @FXML
     private lateinit var bpMain: BorderPane
     @FXML
+
     private lateinit var pnMain: Pane
     private lateinit var account: Account
 
@@ -107,7 +108,6 @@ class Login : Application() {
         return when (result) {
             is AccountResult.Found -> {
                 this.account = result.account
-                println("MEOW")
                 true
             }
             is AccountResult.NotFound -> {
@@ -143,7 +143,7 @@ class Login : Application() {
         }
         if (aPaneMainMenu != null) {
             val mainMenuController = fxmlLoader.getController<MainMenu>()
-            this.lbHeader.text = "Menu principal"
+            this.lbHeader.text = "Propiedades Xalapa Nueva Generación"
             this.bpMain.center = aPaneMainMenu
             val stage = bpMain.scene.window as Stage
             mainMenuController.initialize(bpMain, account, lbHeader)
@@ -151,8 +151,5 @@ class Login : Application() {
         }
 
     }
-
-
-
 
 }
