@@ -61,6 +61,7 @@ class EditAccount {
                     PopUpAlert.showAlert("El correo electrónico ya esta registrado, por favor ingrese otro distinto", Alert.AlertType.WARNING)
                 }
                 is AccountResult.Success -> {
+                    this.account = getData()
                     PopUpAlert.showAlert("Se modificarón los datos de la cuenta exitosamente", Alert.AlertType.INFORMATION)
                 }
                 is AccountResult.WrongAccount -> {
