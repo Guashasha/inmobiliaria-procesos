@@ -9,6 +9,7 @@ import javafx.application.Application
 import javafx.application.Application.launch
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
+import javafx.geometry.Insets
 import javafx.scene.Parent
 import javafx.scene.Scene
 import javafx.scene.control.Alert
@@ -81,6 +82,9 @@ class PropertyList : Application() {
 
         for (property in properties) {
             val pane = HBox()
+            pane.style = "-fx-background-color: linear-gradient(to bottom, #AFA9F3 29.8%, #AFA9F3 50%, #9F99E3 90%); -fx-background-radius: 25px;"
+            pane.prefWidth(1200.0)
+            pane.padding = Insets(15.0)
             pane.spacing = 20.0
 
             getImages(property)
