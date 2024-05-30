@@ -129,11 +129,11 @@ class AddProperty : Application() {
     }
 
     fun registerProperty () {
-        val property = createProperty() ?: return
+        var property = createProperty() ?: return
         print("creada propiedad")
         val dao = PropertyDAO()
 
-        val result = dao.add(property)
+        var result = dao.add(property)
 
         when (result) {
             is PropertyResult.DBError -> {
@@ -157,8 +157,29 @@ class AddProperty : Application() {
             }
         }
 
+        result = dao.getAll()
+
+        property = when (result) {
+            is PropertyResult.DBError -> {
+                PopUpAlert.showAlert("No se pudo conectar a la base de datos, intente de nuevo más tarde", Alert.AlertType.ERROR)
+                return
+            }
+            is PropertyResult.FoundList<*> -> {
+                val propertyList = result.list as ArrayList<Property>
+                propertyList.first()
+            }
+            is PropertyResult.NotFound -> {
+                PopUpAlert.showAlert("No se encontró ninguna propiedad", Alert.AlertType.INFORMATION)
+                return
+            }
+            else -> {
+                PopUpAlert.showAlert("Ocurrió un error inesperado", Alert.AlertType.ERROR)
+                return
+            }
+        }
+
         for (image in propertyImages) {
-            val result = dao.addImage(property.id!!, image)
+            result = dao.addImage(property.id!!, image)
 
             when (result) {
                 is PropertyResult.DBError -> {
