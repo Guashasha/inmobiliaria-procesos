@@ -33,6 +33,7 @@ class MainMenu {
         this.lbHeader = lbHeader
 
         cbPropertyType.items.addAll(PropertyType.all.toString(), PropertyType.building.toString(), PropertyType.house.toString(), PropertyType.apartment.toString(), PropertyType.premises.toString())
+        cbPropertyType.value = PropertyType.all.toString()
     }
 
     fun openProperties () {
