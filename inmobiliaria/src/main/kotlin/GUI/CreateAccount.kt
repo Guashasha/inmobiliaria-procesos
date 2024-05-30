@@ -37,6 +37,12 @@ class CreateAccount {
         val name = tfName.text
         val lastName = tfLastName.text
         val email = tfEmail.text
+
+        val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$".toRegex()
+
+        if (!email.matches(emailRegex)) {
+            throw IllegalArgumentException("El correo electrónico no es válido")
+        }
         val phoneNumber = tfPhoneNumber.text
         val password = pwPassword.text
         val repeatPassword = pwRepeatPassword.text
