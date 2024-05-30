@@ -5,16 +5,20 @@ import DTO.Property
 import DTO.PropertyAction
 import GUI.Utility.PopUpAlert
 import javafx.fxml.FXML
+import javafx.fxml.FXMLLoader
 import javafx.scene.control.Alert
 import javafx.scene.control.Label
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
+import javafx.scene.layout.AnchorPane
 import javafx.scene.layout.BorderPane
 import javafx.scene.layout.HBox
 import javafx.scene.layout.Pane
 import javafx.scene.text.Text
+import javafx.stage.Stage
 import main.kotlin.DAO.PropertyDAO
 import main.kotlin.DAO.PropertyResult
+import java.io.IOException
 
 class PropertyInfo {
     private lateinit var mainPane: BorderPane
@@ -34,6 +38,8 @@ class PropertyInfo {
     private lateinit var lbPropertyAction: Text
     @FXML
     private lateinit var lbPrice: Text
+    @FXML
+    private lateinit var apRoot: AnchorPane
 
     private lateinit var property: Property
 
@@ -47,8 +53,25 @@ class PropertyInfo {
         setPropertyData()
     }
 
-    fun modifyProperty () {
-        print("crear ventana de modificación")
+    fun scheduleVisit () {
+        val fxmlLoader = FXMLLoader(javaClass.getResource("/FXML/ScheduleVisit.fxml"))
+        var bpScheduleVisit : BorderPane? = null
+
+        try {
+            bpScheduleVisit = fxmlLoader.load()
+        }
+        catch (error : IOException) {
+            PopUpAlert.showAlert("Error al cargar la ventana de información", Alert.AlertType.WARNING)
+        }
+
+        if (bpScheduleVisit != null && property.id != null && account.id != null) {
+            val scheduleVisitController = fxmlLoader.getController<ScheduleVisitController>()
+            scheduleVisitController.initialize(mainPane,apRoot,lbHeader, property.id!!, account.id!!)
+            this.lbHeader.text = "Agenda"
+            mainPane.center = bpScheduleVisit
+            val stage = mainPane.scene.window as Stage
+            stage.title = "Agendar visita a la propiedad"
+        }
     }
 
     fun returnToList () {

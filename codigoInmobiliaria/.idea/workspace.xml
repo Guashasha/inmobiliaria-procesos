@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="294fccbf-6c6f-42e0-a859-a22d98047ebc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../inmobiliaria/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Kotlin File" />
+        <option value="Kotlin Class" />
+        <option value="JUnit5 Test Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="2eeiTd6R4wtjKvKeoWm4oTuj1oQ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Downloaded.Files.Path.Enabled": "false",
+    "Kotlin.MainKt.executor": "Run",
+    "Kotlin.PropertyInfo.executor": "Run",
+    "Kotlin.PruebasKt.executor": "Run",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "git-widget-placeholder": "psle",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/epale/Documents/Tareas/4to semestre/Procesos para la ingenieria de software/Inmobiliaria/inmobiliaria-procesos/inmobiliaria",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="DataAccess" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.DataBaseConnectionTest">
+    <configuration name="DataBaseConnectionTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="codigoInmobiliaria" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="DataAccess.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="DataAccess" />
+      <option name="MAIN_CLASS_NAME" value="DataAccess.DataBaseConnectionTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DataBaseConnectionTest.getConnection$codigoInmobiliaria" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="codigoInmobiliaria" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="DataAccess.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="DataAccess" />
+      <option name="MAIN_CLASS_NAME" value="DataAccess.DataBaseConnectionTest" />
+      <option name="METHOD_NAME" value="getConnection$codigoInmobiliaria" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DataBaseConnectionTest.getConnectionSuccesfull" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="codigoInmobiliaria" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="DataAccess.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="DataAccess" />
+      <option name="MAIN_CLASS_NAME" value="DataAccess.DataBaseConnectionTest" />
+      <option name="METHOD_NAME" value="getConnectionSuccesfull" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MainKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="DTO.MainKt" />
+      <module name="codigoInmobiliaria" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PropertyInfo" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="main.kotlin.GUI.PropertyInfo" />
+      <module name="codigoInmobiliaria" />
+      <shortenClasspath name="NONE" />
+      <option name="VM_PARAMETERS" value="--module-path ./lib/JavaFX/lib --add-modules=javafx.controls, javafx.fxml" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="JUnit.DataBaseConnectionTest" />
+      <item itemvalue="JUnit.DataBaseConnectionTest.getConnection$codigoInmobiliaria" />
+      <item itemvalue="JUnit.DataBaseConnectionTest.getConnectionSuccesfull" />
+      <item itemvalue="Kotlin.MainKt" />
+      <item itemvalue="Kotlin.PropertyInfo" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.DataBaseConnectionTest" />
+        <item itemvalue="JUnit.DataBaseConnectionTest.getConnectionSuccesfull" />
+        <item itemvalue="JUnit.DataBaseConnectionTest.getConnection$codigoInmobiliaria" />
+        <item itemvalue="Kotlin.PropertyInfo" />
+        <item itemvalue="Kotlin.MainKt" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="294fccbf-6c6f-42e0-a859-a22d98047ebc" name="Changes" comment="" />
+      <created>1715899074529</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1715899074529</updated>
+      <workItem from="1715899075486" duration="965000" />
+      <workItem from="1715916217032" duration="27000" />
+      <workItem from="1716321950511" duration="2620000" />
+      <workItem from="1716326546422" duration="9000" />
+      <workItem from="1716433753992" duration="339000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="dependencySupport" implementationName="java:org.openjfx:javafx-base" />
+    <option featureType="dependencySupport" implementationName="java:org.projectlombok:lombok" />
+  </component>
+</project>

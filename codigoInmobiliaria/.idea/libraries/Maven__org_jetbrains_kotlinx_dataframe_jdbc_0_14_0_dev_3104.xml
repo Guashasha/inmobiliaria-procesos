@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Maven: org.jetbrains.kotlinx:dataframe-jdbc:0.14.0-dev-3104" type="java-imported" external-system-id="Maven">
+    <properties groupId="org.jetbrains.kotlinx" artifactId="dataframe-jdbc" version="0.14.0-dev-3104" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/jetbrains/kotlinx/dataframe-jdbc/0.14.0-dev-3104/dataframe-jdbc-0.14.0-dev-3104.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/jetbrains/kotlinx/dataframe-jdbc/0.14.0-dev-3104/dataframe-jdbc-0.14.0-dev-3104-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/jetbrains/kotlinx/dataframe-jdbc/0.14.0-dev-3104/dataframe-jdbc-0.14.0-dev-3104-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

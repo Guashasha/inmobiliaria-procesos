@@ -3,7 +3,7 @@ import java.sql.DriverManager
 
 class TestHelper {
     companion object {
-        private val dbConnection: Connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/PXNGAgency", "adminPXNG", "RobaloBurbuja")
+        private val dbConnection: Connection = DriverManager.getConnection("jdbc:mariadb://localhost:3307/PXNGAgency", "adminPXNG", "RobaloBurbuja")
 
         fun addTestData() {
             clearTables()
