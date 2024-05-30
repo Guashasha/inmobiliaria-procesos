@@ -15,8 +15,6 @@ sealed class AccountResult (val message: String) {
 }
 
 class AccountDAO {
-    private val dbConnection = DataBaseConnection().connection
-
     fun add (account: Account): AccountResult {
         if (!account.isValid() || account.password == null) {
             return AccountResult.WrongAccount()
@@ -27,6 +25,8 @@ class AccountDAO {
         }
 
         return try {
+            val dbConnection = DataBaseConnection().connection
+
             val query =
                 dbConnection.prepareStatement("INSERT INTO account (name, type, email, phone, password) VALUES (?, ?, ?, ?, ?);")
             query.setString(1, account.name)
@@ -53,12 +53,14 @@ class AccountDAO {
         else if (account.id == null) {
             return AccountResult.NotFound()
         }
-        val emailResult = getByEmail(account.email)
+        val emailResult = getByEmailDistinctId(account)
         if (emailResult is AccountResult.Found) {
             return AccountResult.Failure()
         }
 
         return try {
+            val dbConnection = DataBaseConnection().connection
+
             val query =
                 dbConnection.prepareStatement("UPDATE account SET name=?, type=?, email=?, phone=? where id=?;")
 
@@ -85,6 +87,8 @@ class AccountDAO {
         }
 
         return try {
+            val dbConnection = DataBaseConnection().connection
+
             val query = dbConnection.prepareStatement("SELECT * FROM account WHERE id=?;")
 
             query.setInt(1, accountId.toInt())
@@ -103,6 +107,8 @@ class AccountDAO {
     }
 
     fun getAll (): AccountResult {
+        val dbConnection = DataBaseConnection().connection
+
         val result = dbConnection.prepareStatement("SELECT * FROM account;").executeQuery()
         val list = ArrayList<Account>()
 
@@ -118,12 +124,38 @@ class AccountDAO {
         }
     }
 
+    fun getByEmailDistinctId(account: Account): AccountResult {
+        if (account.id == null) {
+            return AccountResult.WrongAccount()
+        }
+
+        return try {
+            val dbConnection = DataBaseConnection().connection
+
+            val query = dbConnection.prepareStatement("SELECT * FROM account WHERE email = ? AND id != ?;")
+            query.setString(1, account.email)
+            query.setInt(2, account.id.toInt())
+
+            val result = query.executeQuery()
+
+            if (result.next()) {
+                AccountResult.Found(Account.fromResultSet(result))
+            } else {
+                AccountResult.NotFound()
+            }
+        } catch (error: SQLException) {
+            AccountResult.DBError(error.message.toString())
+        }
+    }
+
     fun getByEmail(email: String): AccountResult {
         if (email.isBlank()) {
             return AccountResult.WrongAccount()
         }
 
         return try {
+            val dbConnection = DataBaseConnection().connection
+
             val query = dbConnection.prepareStatement("SELECT * FROM account WHERE email = ?;")
             query.setString(1, email)
 
@@ -145,6 +177,8 @@ class AccountDAO {
         }
 
         return try {
+            val dbConnection = DataBaseConnection().connection
+
             val query = dbConnection.prepareStatement("SELECT * FROM account WHERE email = ? AND BINARY password = BINARY ?;")
             query.setString(1, email)
             query.setString(2, password)
