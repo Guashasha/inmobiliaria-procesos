@@ -31,10 +31,12 @@ class EditAccount {
         tfNumber.promptText = this.account.phone
     }
 
+
+
     private fun getData(): Account {
-        val name = tfName.text
-        val numberPhone = tfNumber.text
-        val email = tfEmail.text
+        val name = if (tfName.text.isNullOrBlank()) this.account.name else tfName.text
+        val numberPhone = if (tfNumber.text.isNullOrBlank()) this.account.phone else tfNumber.text
+        val email = if (tfEmail.text.isNullOrBlank()) this.account.email else tfEmail.text
 
         return Account (
             id = this.account.id,
