@@ -55,7 +55,24 @@ class AdminPropertyInfo {
     }
 
     fun openModifyProperty () {
-        
+        val fxmlLoader = FXMLLoader(javaClass.getResource("/FXML/ModifyProperty.fxml"))
+        var paneModifyProperty : BorderPane? = null
+
+        try {
+            paneModifyProperty = fxmlLoader.load()
+        }
+        catch (error : IOException) {
+            PopUpAlert.showAlert("Error al cargar la ventana de información", Alert.AlertType.WARNING)
+        }
+
+        if (paneModifyProperty != null && property.id != null && account.id != null) {
+            val scheduleVisitController = fxmlLoader.getController<ModifyProperty>()
+            scheduleVisitController.initialize(mainPane, apRoot, lbHeader, property)
+            this.lbHeader.text = "Modificar datos de propiedad"
+            mainPane.center = paneModifyProperty
+            val stage = mainPane.scene.window as Stage
+            stage.title = "Modificar datos de propiedad"
+        }
     }
 
     fun returnToList () {

@@ -74,7 +74,9 @@ class AddProperty : Application() {
         this.headerText = headerText
 
         cbPropertyType.items.addAll(PropertyType.house, PropertyType.building, PropertyType.premises, PropertyType.apartment)
+        cbPropertyType.value = PropertyType.house
         cbPropertyAction.items.addAll(PropertyAction.sell, PropertyAction.rent)
+        cbPropertyAction.value = PropertyAction.sell
     }
 
     fun returnToMainMenu() {

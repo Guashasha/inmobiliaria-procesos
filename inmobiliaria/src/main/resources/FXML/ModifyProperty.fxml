@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+
+<AnchorPane prefHeight="568.0" prefWidth="798.0" styleClass="mainPane" stylesheets="@../Style/Pane.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ModifyProperty">
+   <children>
+      <VBox layoutX="70.0" layoutY="50.0" prefHeight="447.0" prefWidth="463.0" spacing="2.0" styleClass="informationPane" stylesheets="@../Style/Pane.css">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Titulo" />
+            <TextField fx:id="tfTitle">
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </TextField>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Descripcion corta" />
+            <TextField fx:id="tfShortDescription">
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </TextField>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Descripcion completa" />
+            <TextArea fx:id="tfFullDescription" prefHeight="200.0" prefWidth="200.0" wrapText="true">
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </TextArea>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+               <children>
+                  <VBox prefHeight="80.0" prefWidth="205.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Precio" />
+                        <TextField fx:id="tfPrice" prefHeight="26.0" prefWidth="154.0" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="80.0" prefWidth="193.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Accion" />
+                        <ComboBox fx:id="cbAction" prefHeight="26.0" prefWidth="170.0" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </VBox>
+      <Button fx:id="btnSuspend" layoutX="585.0" layoutY="335.0" mnemonicParsing="false" styleClass="btnPrincipal" stylesheets="@../Style/ButtonStyle.css" text="Suspender inmueble" />
+      <Button layoutX="598.0" layoutY="415.0" mnemonicParsing="false" onAction="#updateProperty" styleClass="btnPrincipal" stylesheets="@../Style/ButtonStyle.css" text="Aceptar cambios" />
+      <Button fx:id="btnOccupy" layoutX="555.0" layoutY="258.0" mnemonicParsing="false" styleClass="btnPrincipal" stylesheets="@../Style/ButtonStyle.css" text="Marcar como vendido/rentado" />
+   </children>
+</AnchorPane>
