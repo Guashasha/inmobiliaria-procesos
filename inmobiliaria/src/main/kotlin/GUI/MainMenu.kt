@@ -32,7 +32,7 @@ class MainMenu {
         this.account = account
         this.lbHeader = lbHeader
 
-        cbPropertyType.items.addAll(PropertyType.all.toString().toString(), PropertyType.building.toString(), PropertyType.house.toString(), PropertyType.apartment.toString(), PropertyType.premises.toString())
+        cbPropertyType.items.addAll(PropertyType.all.toString(), PropertyType.building.toString(), PropertyType.house.toString(), PropertyType.apartment.toString(), PropertyType.premises.toString())
     }
 
     fun openProperties () {
@@ -56,7 +56,7 @@ class MainMenu {
 
     fun openAddProperty () {
         val fxmlLoader = FXMLLoader(javaClass.getResource("/FXML/AddProperty.fxml"))
-        var bpAddProperty : BorderPane? = null
+        var bpAddProperty : Pane? = null
         try {
             bpAddProperty = fxmlLoader.load()
         }

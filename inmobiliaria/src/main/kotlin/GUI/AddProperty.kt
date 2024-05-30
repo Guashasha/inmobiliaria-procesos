@@ -26,7 +26,7 @@ fun main (args: Array<String>) {
 }
 class AddProperty : Application() {
 
-    private lateinit var mainWindow: Pane;
+    private lateinit var mainWindow: BorderPane;
     private lateinit var previousWindow: Pane;
     private lateinit var headerText: Label;
 
@@ -68,7 +68,7 @@ class AddProperty : Application() {
     }
 
 
-    fun initialize (previousWindow: Pane, mainWindow: Pane, headerText: Label) {
+    fun initialize (previousWindow: Pane, mainWindow: BorderPane, headerText: Label) {
         this.previousWindow = previousWindow
         this.mainWindow = mainWindow
         this.headerText = headerText
@@ -77,7 +77,10 @@ class AddProperty : Application() {
         cbPropertyAction.items.addAll(PropertyAction.sell, PropertyAction.rent)
     }
 
-    fun returnToMainMenu() {}
+    fun returnToMainMenu() {
+        this.headerText.text = "Menu principal"
+        this.mainWindow.center = previousWindow
+    }
 
     fun addImage () {
         val chooser = FileChooser()
