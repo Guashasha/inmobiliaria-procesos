@@ -1,12 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane fx:id="mainPane" prefHeight="700.0" prefWidth="1200.0" styleClass="mainMenuPane" stylesheets="@../Style/Pane.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MainMenu">
    <children>
-      <Button layoutX="284.0" layoutY="247.0" mnemonicParsing="false" onAction="#openProperties" text="properties" />
-      <Button layoutX="284.0" layoutY="324.0" mnemonicParsing="false" onAction="#openEditProfile" text="profile" />
-      <Button layoutX="243.0" layoutY="402.0" mnemonicParsing="false" onAction="#openScheduleVisit" text="visit" />
+      <VBox layoutX="95.0" layoutY="73.0" prefHeight="508.0" prefWidth="355.0" spacing="15.0" styleClass="informationPane" stylesheets="@../Style/Pane.css">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Busqueda de propiedades">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Palabras clave" />
+            <TextField fx:id="tfSearchQuery" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <ComboBox fx:id="cbPropertyType" prefWidth="150.0" />
+            <Button mnemonicParsing="false" onAction="#openProperties" styleClass="btnPrincipal" stylesheets="@../Style/ButtonStyle.css" text="Buscar propiedades" />
+            <Button mnemonicParsing="false" onAction="#openAddProperty" styleClass="btnSecondary" stylesheets="@../Style/ButtonStyle.css" text="Agregar propiedad" />
+         </children>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </VBox>
+      <Button mnemonicParsing="false" onAction="#openEditProfile" text="Perfil" />
    </children>
 </AnchorPane>

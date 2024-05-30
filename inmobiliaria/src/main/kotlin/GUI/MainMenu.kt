@@ -22,7 +22,7 @@ class MainMenu {
     @FXML
     private lateinit var mainPane: Pane
     @FXML
-    private lateinit var cbPropertyType: ComboBox<PropertyType>
+    private lateinit var cbPropertyType: ComboBox<String>
     @FXML
     private lateinit var tfSearchQuery: TextField
 
@@ -32,7 +32,7 @@ class MainMenu {
         this.account = account
         this.lbHeader = lbHeader
 
-        cbPropertyType.items.addAll(PropertyType.all, PropertyType.building, PropertyType.house, PropertyType.apartment, PropertyType.premises)
+        cbPropertyType.items.addAll(PropertyType.all.toString().toString(), PropertyType.building.toString(), PropertyType.house.toString(), PropertyType.apartment.toString(), PropertyType.premises.toString())
     }
 
     fun openProperties () {
@@ -49,7 +49,7 @@ class MainMenu {
             this.lbHeader.text = "Lista de propiedades"
             this.bpMain.center = bpPropertyList
             val stage = bpMain.scene.window as Stage
-            propertyListController.initialize(this.bpMain, this.mainPane, account, this.lbHeader, "xalapa", PropertyType.house)
+            propertyListController.initialize(this.bpMain, this.mainPane, account, this.lbHeader, tfSearchQuery.text, PropertyType.valueOf(cbPropertyType.value))
             stage.title = "Lista propiedades"
         }
     }
@@ -71,10 +71,6 @@ class MainMenu {
             propertyListController.initialize(mainPane, bpMain, lbHeader)
             stage.title = "Lista propiedades"
         }
-    }
-
-    fun openScheduleVisit () {
-        // TODO
     }
 
     fun openEditProfile () {
