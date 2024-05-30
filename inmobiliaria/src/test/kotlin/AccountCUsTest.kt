@@ -14,7 +14,7 @@ class AccountCUsTest {
     private val accountDAO = AccountDAO()
 
     @Test
-    fun testAddValidAccount() {
+    fun createClientAccount() {
         val account = Account(null, "John Doe", AccountType.CLIENT, "john@example.com", "1234567890", "password")
         val result = accountDAO.add(account)
         assertTrue(result is AccountResult.Success)
@@ -25,5 +25,15 @@ class AccountCUsTest {
         val account = Account(null, "", AccountType.CLIENT, "john@example.com", "1234567890", "password")
         val result = accountDAO.add(account)
         assertTrue(result is AccountResult.WrongAccount)
+    }
+
+
+
+    companion object {
+        @JvmStatic
+        @BeforeAll
+        fun setUp(): Unit {
+            TestHelper.addTestData()
+        }
     }
 }
