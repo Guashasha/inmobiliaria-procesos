@@ -65,13 +65,11 @@ class AddProperty : Application() {
 
 
     fun initialize () {
-
         cbPropertyType.items.addAll(PropertyType.house, PropertyType.building, PropertyType.premises, PropertyType.apartment)
         cbPropertyAction.items.addAll(PropertyAction.sell, PropertyAction.rent)
     }
 
-    fun returnToMainMenu(){}
-
+    fun returnToMainMenu() {}
 
     fun addImage () {
         val chooser = FileChooser()
@@ -86,31 +84,19 @@ class AddProperty : Application() {
 
             propertyImages.add(imageFile)
 
-            if (!addImageToPane(image)) {
-                PopUpAlert.showAlert("No se pudo agregar la imagen", Alert.AlertType.WARNING)
-            }
-        }
-        else {
-            PopUpAlert.showAlert("Ocurrió un problema al cargar la imagen, intente de nuevo.", Alert.AlertType.ERROR)
-        }
-    }
+            val imageView = ImageView(image)
+            imageView.fitWidth = 80.0;
+            imageView.fitHeight = 80.0;
 
-    fun addImageToPane (image: Image): Boolean {
-        for (i in 0..5) {
-            if (pnImages.children[i] == null) {
-                pnImages.children.add(i, ImageView(image))
-                return true
-            }
+            pnImages.children.add(imageView)
         }
-
-        return false
     }
 
     fun removeImages () {
         pnImages.children.removeAll()
     }
 
-    fun createProperty (): Property? {
+     fun createProperty (): Property? {
         if (emptyTextFields()) {
             PopUpAlert.showAlert("Por favor llene todos los campos.", Alert.AlertType.WARNING)
             return null
@@ -119,20 +105,21 @@ class AddProperty : Application() {
             return null
         }
 
-        val title = tfTitle.text
-        val shortDescription = tfShortDescription.text
-        val fullDescription = tfFullDescription.text
+        val title = tfTitle.text.trim()
+        val shortDescription = tfShortDescription.text.trim()
+        val fullDescription = tfFullDescription.text.trim()
         val price = tfPrice.text.toFloat()
-        val direction = tfDirection.text
+        val direction = tfDirection.text.trim()
         val propertyType = cbPropertyType.value
         val propertyAction = cbPropertyAction.value
-        val houseOwner = getOwner(tfOwnerEmail.text) ?: return null
+        val houseOwner = getOwner(tfOwnerEmail.text.trim()) ?: return null
 
         return Property(null, title, shortDescription, fullDescription, propertyType, price, PropertyState.available, direction, houseOwner.id!!, propertyAction, null)
     }
 
     fun registerProperty () {
         val property = createProperty() ?: return
+        print("creada propiedad")
         val dao = PropertyDAO()
 
         val result = dao.add(property)
@@ -198,7 +185,10 @@ class AddProperty : Application() {
                 return null
             }
             is PropertyResult.OwnerFound -> return result.houseOwner
-            else -> return null
+            else -> {
+                PopUpAlert.showAlert("Ocurrió un error inesperado", Alert.AlertType.ERROR)
+                return null
+            }
         }
     }
 
@@ -218,29 +208,29 @@ class AddProperty : Application() {
 
         if (unsafeString.containsMatchIn(tfTitle.text)) {
             PopUpAlert.showAlert("El campo *Titulo contiene caracteres no soportados: -, *, /, \", \', #", Alert.AlertType.WARNING)
-            return false
+            return true
         }
         if (unsafeString.containsMatchIn(tfDirection.text)) {
             PopUpAlert.showAlert("El campo *Dirección contiene caracteres no soportados: -, *, /, \", \', #", Alert.AlertType.WARNING)
-            return false
+            return true
         }
         if (unsafeString.containsMatchIn(tfFullDescription.text)) {
             PopUpAlert.showAlert("El campo *Descripción completa contiene caracteres no soportados: -, *, /, \", \', #", Alert.AlertType.WARNING)
-            return false
+            return true
         }
         if (unsafeString.containsMatchIn(tfShortDescription.text)) {
             PopUpAlert.showAlert("El campo *Descripción corta contiene caracteres no soportados: -, *, /, \", \', #", Alert.AlertType.WARNING)
-            return false
+            return true
         }
         if (!email.matches(tfOwnerEmail.text)) {
             PopUpAlert.showAlert("El campo *Email no contiene una dirección de email valida, intente de nuevo", Alert.AlertType.WARNING)
-            return false
+            return true
         }
         if (!number.matches(tfPrice.text)) {
             PopUpAlert.showAlert("El campo *Precio no contiene un numero valido, intente de nuevo", Alert.AlertType.WARNING)
-            return false
+            return true
         }
 
-        return true
+        return false
     }
 }
