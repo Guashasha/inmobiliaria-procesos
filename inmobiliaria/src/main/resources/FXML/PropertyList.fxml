@@ -9,7 +9,7 @@
       <VBox fx:id="vboxProperties" prefHeight="200.0" prefWidth="100.0" spacing="20.0" styleClass="mainPane" stylesheets="@../Style/Pane.css" BorderPane.alignment="CENTER" />
    </center>
    <top>
-      <Button mnemonicParsing="false" onAction="#returnToList" styleClass="btnPrincipal" stylesheets="@../Style/ButtonStyle.css" text="Regresar" BorderPane.alignment="TOP_LEFT">
+      <Button mnemonicParsing="false" onAction="#returnToMenu" styleClass="btnPrincipal" stylesheets="@../Style/ButtonStyle.css" text="Regresar" BorderPane.alignment="TOP_LEFT">
          <BorderPane.margin>
             <Insets left="10.0" top="10.0" />
          </BorderPane.margin>

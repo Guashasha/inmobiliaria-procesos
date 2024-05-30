@@ -26,7 +26,11 @@ fun main (args: Array<String>) {
 }
 class AddProperty : Application() {
 
-    var propertyImages = ArrayList<File>()
+    private lateinit var mainWindow: Pane;
+    private lateinit var previousWindow: Pane;
+    private lateinit var headerText: Label;
+
+    private var propertyImages = ArrayList<File>()
 
     @FXML
     private lateinit var cbPropertyAction: ComboBox<PropertyAction>
@@ -64,7 +68,11 @@ class AddProperty : Application() {
     }
 
 
-    fun initialize () {
+    fun initialize (previousWindow: Pane, mainWindow: Pane, headerText: Label) {
+        this.previousWindow = previousWindow
+        this.mainWindow = mainWindow
+        this.headerText = headerText
+
         cbPropertyType.items.addAll(PropertyType.house, PropertyType.building, PropertyType.premises, PropertyType.apartment)
         cbPropertyAction.items.addAll(PropertyAction.sell, PropertyAction.rent)
     }

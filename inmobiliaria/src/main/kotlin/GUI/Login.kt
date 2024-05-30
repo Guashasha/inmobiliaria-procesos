@@ -37,6 +37,7 @@ class Login : Application() {
     @FXML
     private lateinit var bpMain: BorderPane
     @FXML
+
     private lateinit var pnMain: Pane
     private lateinit var account: Account
 
@@ -107,7 +108,6 @@ class Login : Application() {
         return when (result) {
             is AccountResult.Found -> {
                 this.account = result.account
-                println("MEOW")
                 true
             }
             is AccountResult.NotFound -> {
@@ -151,8 +151,5 @@ class Login : Application() {
         }
 
     }
-
-
-
 
 }

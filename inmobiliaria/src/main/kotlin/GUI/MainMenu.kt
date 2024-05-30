@@ -27,7 +27,7 @@ class MainMenu {
     private lateinit var tfSearchQuery: TextField
 
 
-    fun initialize(bpMain: BorderPane, account: Account, lbHeader : Label) {
+    fun initialize(bpMain: BorderPane, account: Account, lbHeader: Label) {
         this.bpMain = bpMain
         this.account = account
         this.lbHeader = lbHeader
