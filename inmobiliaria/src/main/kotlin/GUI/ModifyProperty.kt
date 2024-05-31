@@ -139,4 +139,9 @@ class ModifyProperty {
     private fun changePropertyToAvailable () {
         TODO()
     }
+
+    fun volverAInformacion () {
+        this.lbHeader.text = "Informacion de propiedad"
+        this.mainPane.center = originalPane
+    }
 }

@@ -56,7 +56,7 @@ class AdminPropertyInfo {
 
     fun openModifyProperty () {
         val fxmlLoader = FXMLLoader(javaClass.getResource("/FXML/ModifyProperty.fxml"))
-        var paneModifyProperty : BorderPane? = null
+        var paneModifyProperty : Pane? = null
 
         try {
             paneModifyProperty = fxmlLoader.load()

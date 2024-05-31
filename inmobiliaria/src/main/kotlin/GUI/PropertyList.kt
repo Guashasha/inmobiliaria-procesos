@@ -108,7 +108,7 @@ class PropertyList : Application() {
                 run {
                     when (account.type) {
                         AccountType.CLIENT -> openPropertyInfo(property)
-                        AccountType.AGENT -> openPropertyInfo(property)
+                        AccountType.AGENT -> openAdminPropertyInfo(property)
                     }
                 }
             }
