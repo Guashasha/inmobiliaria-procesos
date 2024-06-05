@@ -69,6 +69,6 @@
             <Font size="16.0" />
          </font>
       </Text>
-      <Button layoutX="34.0" layoutY="37.0" mnemonicParsing="false" onAction="#returnToList" styleClass="btnPrincipal" stylesheets="@../Style/ButtonStyle.css" text="Regresar" />
+      <Button layoutX="34.0" layoutY="37.0" mnemonicParsing="false" onAction="#returnToList" styleClass="btnSecondary" stylesheets="@../Style/ButtonStyle.css" text="Regresar" />
    </children>
 </AnchorPane>
