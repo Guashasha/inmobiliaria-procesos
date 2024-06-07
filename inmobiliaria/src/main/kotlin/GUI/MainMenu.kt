@@ -13,7 +13,7 @@ import javafx.stage.Stage
 import java.io.IOException
 
 class MainMenu {
-    private lateinit var account: Account
+    lateinit var account: Account
     private lateinit var bpMain: BorderPane
     private lateinit var lbHeader: Label
 
@@ -96,4 +96,5 @@ class MainMenu {
             stage.title = "Lista propiedades"
         }
     }
+
 }

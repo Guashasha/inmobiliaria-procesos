@@ -46,14 +46,15 @@
             <TextField fx:id="tfName" layoutX="70.0" layoutY="102.0" prefHeight="51.0" prefWidth="986.0" promptText="Nombre completo" styleClass="textFieldDataAccount" stylesheets="@../Style/Pane.css" />
             <TextField fx:id="tfNumber" layoutX="67.0" layoutY="248.0" promptText="2288557788" styleClass="textFieldDataAccount" />
             <TextField fx:id="tfEmail" layoutX="497.0" layoutY="248.0" prefHeight="51.0" prefWidth="560.0" promptText="correo@ejemplo.com" styleClass="textFieldDataAccount" />
-            <Button layoutX="669.0" layoutY="383.0" mnemonicParsing="false" onAction="#HandleSave" prefHeight="47.0" prefWidth="176.0" styleClass="btnPrincipal" stylesheets="@../Style/ButtonStyle.css" text="Guardar cambios">
+            <Button layoutX="672.0" layoutY="329.0" mnemonicParsing="false" onAction="#HandleSave" prefHeight="47.0" prefWidth="176.0" styleClass="btnPrincipal" stylesheets="@../Style/ButtonStyle.css" text="Guardar cambios">
                <font>
                   <Font size="16.0" />
                </font></Button>
-            <Button layoutX="907.0" layoutY="383.0" mnemonicParsing="false" onAction="#backToMainMenu" prefHeight="47.0" prefWidth="102.0" styleClass="btnSecondary" stylesheets="@../Style/ButtonStyle.css" text="Cancelar">
+            <Button layoutX="944.0" layoutY="329.0" mnemonicParsing="false" onAction="#backToMainMenu" prefHeight="47.0" prefWidth="102.0" styleClass="btnSecondary" stylesheets="@../Style/ButtonStyle.css" text="Cancelar">
                <font>
                   <Font size="16.0" />
                </font></Button>
+            <Button fx:id="btnEliminar" layoutX="943.0" layoutY="412.0" mnemonicParsing="false" onAction="#deleteAccount" prefHeight="38.0" prefWidth="102.0" style="-fx-background-color: transparent;" styleClass="btnSecondary" stylesheets="@../Style/ButtonStyle.css" text="Eliminar cuenta" textAlignment="CENTER" />
          </children>
       </Pane>
    </children>
