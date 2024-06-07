@@ -22,7 +22,6 @@ class ScheduleVisitController {
     private lateinit var lbHeader: Label
     private var propertyId : UInt = 0U
     private var clientId : UInt = 0U
-
     @FXML lateinit var gpSchedule : GridPane
     @FXML lateinit var dpDate : DatePicker
 
@@ -32,6 +31,21 @@ class ScheduleVisitController {
         this.lbHeader = lbHeader
         this.propertyId = propertyId
         this.clientId = clientId
+        limitDateOnDatePicker()
+    }
+
+    private fun limitDateOnDatePicker () {
+        this.dpDate.dayCellFactory = javafx.util.Callback {
+            object : javafx.scene.control.DateCell() {
+                override fun updateItem(item: LocalDate?, empty: Boolean) {
+                    super.updateItem(item, empty)
+                    if (item?.isBefore(LocalDate.now().plusDays(1)) == true) {
+                        isDisable = true
+                        style = "-fx-background-color: #ffc0cb;"
+                    }
+                }
+            }
+        }
     }
 
     @FXML fun salir () {
@@ -44,8 +58,7 @@ class ScheduleVisitController {
         val selectedDate : LocalDate? = dpDate.value
 
         if (selectedDate != null) {
-            val visitResult = visitDao.getUnavailableVisits(propertyId,Date.valueOf(selectedDate))
-            when (visitResult) {
+            when (val visitResult = visitDao.getUnavailableVisits(propertyId,Date.valueOf(selectedDate))) {
                 is VisitResult.FoundList -> showSchedule(visitResult.visits)
                 is VisitResult.DBError -> showAlert(visitResult.message,AlertType.ERROR)
                 is VisitResult.Failure -> showAlert(visitResult.message,AlertType.ERROR)

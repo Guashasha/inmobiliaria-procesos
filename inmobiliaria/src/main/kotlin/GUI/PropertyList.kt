@@ -108,7 +108,7 @@ class PropertyList : Application() {
                 run {
                     when (account.type) {
                         AccountType.CLIENT -> openPropertyInfo(property)
-                        AccountType.AGENT -> openPropertyInfo(property)
+                        AccountType.AGENT -> openAdminPropertyInfo(property)
                     }
                 }
             }
@@ -141,7 +141,24 @@ class PropertyList : Application() {
     }
 
     private fun openAdminPropertyInfo (property: Property) {
+        val fxmlLoader = FXMLLoader(javaClass.getResource("/FXML/AdminPropertyInfo.fxml"))
+        var bpPropertyList : AnchorPane? = null
 
+        try {
+            bpPropertyList = fxmlLoader.load()
+        }
+        catch (error : IOException) {
+            PopUpAlert.showAlert("Error al cargar la ventana de información", Alert.AlertType.WARNING)
+        }
+
+        if (bpPropertyList != null) {
+            val propertyInfoController = fxmlLoader.getController<AdminPropertyInfo>()
+            this.lbHeader.text = "Información de propiedad"
+            this.bpMain.center = bpPropertyList
+            val stage = bpMain.scene.window as Stage
+            propertyInfoController.initialize(bpMain, mainAnchorPaneMenu, account, lbHeader, property)
+            stage.title = "Información de propiedad"
+        }
     }
 
     private fun getProperties (): ArrayList<Property> {

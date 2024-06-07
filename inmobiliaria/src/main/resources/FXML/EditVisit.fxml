@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #CDC9FF;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.EditVisitController">
+   <center>
+      <BorderPane prefHeight="571.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+         <top>
+            <HBox alignment="CENTER" prefHeight="173.0" prefWidth="1200.0" style="-fx-background-color: #AFA9F3; -fx-background-radius: 20;" BorderPane.alignment="CENTER">
+               <children>
+                  <BorderPane prefHeight="153.0" prefWidth="673.0" style="-fx-background-color: #AFA9F3; -fx-background-radius: 20;">
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="40.0" top="10.0" />
+                     </HBox.margin>
+                     <top>
+                        <Label fx:id="lbTitle" text="Titulo" BorderPane.alignment="CENTER">
+                           <font>
+                              <Font name="Franklin Gothic Demi Cond" size="25.0" />
+                           </font>
+                        </Label>
+                     </top>
+                     <left>
+                        <ImageView fitHeight="116.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+                     </left>
+                     <center>
+                        <VBox prefHeight="88.0" prefWidth="486.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <Label fx:id="lbShortDescription" prefHeight="79.0" prefWidth="502.0" text="Descripción" wrapText="true">
+                                 <font>
+                                    <Font name="Franklin Gothic Book" size="20.0" />
+                                 </font>
+                              </Label>
+                              <HBox>
+                                 <children>
+                                    <Label prefHeight="45.0" prefWidth="178.0" text="Dirección: ">
+                                       <font>
+                                          <Font name="Franklin Gothic Demi Cond" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lbAddress" prefHeight="45.0" prefWidth="503.0" text="Dirección">
+                                       <font>
+                                          <Font name="Franklin Gothic Book" size="20.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </center>
+                  </BorderPane>
+                  <BorderPane prefHeight="143.0" prefWidth="251.0" style="-fx-background-color: rgba(255, 255, 255, 0.6); -fx-background-radius: 20;">
+                     <top>
+                        <Label alignment="CENTER" prefHeight="34.0" prefWidth="214.0" text="Fecha y hora agendada" textFill="#000000a6" BorderPane.alignment="CENTER_LEFT">
+                           <font>
+                              <Font name="Franklin Gothic Demi" size="20.0" />
+                           </font>
+                           <BorderPane.margin>
+                              <Insets left="15.0" />
+                           </BorderPane.margin>
+                        </Label>
+                     </top>
+                     <center>
+                        <VBox prefHeight="115.0" prefWidth="276.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="24.0" prefWidth="102.0" text="Fecha: ">
+                                 <font>
+                                    <Font name="Franklin Gothic Book" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lbVisitDate" alignment="CENTER" contentDisplay="CENTER" prefHeight="24.0" prefWidth="154.0" text="00/00/0000">
+                                 <font>
+                                    <Font name="Franklin Gothic Book" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="24.0" prefWidth="86.0" text="Hora:">
+                                 <font>
+                                    <Font name="Franklin Gothic Book" size="20.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label fx:id="lbVisitTime" alignment="CENTER" contentDisplay="CENTER" prefHeight="24.0" prefWidth="122.0" text="00:00:00">
+                                 <font>
+                                    <Font name="Franklin Gothic Book" size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </center>
+                     <HBox.margin>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                     </HBox.margin>
+                  </BorderPane>
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#cancelVisit" prefHeight="40.0" prefWidth="149.0" style="-fx-background-color: #8F57BB;" text="Cancelar visita" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <BorderPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </BorderPane.margin>
+            </HBox>
+         </top>
+         <left>
+            <VBox alignment="TOP_CENTER" prefHeight="408.0" prefWidth="300.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label alignment="CENTER" prefHeight="73.0" prefWidth="391.0" text="Reagendar visita">
+                     <font>
+                        <Font name="Franklin Gothic Demi" size="35.0" />
+                     </font>
+                  </Label>
+                  <BorderPane prefHeight="94.0" prefWidth="276.0" style="-fx-background-color: rgba(255, 255, 255, 0.6); -fx-background-radius: 20;">
+                     <right>
+                        <ImageView fitHeight="51.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER_LEFT">
+                           <BorderPane.margin>
+                              <Insets left="5.0" right="10.0" />
+                           </BorderPane.margin>
+                           <image>
+                              <Image url="@../calendar-days.png" />
+                           </image>
+                        </ImageView>
+                     </right>
+                     <center>
+                        <DatePicker fx:id="dpDate" editable="false" prefHeight="44.0" prefWidth="201.0" BorderPane.alignment="CENTER_RIGHT">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <BorderPane.margin>
+                              <Insets bottom="10.0" />
+                           </BorderPane.margin>
+                        </DatePicker>
+                     </center>
+                     <top>
+                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="62.0" text="Fecha" textFill="#000000a6" BorderPane.alignment="CENTER_LEFT">
+                           <font>
+                              <Font name="Franklin Gothic Demi" size="20.0" />
+                           </font>
+                           <BorderPane.margin>
+                              <Insets left="15.0" />
+                           </BorderPane.margin>
+                        </Label>
+                     </top>
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </VBox.margin>
+                  </BorderPane>
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#searchSchedule" prefHeight="40.0" prefWidth="161.0" style="-fx-background-color: #8F57BB;" text="Buscar horarios" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+               <BorderPane.margin>
+                  <Insets top="15.0" />
+               </BorderPane.margin>
+            </VBox>
+         </left>
+         <right>
+            <VBox alignment="CENTER" prefHeight="408.0" prefWidth="898.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label prefHeight="46.0" prefWidth="273.0" text="Horarios disponibles">
+                     <font>
+                        <Font name="Franklin Gothic Book" size="30.0" />
+                     </font>
+                  </Label>
+                  <GridPane fx:id="gpSchedule" alignment="CENTER" prefHeight="324.0" prefWidth="765.0" style="-fx-background-color: #AFA9F3; -fx-background-radius: 20;">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="391.5999755859375" minWidth="10.0" prefWidth="391.5999755859375" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="398.0" minWidth="10.0" prefWidth="388.4000244140625" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="398.0" minWidth="10.0" prefWidth="388.4000244140625" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                  </GridPane>
+               </children>
+               <BorderPane.margin>
+                  <Insets top="15.0" />
+               </BorderPane.margin>
+            </VBox>
+         </right>
+      </BorderPane>
+   </center>
+   <top>
+      <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <children>
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#exit" prefHeight="40.0" prefWidth="78.0" style="-fx-background-color: #8F57BB;" text="Salir" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </HBox.margin>
+            </Button>
+            <Label alignment="CENTER" prefHeight="82.0" prefWidth="1087.0" text="Detalles de visita">
+               <font>
+                  <Font name="Franklin Gothic Demi" size="35.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+   </top>
+</BorderPane>
