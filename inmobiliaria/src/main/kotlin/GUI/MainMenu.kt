@@ -25,6 +25,8 @@ class MainMenu {
     private lateinit var tfSearchQuery: TextField
     @FXML
     private lateinit var btnAgregarPropiedad: Button
+    @FXML
+    private lateinit var btnAgenda: Button
 
 
     fun initialize(bpMain: BorderPane, account: Account, lbHeader: Label) {
@@ -37,6 +39,9 @@ class MainMenu {
 
         if (account.type == AccountType.CLIENT) {
             btnAgregarPropiedad.isVisible = false
+        }
+        else if (account.type == AccountType.AGENT) {
+            btnAgenda.isVisible = false
         }
     }
 
@@ -94,6 +99,25 @@ class MainMenu {
             val stage = bpMain.scene.window as Stage
             editAccountController.initialize(bpMain, mainPane, account, lbHeader)
             stage.title = "Lista propiedades"
+        }
+    }
+
+    @FXML fun openVisitSchedule () {
+        val fxmlLoader = FXMLLoader(javaClass.getResource("/FXML/VisitsSchedule.fxml"))
+        var pnVisitSchedule : Pane? = null
+        try {
+            pnVisitSchedule = fxmlLoader.load()
+        }
+        catch (error : IOException) {
+            PopUpAlert.showAlert("Error al cargar la agenda", Alert.AlertType.WARNING)
+        }
+        if (pnVisitSchedule != null) {
+            val visitScheduleController = fxmlLoader.getController<VisitScheduleController>()
+            this.lbHeader.text = "Agenda"
+            this.bpMain.center = pnVisitSchedule
+            val stage = bpMain.scene.window as Stage
+            visitScheduleController.initialize(bpMain, mainPane, account, lbHeader)
+            stage.title = "Agenda de visitas"
         }
     }
 }

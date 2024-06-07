@@ -73,7 +73,7 @@
             </HBox>
          </top>
          <bottom>
-            <GridPane fx:id="gpSchedule" alignment="CENTER" prefHeight="269.0" prefWidth="1000.0" style="-fx-background-color: #AFA9F3; -fx-background-radius: 20;" BorderPane.alignment="CENTER">
+            <GridPane fx:id="gpSchedule" alignment="CENTER" prefHeight="300.0" prefWidth="990.0" style="-fx-background-color: #AFA9F3; -fx-background-radius: 20;" BorderPane.alignment="CENTER">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="391.5999755859375" minWidth="10.0" prefWidth="391.5999755859375" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="398.0" minWidth="10.0" prefWidth="388.4000244140625" />
@@ -88,7 +88,7 @@
                   <Insets />
                </opaqueInsets>
                <BorderPane.margin>
-                  <Insets bottom="80.0" left="80.0" right="80.0" />
+                  <Insets bottom="50.0" left="80.0" right="80.0" />
                </BorderPane.margin>
             </GridPane>
          </bottom>
@@ -97,6 +97,9 @@
                <font>
                   <Font name="Franklin Gothic Book" size="30.0" />
                </font>
+               <BorderPane.margin>
+                  <Insets top="10.0" />
+               </BorderPane.margin>
             </Label>
          </center>
       </BorderPane>

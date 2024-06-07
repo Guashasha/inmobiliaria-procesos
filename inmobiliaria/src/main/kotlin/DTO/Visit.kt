@@ -4,15 +4,22 @@ import java.sql.Date
 import java.sql.ResultSet
 import java.sql.Time
 
+enum class VisitStatus {scheduled,cancelled,expired}
+
 class Visit (
     val id: UInt = 0U,
     val clientId: UInt,
     val propertyId: UInt,
-    val date: Date,
-    val time: Time
+    var date: Date,
+    var time: Time,
+    var visitStatus: VisitStatus
 ) {
     fun isValidForAdd () : Boolean {
-        return clientId > 0U && propertyId > 0U && date.toString().isNotBlank()
+        return clientId > 0U && propertyId > 0U && date.toString().isNotBlank() && time.toString().isNotBlank() && visitStatus == VisitStatus.scheduled
+    }
+
+    fun isValidForEdit(): Boolean {
+        return id > 0U && date.toString().isNotBlank() && time.toString().isNotBlank()
     }
 
     companion object {
@@ -22,8 +29,9 @@ class Visit (
             val property: UInt = result.getInt(3).toUInt()
             val date: Date = result.getDate(4)
             val time: Time = result.getTime(5)
+            val status= VisitStatus.valueOf(result.getString(6))
 
-            return Visit(id, client, property, date, time)
+            return Visit(id, client, property, date, time, status)
         }
     }
 }

@@ -62,7 +62,8 @@ CREATE TABLE `visit` (
   `clientId` int NOT NULL,
   `propertyId` int NOT NULL,
   `date` Date NOT NULL,
-  `time` time NOT NULL
+  `time` time NOT NULL,
+  `visitStatus` ENUM ('scheduled','cancelled','expired') NOT NULL 
 );
 
 ALTER TABLE `property` ADD FOREIGN KEY (`houseOwner`) REFERENCES `houseOwner` (`id`);
