@@ -1,4 +1,4 @@
-package GUI;
+package GUI
 
 import DTO.Account
 import DTO.AccountType
@@ -21,7 +21,7 @@ import main.kotlin.DAO.PropertyDAO
 import main.kotlin.DAO.PropertyResult
 import java.io.IOException
 
-class PropertyInfo {
+class AdminPropertyInfo {
     private lateinit var mainPane: BorderPane
     private lateinit var originalPane: Pane
     private lateinit var account: Account
@@ -54,29 +54,24 @@ class PropertyInfo {
         setPropertyData()
     }
 
-    fun scheduleVisit () {
-        if (account.type == AccountType.AGENT) {
-            PopUpAlert.showAlert("No puede agendar visitas siendo administrador",  Alert.AlertType.ERROR)
-            return
-        }
-
-        val fxmlLoader = FXMLLoader(javaClass.getResource("/FXML/ScheduleVisit.fxml"))
-        var bpScheduleVisit : BorderPane? = null
+    fun openModifyProperty () {
+        val fxmlLoader = FXMLLoader(javaClass.getResource("/FXML/ModifyProperty.fxml"))
+        var paneModifyProperty : Pane? = null
 
         try {
-            bpScheduleVisit = fxmlLoader.load()
+            paneModifyProperty = fxmlLoader.load()
         }
         catch (error : IOException) {
             PopUpAlert.showAlert("Error al cargar la ventana de información", Alert.AlertType.WARNING)
         }
 
-        if (bpScheduleVisit != null && property.id != null && account.id != null) {
-            val scheduleVisitController = fxmlLoader.getController<ScheduleVisitController>()
-            scheduleVisitController.initialize(mainPane,apRoot,lbHeader, property.id!!, account.id!!)
-            this.lbHeader.text = "Agenda"
-            mainPane.center = bpScheduleVisit
+        if (paneModifyProperty != null && property.id != null && account.id != null) {
+            val scheduleVisitController = fxmlLoader.getController<ModifyProperty>()
+            scheduleVisitController.initialize(mainPane, apRoot, lbHeader, property)
+            this.lbHeader.text = "Modificar datos de propiedad"
+            mainPane.center = paneModifyProperty
             val stage = mainPane.scene.window as Stage
-            stage.title = "Agendar visita a la propiedad"
+            stage.title = "Modificar datos de propiedad"
         }
     }
 

@@ -54,7 +54,7 @@
             </VBox>
             <VBox prefHeight="467.0" prefWidth="330.0" spacing="10.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Owner email" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email del dueño" />
                   <TextField fx:id="tfOwnerEmail" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo de inmueble" />
                   <ChoiceBox fx:id="cbPropertyType" prefHeight="26.0" prefWidth="200.0">

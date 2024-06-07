@@ -261,4 +261,5 @@ class PropertyDAO {
             PropertyResult.DBError(error.message.toString())
         }
     }
+
 }
