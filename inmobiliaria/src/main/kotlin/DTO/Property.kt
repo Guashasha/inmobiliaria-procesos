@@ -20,7 +20,7 @@ data class Property (
   val direction: String,
   val houseOwner: UInt,
   var action: PropertyAction,
-  var images: ArrayList<Image>?
+  var image: Image?
 ) {
   fun isValid (): Boolean {
     return  this.title.isNotBlank() &&
@@ -62,7 +62,7 @@ data class Property (
     result = 31 * result + direction.hashCode()
     result = 31 * result + houseOwner.hashCode()
     result = 31 * result + action.hashCode()
-    result = 31 * result + (images?.hashCode() ?: 0)
+    result = 31 * result + (image?.hashCode() ?: 0)
     return result
   }
 

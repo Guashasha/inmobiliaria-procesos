@@ -14,13 +14,8 @@ CREATE TABLE `property` (
   `state` ENUM ('available', 'occupied', 'suspended') NOT NULL,
   `direction` varchar(400) NOT NULL,
   `houseOwner` int NOT NULL,
-  `action` ENUM ('sell', 'rent') NOT NULL
-);
-
-CREATE TABLE `propertyPictures` (
-  `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `picture` blob NOT NULL,
-  `propertyId` int NOT NULL
+  `action` ENUM ('sell', 'rent') NOT NULL,
+  image blob
 );
 
 CREATE TABLE `houseOwner` (
@@ -67,8 +62,6 @@ CREATE TABLE `visit` (
 );
 
 ALTER TABLE `property` ADD FOREIGN KEY (`houseOwner`) REFERENCES `houseOwner` (`id`);
-
-ALTER TABLE `propertyPictures` ADD FOREIGN KEY (`propertyId`) REFERENCES `property` (`id`);
 
 ALTER TABLE `agent` ADD FOREIGN KEY (`accountId`) REFERENCES `account` (`id`);
 
