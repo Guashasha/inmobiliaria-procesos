@@ -5,7 +5,6 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-
 <AnchorPane prefHeight="568.0" prefWidth="798.0" styleClass="mainPane" stylesheets="@../Style/Pane.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ModifyProperty">
    <children>
       <VBox layoutX="60.0" layoutY="70.0" prefHeight="447.0" prefWidth="463.0" spacing="2.0" styleClass="informationPane" stylesheets="@../Style/Pane.css">
@@ -49,9 +48,9 @@
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
       </VBox>
-      <Button fx:id="btnSuspend" layoutX="585.0" layoutY="335.0" mnemonicParsing="false" styleClass="btnPrincipal" stylesheets="@../Style/ButtonStyle.css" text="Suspender inmueble" />
-      <Button layoutX="598.0" layoutY="415.0" mnemonicParsing="false" onAction="#updateProperty" styleClass="btnPrincipal" stylesheets="@../Style/ButtonStyle.css" text="Aceptar cambios" />
-      <Button fx:id="btnOccupy" layoutX="555.0" layoutY="258.0" mnemonicParsing="false" styleClass="btnPrincipal" stylesheets="@../Style/ButtonStyle.css" text="Marcar como vendido/rentado" />
+      <Button fx:id="btnSuspend" layoutX="555.0" layoutY="380.0" mnemonicParsing="false" styleClass="btnPrincipal" stylesheets="@../Style/ButtonStyle.css" text="Suspender inmueble" />
+      <Button layoutX="555.0" layoutY="415.0" mnemonicParsing="false" onAction="#updateProperty" styleClass="btnPrincipal" stylesheets="@../Style/ButtonStyle.css" text="Aceptar cambios" />
+      <Button fx:id="btnOccupy" layoutX="555.0" layoutY="343.0" mnemonicParsing="false" styleClass="btnPrincipal" stylesheets="@../Style/ButtonStyle.css" text="Marcar como vendido/rentado" />
       <Button layoutX="25.0" layoutY="25.0" mnemonicParsing="false" onAction="#volverAInformacion" styleClass="btnSecondary" stylesheets="@../Style/ButtonStyle.css" text="Regresar" />
    </children>
 </AnchorPane>

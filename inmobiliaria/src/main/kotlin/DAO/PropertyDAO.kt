@@ -215,14 +215,13 @@ class PropertyDAO {
         }
     }
 
-    fun addImage (propertyId: UInt, image: File): PropertyResult {
+    fun addImage (image: File): PropertyResult {
         val imageStream = FileInputStream(image)
 
         return try {
-            val query = dbConnection.prepareStatement("INSERT INTO propertyPictures (picture, propertyId) VALUES (?, ?);")
+            val query = dbConnection.prepareStatement("UPDATE property SET image=?;")
 
             query.setBinaryStream(1, imageStream, image.length())
-            query.setInt(2, propertyId.toInt())
 
             if (query.executeUpdate() < 1) {
                 PropertyResult.Failure()
