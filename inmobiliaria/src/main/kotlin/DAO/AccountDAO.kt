@@ -62,13 +62,14 @@ class AccountDAO {
             val dbConnection = DataBaseConnection().connection
 
             val query =
-                dbConnection.prepareStatement("UPDATE account SET name=?, type=?, email=?, phone=?, password=? where id=?;")
+                dbConnection.prepareStatement("UPDATE account SET name=?, type=?, email=?, phone=? where id=?;")
 
             query.setString(1, account.name)
             query.setString(2, account.type.toString())
             query.setString(3, account.email)
             query.setString(4, account.phone)
             query.setInt(5, account.id.toInt())
+            //query.setString(6, account.password)
 
             if (query.executeUpdate() > 0) {
                 AccountResult.Success()

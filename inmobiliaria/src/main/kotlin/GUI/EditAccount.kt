@@ -50,14 +50,12 @@ class EditAccount {
         val name = if (tfName.text.isNullOrBlank()) this.account.name else tfName.text
         val numberPhone = if (tfNumber.text.isNullOrBlank()) this.account.phone else tfNumber.text
         val email = if (tfEmail.text.isNullOrBlank()) this.account.email else tfEmail.text
-        var password = this.account.password
-        if (pwPassword.text.isNullOrBlank()) {
-            if (!pwPassword.text.equals(pwReapeatPassword.text)) {
-                throw IllegalArgumentException("Las contraseñas no son iguales")
-            }
-            validatePasswordSecurity(pwPassword.text)
-            password = pwPassword.text
-        }
+
+//        if (pwPassword.text.equals(pwReapeatPassword)) {
+//            throw IllegalArgumentException("Las contraseñas no son iguales");
+//        }
+//        val password = if (pwPassword.text.isNullOrBlank()) this.account.password else pwPassword.text
+
 
         val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$".toRegex()
         if (!email.matches(emailRegex)) {
@@ -70,7 +68,7 @@ class EditAccount {
             phone = numberPhone,
             email = email,
             type = this.account.type,
-            password = password
+            password = null
         )
     }
 
@@ -152,7 +150,7 @@ class EditAccount {
 
     @FXML
     fun backArrow() {
-        if (isAcepted("¿Seguro que desea salir? Los cambios no se realizarán"))
+        //if (isAcepted("¿Seguro que desea salir? Los cambios no se realizarán"))
             backToMainMenu()
     }
 

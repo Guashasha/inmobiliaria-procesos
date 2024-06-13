@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -52,18 +51,6 @@
                   <Font size="16.0" />
                </font></Button>
             <Button fx:id="btnEliminar" layoutX="70.0" layoutY="429.0" mnemonicParsing="false" onAction="#deleteAccount" prefHeight="38.0" prefWidth="102.0" style="-fx-background-color: transparent;" styleClass="btnSecondary" stylesheets="@../Style/ButtonStyle.css" text="Eliminar cuenta" textAlignment="CENTER" />
-            <PasswordField fx:id="pwPassword" layoutX="67.0" layoutY="350.0" prefHeight="25.0" prefWidth="298.0" promptText="Contraseña" styleClass="textFieldDataAccount" stylesheets="@../Style/Pane.css" />
-            <PasswordField fx:id="pwReapeatPassword" layoutX="396.0" layoutY="350.0" promptText="Confirmar contraseña" styleClass="textFieldDataAccount" stylesheets="@../Style/Pane.css" />
-            <Label layoutX="70.0" layoutY="319.0" text="Contraseña">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="16.0" />
-               </font>
-            </Label>
-            <Label layoutX="396.0" layoutY="319.0" text="Confirmar contraseña">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="16.0" />
-               </font>
-            </Label>
          </children>
       </Pane>
    </children>

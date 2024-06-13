@@ -66,7 +66,7 @@ class CreateAccount {
 
         val password = fields["Contraseña"]
         if (password != null) {
-            validatePasswordSecurity(password)
+            //validatePasswordSecurity(password)
         }
 
         val repeatPassword = fields["Repetir contraseña"]
@@ -88,12 +88,12 @@ class CreateAccount {
         }
     }
 
-    private fun validatePasswordSecurity(password: String) {
-        val passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,}$".toRegex()
-        if (!password.matches(passwordRegex)) {
-            throw IllegalArgumentException("La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un carácter especial")
-        }
-    }
+//    private fun validatePasswordSecurity(password: String) {
+//        val passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,}$".toRegex()
+//        if (!password.matches(passwordRegex)) {
+//            throw IllegalArgumentException("La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un carácter especial")
+//        }
+//    }
 
     private fun getData(): Account {
         validateFields()
