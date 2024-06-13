@@ -17,6 +17,7 @@ sealed class PropertyResult (val message: String) {
     class OwnerFound(val houseOwner: HouseOwner): PropertyResult("Se encontró el propietario")
     class FoundList<T>(val list: List<T>): PropertyResult("Se encontraron multiples propiedades")
     class Found(val property: Property): PropertyResult("Se encontró la propiedad")
+    class FoundImage(val image: Image): PropertyResult("Se encontró ninguna imagen")
     class NotFound: PropertyResult("La propiedad a buscar no existe")
     class DBError(private val errorMessage: String): PropertyResult(errorMessage)
     class WrongProperty: PropertyResult("Los datos de la propiedad son incorrectos")
@@ -215,13 +216,14 @@ class PropertyDAO {
         }
     }
 
-    fun addImage (image: File): PropertyResult {
+    fun addImage (image: File, propertyId: Int): PropertyResult {
         val imageStream = FileInputStream(image)
 
         return try {
-            val query = dbConnection.prepareStatement("UPDATE property SET image=?;")
+            val query = dbConnection.prepareStatement("UPDATE property SET image=? WHERE id=?;")
 
             query.setBinaryStream(1, imageStream, image.length())
+            query.setInt(2, propertyId);
 
             if (query.executeUpdate() < 1) {
                 PropertyResult.Failure()
@@ -235,26 +237,21 @@ class PropertyDAO {
         }
     }
 
-    fun getImages (propertyId: UInt): PropertyResult {
-        val pictures = ArrayList<Image>()
-
+    fun getImage (propertyId: UInt): PropertyResult {
         return try {
-            val query = dbConnection.prepareStatement("SELECT picture FROM propertyPictures WHERE propertyId=?;")
+            val query = dbConnection.prepareStatement("SELECT image FROM property WHERE id=?;")
 
             query.setInt(1, propertyId.toInt())
 
             val result = query.executeQuery()
+            var image: Image? = null
 
-            while (result.next()) {
-                val bufferedImage = ImageIO.read(result.getBinaryStream(1))
-                val image: Image = SwingFXUtils.toFXImage(bufferedImage, null)
-                pictures.add(image)
+            if (result.next()) {
+                val bufferedImage = ImageIO.read(result.getBinaryStream(1)?: return PropertyResult.NotFound())
+                image = SwingFXUtils.toFXImage(bufferedImage, null)
             }
 
-            if (pictures.isEmpty())
-                PropertyResult.NotFound()
-            else
-                PropertyResult.FoundList(pictures)
+            PropertyResult.FoundImage(image!!)
         }
         catch (error: SQLException) {
             PropertyResult.DBError(error.message.toString())

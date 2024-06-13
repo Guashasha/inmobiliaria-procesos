@@ -13,8 +13,8 @@ import javafx.scene.layout.GridPane
 import javafx.scene.layout.Pane
 import main.kotlin.DAO.PropertyDAO
 import main.kotlin.DAO.PropertyResult
-import main.kotlin.DTO.Visit
-import main.kotlin.DTO.VisitStatus
+import DTO.Visit
+import DTO.VisitStatus
 import java.io.IOException
 import java.sql.Date
 import java.sql.Time
@@ -80,7 +80,7 @@ class EditVisitController {
             val visitDao = VisitDAO()
             when (val visitResult = visitDao.getUnavailableVisits(this.visit.propertyId,Date.valueOf(selectedDate))) {
                 is VisitResult.FoundList -> showSchedule(visitResult.visits)
-                is VisitResult.DBError -> showAlert(visitResult.message, Alert.AlertType.ERROR)
+                is VisitResult.DBError -> showAlert("Error al establecer conexión con la base de datos", Alert.AlertType.ERROR)
                 is VisitResult.Failure -> showAlert(visitResult.message, Alert.AlertType.ERROR)
                 else -> showAlert("Algo salió mal. Contacte a un técnico", Alert.AlertType.ERROR)
             }
@@ -108,14 +108,14 @@ class EditVisitController {
     private fun changeExpiredVisit () {
         this.visit.visitStatus = VisitStatus.expired
         val visitDao = VisitDAO()
-        when (val visitResult = visitDao.edit(this.visit)) {
+        when (visitDao.edit(this.visit)) {
             is VisitResult.Success -> {
                 showAlert("La visita ha expirado. No puedes cancelarla",Alert.AlertType.INFORMATION)
                 exit()
             }
             is VisitResult.WrongVisit -> showAlert("Ah ocurrido un error. Reinicie la aplicación",Alert.AlertType.WARNING)
             is VisitResult.Failure -> showAlert("Ah ocurrido un error. Reinicie la aplicación",Alert.AlertType.ERROR)
-            is VisitResult.DBError -> showAlert(visitResult.message, Alert.AlertType.ERROR)
+            is VisitResult.DBError -> showAlert("Error al establecer conexión con la base de datos", Alert.AlertType.ERROR)
             else -> showAlert("Ah ocurrido un error. Contacte a un técnico",Alert.AlertType.ERROR)
         }
     }
@@ -130,7 +130,7 @@ class EditVisitController {
             }
             is VisitResult.Failure -> showAlert("Algo salió mal. Reinicie la aplicación",Alert.AlertType.WARNING)
             is VisitResult.WrongVisit -> showAlert("Algo salió mal al intentar cancelar la visita", Alert.AlertType.ERROR)
-            is VisitResult.DBError -> showAlert(visitResult.message,Alert.AlertType.ERROR)
+            is VisitResult.DBError -> showAlert("Error al establecer conexión con la base de datos",Alert.AlertType.ERROR)
             else -> showAlert("Algo salió mal. Contacte con un técnico",Alert.AlertType.ERROR)
         }
     }

@@ -1,3 +1,5 @@
+insert into account (name, type, email, phone, password) values ("admin", "agent", "david@hotmail.com", "2255447788", "contrasena");
+
 insert into houseOwner (name, email, phone) values ("david carrion", "davidcarrion@hotmail.com", "2288554477");
 insert into account (name, type, email, phone, password) values ("pale molina", "client", "pale@hotmail.com", "2255447788", "habitacionDeVuelo");
 

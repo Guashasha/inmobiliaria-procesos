@@ -7,6 +7,8 @@ import DTO.PropertyType
 import GUI.Utility.PopUpAlert
 import javafx.application.Application
 import javafx.application.Application.launch
+import javafx.beans.value.ChangeListener
+import javafx.beans.value.ObservableValue
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
 import javafx.geometry.Insets
@@ -15,7 +17,7 @@ import javafx.scene.Scene
 import javafx.scene.control.Alert
 import javafx.scene.control.Button
 import javafx.scene.control.Label
-import javafx.scene.image.Image
+import javafx.scene.control.ScrollBar
 import javafx.scene.image.ImageView
 import javafx.scene.layout.*
 import javafx.scene.text.Text
@@ -36,6 +38,8 @@ class PropertyList : Application() {
 
     @FXML
     lateinit var vboxProperties: VBox
+    @FXML
+    lateinit var scroll: ScrollBar
 
     private var query: String? = null
     private var propertyType: PropertyType = PropertyType.all
@@ -69,10 +73,10 @@ class PropertyList : Application() {
 
     private fun getImages (property: Property) {
         val dao = PropertyDAO()
-        val result = dao.getImages(property.id!!)
+        val result = dao.getImage(property.id!!)
 
-        property.images = when (result) {
-            is PropertyResult.FoundList<*> -> result.list as ArrayList<Image>
+        property.image = when (result) {
+            is PropertyResult.FoundImage -> result.image
             else -> null
         }
     }
@@ -89,7 +93,7 @@ class PropertyList : Application() {
 
             getImages(property)
             val image = ImageView()
-            image.image = property.images?.first()
+            image.image = property.image
 
             val info = VBox()
             info.spacing = 10.0

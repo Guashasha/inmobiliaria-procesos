@@ -12,7 +12,7 @@ import javafx.scene.layout.Pane
 import javafx.scene.layout.VBox
 import main.kotlin.DAO.PropertyDAO
 import main.kotlin.DAO.PropertyResult
-import main.kotlin.DTO.Visit
+import DTO.Visit
 import java.io.IOException
 
 class VisitScheduleController {
