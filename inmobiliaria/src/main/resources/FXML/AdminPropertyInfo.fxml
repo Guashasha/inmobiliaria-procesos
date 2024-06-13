@@ -37,7 +37,7 @@
                   <Font name="System Bold" size="26.0" />
                </font>
             </Text>
-            <Button fx:id="btnModifyProperty" mnemonicParsing="false" onAction="#openModifyProperty" prefHeight="44.0" prefWidth="180.0" styleClass="btnPrincipal" stylesheets="@../Style/ButtonStyle.css" text="Modificar propiedad">
+            <Button fx:id="btnModifyProperty" mnemonicParsing="false" onAction="#openModifyProperty" prefHeight="44.0" prefWidth="219.0" styleClass="btnPrincipal" stylesheets="@../Style/ButtonStyle.css" text="Modificar propiedad">
                <font>
                   <Font size="18.0" />
                </font>
