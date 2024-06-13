@@ -38,19 +38,19 @@
                      <center>
                         <VBox prefHeight="88.0" prefWidth="486.0" BorderPane.alignment="CENTER">
                            <children>
-                              <Label fx:id="lbShortDescription" prefHeight="79.0" prefWidth="502.0" text="Descripción" wrapText="true">
+                              <Label fx:id="lbShortDescription" prefHeight="66.0" prefWidth="498.0" text="Descripción" wrapText="true">
                                  <font>
                                     <Font name="Franklin Gothic Book" size="20.0" />
                                  </font>
                               </Label>
-                              <HBox>
+                              <HBox prefHeight="63.0" prefWidth="498.0">
                                  <children>
-                                    <Label prefHeight="45.0" prefWidth="178.0" text="Dirección: ">
+                                    <Label prefHeight="34.0" prefWidth="174.0" text="Dirección: ">
                                        <font>
                                           <Font name="Franklin Gothic Demi Cond" size="20.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="lbAddress" prefHeight="45.0" prefWidth="503.0" text="Dirección">
+                                    <Label fx:id="lbAddress" prefHeight="60.0" prefWidth="508.0" text="Dirección" wrapText="true">
                                        <font>
                                           <Font name="Franklin Gothic Book" size="20.0" />
                                        </font>

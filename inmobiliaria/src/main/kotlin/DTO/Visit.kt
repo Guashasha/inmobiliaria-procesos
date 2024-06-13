@@ -1,4 +1,4 @@
-package main.kotlin.DTO
+package DTO
 
 import java.sql.Date
 import java.sql.ResultSet

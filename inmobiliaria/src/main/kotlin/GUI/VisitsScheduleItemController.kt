@@ -10,8 +10,8 @@ import javafx.scene.control.Button
 import javafx.scene.control.Label
 import javafx.scene.layout.BorderPane
 import javafx.scene.layout.Pane
-import main.kotlin.DTO.Visit
-import main.kotlin.DTO.VisitStatus
+import DTO.Visit
+import DTO.VisitStatus
 import java.io.IOException
 import java.time.LocalDate
 import java.sql.Date
@@ -32,7 +32,7 @@ class VisitsScheduleItemController {
     private lateinit var visitScheduleController: VisitScheduleController
     private lateinit var visit: Visit
 
-    fun initialize (property : Property,visit: Visit,bpMain: BorderPane,lastPane: Pane,lbHeader: Label,visitScheduleController: VisitScheduleController) {
+    fun initialize (property : Property, visit: Visit, bpMain: BorderPane, lastPane: Pane, lbHeader: Label, visitScheduleController: VisitScheduleController) {
         this.visit = visit
         this.bpMain = bpMain
         this.lastPane = lastPane
@@ -76,7 +76,7 @@ class VisitsScheduleItemController {
     private fun changeExpiredVisit () {
         this.visit.visitStatus = VisitStatus.expired
         val visitDao = VisitDAO()
-        when (val visitResult = visitDao.edit(this.visit)) {
+        when (visitDao.edit(this.visit)) {
             is VisitResult.Success -> {
                 this.btnConfigurar.isVisible = false
                 this.lbStatus.text = "Expirada"
@@ -84,7 +84,7 @@ class VisitsScheduleItemController {
             }
             is VisitResult.WrongVisit -> showAlert("Ah ocurrido un error. Reinicie la aplicación",Alert.AlertType.WARNING)
             is VisitResult.Failure -> showAlert("Ah ocurrido un error. Reinicie la aplicación",Alert.AlertType.ERROR)
-            is VisitResult.DBError -> showAlert(visitResult.message, Alert.AlertType.ERROR)
+            is VisitResult.DBError -> showAlert("Error al establecer conexión con la base de datos", Alert.AlertType.ERROR)
             else -> showAlert("Ah ocurrido un error. Contacte a un técnico",Alert.AlertType.ERROR)
         }
     }

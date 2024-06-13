@@ -1,7 +1,7 @@
 package DAO
 
 import DataAccess.DataBaseConnection
-import main.kotlin.DTO.Visit
+import DTO.Visit
 import java.sql.Date
 import java.sql.SQLException
 
@@ -16,14 +16,13 @@ sealed class VisitResult (val message: String) {
 }
 
 class VisitDAO {
-    private val dbConnection = DataBaseConnection().connection
-
     fun getUnavailableVisits (idProperty : UInt, date : Date) : VisitResult {
         if (idProperty == 0U) return VisitResult.Failure()
 
         val unavailableVisitsList = ArrayList<Visit>()
 
         return try {
+            val dbConnection = DataBaseConnection().connection
             val query = dbConnection.prepareStatement("SELECT * FROM visit WHERE propertyid = ? AND date = ? AND visitStatus = 'scheduled'")
             query.setInt(1,idProperty.toInt())
             query.setDate(2,date)
@@ -32,6 +31,7 @@ class VisitDAO {
 
             while (result.next()) unavailableVisitsList.add(Visit.fromResultSet(result))
 
+            dbConnection.close()
             VisitResult.FoundList(unavailableVisitsList)
         }
         catch (error: SQLException) {
@@ -43,6 +43,7 @@ class VisitDAO {
         if (!visit.isValidForAdd()) return VisitResult.Failure()
 
         return try {
+            val dbConnection = DataBaseConnection().connection
             val query = dbConnection.prepareStatement("INSERT INTO visit (clientId,propertyId,date,time,visitStatus) VALUES (?,?,?,?,?)")
             query.setInt(1,visit.clientId.toInt())
             query.setInt(2,visit.propertyId.toInt())
@@ -61,6 +62,7 @@ class VisitDAO {
         if (!visit.isValidForEdit()) return VisitResult.Failure()
 
         return try {
+            val dbConnection = DataBaseConnection().connection
             val query = dbConnection.prepareStatement("UPDATE visit SET date = ?, time = ?, visitStatus = ? WHERE id = ?")
             query.setDate(1,visit.date)
             query.setTime(2,visit.time)
@@ -78,6 +80,7 @@ class VisitDAO {
         if (idClient == 0U || idProperty == 0U) return VisitResult.Failure()
 
         return try {
+            val dbConnection = DataBaseConnection().connection
             val query = dbConnection.prepareStatement("SELECT * FROM visit WHERE clientId = ? AND propertyId = ? AND visitStatus = 'scheduled'")
             query.setInt(1,idClient.toInt())
             query.setInt(2,idProperty.toInt())
@@ -95,6 +98,7 @@ class VisitDAO {
         if (visitId == 0U) return VisitResult.Failure()
 
         return try {
+            val dbConnection = DataBaseConnection().connection
             val query = dbConnection.prepareStatement("SELECT * FROM visit WHERE id = ?")
             query.setInt(1,visitId.toInt())
 
@@ -103,7 +107,7 @@ class VisitDAO {
             if (result.next()) VisitResult.FoundVisit(Visit.fromResultSet(result)) else VisitResult.NotFound()
         }
         catch (error: SQLException) {
-            VisitResult.DBError(error.message.toString())
+            VisitResult.DBError("Error al establecer conexión con la base de datos")
         }
     }
 
@@ -112,6 +116,7 @@ class VisitDAO {
 
         val visitsList = ArrayList<Visit>()
         return try {
+            val dbConnection = DataBaseConnection().connection
             val query = dbConnection.prepareStatement("SELECT * FROM visit WHERE clientId = ?")
             query.setInt(1,idClient.toInt())
 
@@ -122,7 +127,7 @@ class VisitDAO {
             VisitResult.FoundList(visitsList)
         }
         catch (error: SQLException) {
-            VisitResult.DBError(error.message.toString())
+            VisitResult.DBError("Error al establecer conexión con la base de datos")
         }
     }
 }

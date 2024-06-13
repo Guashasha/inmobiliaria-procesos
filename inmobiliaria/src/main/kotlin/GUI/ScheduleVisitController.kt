@@ -11,7 +11,7 @@ import javafx.scene.control.Label
 import javafx.scene.layout.BorderPane
 import javafx.scene.layout.GridPane
 import javafx.scene.layout.Pane
-import main.kotlin.DTO.Visit
+import DTO.Visit
 import java.io.IOException
 import java.sql.Date
 import java.time.LocalDate
@@ -60,7 +60,7 @@ class ScheduleVisitController {
         if (selectedDate != null) {
             when (val visitResult = visitDao.getUnavailableVisits(propertyId,Date.valueOf(selectedDate))) {
                 is VisitResult.FoundList -> showSchedule(visitResult.visits)
-                is VisitResult.DBError -> showAlert(visitResult.message,AlertType.ERROR)
+                is VisitResult.DBError -> showAlert("Error al establecer conexión con la base de datos",AlertType.ERROR)
                 is VisitResult.Failure -> showAlert(visitResult.message,AlertType.ERROR)
                 else -> showAlert("Algo salió mal. Contacte a un técnico",AlertType.ERROR)
             }

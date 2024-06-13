@@ -5,8 +5,8 @@ import DAO.VisitResult
 import javafx.fxml.FXML
 import javafx.scene.control.Alert
 import javafx.scene.control.Label
-import main.kotlin.DTO.Visit
-import main.kotlin.DTO.VisitStatus
+import DTO.Visit
+import DTO.VisitStatus
 import java.sql.Date
 import java.sql.Time
 import java.time.LocalDate
@@ -20,7 +20,7 @@ class EditVisitItemController {
     private lateinit var editVisitController : EditVisitController
     private lateinit var visit: Visit
 
-    fun initialize (time: String,visit: Visit,date: Date,editVisitController: EditVisitController) {
+    fun initialize (time: String, visit: Visit, date: Date, editVisitController: EditVisitController) {
         this.visit = visit
         this.date = date
         this.time = Time.valueOf(time)
@@ -41,7 +41,7 @@ class EditVisitItemController {
                 }
                 is VisitResult.WrongVisit -> showAlert("Ah ocurrido un error. Reinicie la aplicación",Alert.AlertType.WARNING)
                 is VisitResult.Failure -> showAlert("Ah ocurrido un error. Reinicie la aplicación",Alert.AlertType.ERROR)
-                is VisitResult.DBError -> showAlert(visitResult.message, Alert.AlertType.ERROR)
+                is VisitResult.DBError -> showAlert("Error al establecer conexión con la base de datos", Alert.AlertType.ERROR)
                 else -> showAlert("Ah ocurrido un error. Contacte a un técnico",Alert.AlertType.ERROR)
             }
         }
@@ -69,7 +69,7 @@ class EditVisitItemController {
             }
             is VisitResult.WrongVisit -> showAlert("Ah ocurrido un error. Reinicie la aplicación",Alert.AlertType.WARNING)
             is VisitResult.Failure -> showAlert("Ah ocurrido un error. Reinicie la aplicación",Alert.AlertType.ERROR)
-            is VisitResult.DBError -> showAlert(visitResult.message, Alert.AlertType.ERROR)
+            is VisitResult.DBError -> showAlert("Error al establecer conexión con la base de datos", Alert.AlertType.ERROR)
             else -> showAlert("Ah ocurrido un error. Contacte a un técnico",Alert.AlertType.ERROR)
         }
     }
