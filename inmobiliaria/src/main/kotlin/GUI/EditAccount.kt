@@ -7,10 +7,7 @@ import DTO.AccountType
 import GUI.Utility.PopUpAlert
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
-import javafx.scene.control.Alert
-import javafx.scene.control.Button
-import javafx.scene.control.Label
-import javafx.scene.control.TextField
+import javafx.scene.control.*
 import javafx.scene.layout.BorderPane
 import javafx.scene.layout.Pane
 import javafx.stage.Stage
@@ -38,6 +35,7 @@ class EditAccount {
         tfName.promptText = this.account.name
         tfEmail.promptText = this.account.email
         tfNumber.promptText = this.account.phone
+        configurePhoneNumberField()
     }
 
 
@@ -45,6 +43,11 @@ class EditAccount {
         val name = if (tfName.text.isNullOrBlank()) this.account.name else tfName.text
         val numberPhone = if (tfNumber.text.isNullOrBlank()) this.account.phone else tfNumber.text
         val email = if (tfEmail.text.isNullOrBlank()) this.account.email else tfEmail.text
+
+        val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$".toRegex()
+        if (!email.matches(emailRegex)) {
+            throw IllegalArgumentException("El correo electrónico no es válido")
+        }
 
         return Account(
             id = this.account.id,
@@ -56,38 +59,57 @@ class EditAccount {
         )
     }
 
-    @FXML
-    fun HandleSave() {
-        val modifyAccount = getData()
-        val accountDAO = AccountDAO()
-        val result = accountDAO.modify(modifyAccount)
-        when (result) {
-            is AccountResult.DBError -> {
-                PopUpAlert.showAlert("Error en la conexión en la base de datos", Alert.AlertType.ERROR)
-            }
-
-            is AccountResult.Failure -> {
-                PopUpAlert.showAlert(
-                    "El correo electrónico ya esta registrado, por favor ingrese otro distinto",
-                    Alert.AlertType.WARNING
-                )
-            }
-
-            is AccountResult.Success -> {
-                PopUpAlert.showAlert("Se modificarón los datos de la cuenta exitosamente", Alert.AlertType.INFORMATION)
-                this.account = modifyAccount
-                setLabel()
-            }
-
-            is AccountResult.WrongAccount -> {
-                PopUpAlert.showAlert("Error en el id de la cuenta", Alert.AlertType.ERROR)
-            }
-
-            else -> {
-                PopUpAlert.showAlert("Error desconocido", Alert.AlertType.ERROR)
+    private fun configurePhoneNumberField() {
+        tfNumber.textFormatter = TextFormatter<String> { change ->
+            val newText = change.controlNewText
+            if (newText.matches(Regex("[0-9]*")) && newText.length <= 10) {
+                change
+            } else {
+                null
             }
         }
+    }
 
+    @FXML
+    fun HandleSave() {
+        if (isAcepted("¿Seguro que desea modificar su cuenta?")) {
+            try {
+                val modifyAccount = getData()
+                val accountDAO = AccountDAO()
+                val result = accountDAO.modify(modifyAccount)
+                when (result) {
+                    is AccountResult.DBError -> {
+                        PopUpAlert.showAlert("Error en la conexión en la base de datos", Alert.AlertType.ERROR)
+                    }
+
+                    is AccountResult.Failure -> {
+                        PopUpAlert.showAlert(
+                            "El correo electrónico ya esta registrado, por favor ingrese otro distinto",
+                            Alert.AlertType.WARNING
+                        )
+                    }
+
+                    is AccountResult.Success -> {
+                        PopUpAlert.showAlert(
+                            "Se modificarón los datos de la cuenta exitosamente",
+                            Alert.AlertType.INFORMATION
+                        )
+                        this.account = modifyAccount
+                        setLabel()
+                    }
+
+                    is AccountResult.WrongAccount -> {
+                        PopUpAlert.showAlert("Error en el id de la cuenta", Alert.AlertType.ERROR)
+                    }
+
+                    else -> {
+                        PopUpAlert.showAlert("Error desconocido", Alert.AlertType.ERROR)
+                    }
+                }
+            } catch (e: IllegalArgumentException) {
+                PopUpAlert.showAlert(e.message ?: "", Alert.AlertType.ERROR)
+            }
+        }
     }
 
     fun initialize(bpMain: BorderPane, mainAnchorPaneMenu: Pane, account: Account, lbHeader: Label) {
@@ -112,10 +134,9 @@ class EditAccount {
             backToMainMenu()
     }
 
-    private fun isAcepted(contenido : String): Boolean {
+    private fun isAcepted(contenido: String): Boolean {
         return PopUpAlert.showConfirmationDialog(contenido)
     }
-
 
 
     @FXML
