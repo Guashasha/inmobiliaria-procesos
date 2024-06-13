@@ -33,11 +33,6 @@
                   <Insets right="150.0" />
                </HBox.margin>
             </Label>
-            <ImageView fitHeight="96.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true" smooth="false">
-               <image>
-                  <Image url="@../Image/UserProfile_icon.png" />
-               </image>
-            </ImageView>
          </children>
       </HBox>
    </top>

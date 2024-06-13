@@ -31,25 +31,78 @@ class CreateAccount {
     fun initialize(mainPane: BorderPane, originalPane: Pane) {
         this.mainPane = mainPane
         this.originalPane = originalPane
+        configurePhoneNumberField()
     }
 
-    private fun getData(): Account {
-        val name = tfName.text
-        val lastName = tfLastName.text
-        val email = tfEmail.text
-
-        val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$".toRegex()
-
-        if (!email.matches(emailRegex)) {
-            throw IllegalArgumentException("El correo electrónico no es válido")
+    private fun configurePhoneNumberField() {
+        tfPhoneNumber.textFormatter = TextFormatter<String> { change ->
+            val newText = change.controlNewText
+            if (newText.matches(Regex("[0-9]*")) && newText.length <= 10) {
+                change
+            } else {
+                null
+            }
         }
-        val phoneNumber = tfPhoneNumber.text
-        val password = pwPassword.text
-        val repeatPassword = pwRepeatPassword.text
+    }
 
+    private fun validateFields() {
+        val fields = mapOf(
+            "Nombre" to tfName.text.trim(),
+            "Apellido" to tfLastName.text.trim(),
+            "Correo electrónico" to tfEmail.text.trim(),
+            "Número de teléfono" to tfPhoneNumber.text.trim(),
+            "Contraseña" to pwPassword.text,
+            "Repetir contraseña" to pwRepeatPassword.text
+        )
+
+        for ((fieldName, fieldValue) in fields) {
+            validateField(fieldValue, fieldName)
+        }
+
+        val email = fields["Correo electrónico"]
+        if (email != null) {
+            validateEmail(email)
+        }
+
+        val password = fields["Contraseña"]
+        if (password != null) {
+            validatePasswordSecurity(password)
+        }
+
+        val repeatPassword = fields["Repetir contraseña"]
         if (password != repeatPassword) {
             throw IllegalArgumentException("Las contraseñas no coinciden")
         }
+    }
+
+    private fun validateField(field: String, fieldName: String) {
+        if (field.isBlank()) {
+            throw IllegalArgumentException("El campo $fieldName no puede estar vacío")
+        }
+    }
+
+    private fun validateEmail(email: String) {
+        val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$".toRegex()
+        if (!email.matches(emailRegex)) {
+            throw IllegalArgumentException("El correo electrónico no es válido")
+        }
+    }
+
+    private fun validatePasswordSecurity(password: String) {
+        val passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,}$".toRegex()
+        if (!password.matches(passwordRegex)) {
+            throw IllegalArgumentException("La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un carácter especial")
+        }
+    }
+
+    private fun getData(): Account {
+        validateFields()
+
+        val name = tfName.text.trim()
+        val lastName = tfLastName.text.trim()
+        val email = tfEmail.text.trim()
+        val phoneNumber = tfPhoneNumber.text.trim()
+        val password = pwPassword.text
 
         val accountType = AccountType.CLIENT
 
@@ -62,6 +115,7 @@ class CreateAccount {
             password = password
         )
     }
+
 
     @FXML
     fun handleConfirm() {
