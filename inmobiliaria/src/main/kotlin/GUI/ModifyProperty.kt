@@ -56,14 +56,17 @@ class ModifyProperty {
     private fun updateButtons () {
         when (property.state) {
             PropertyState.available -> {
+                btnOccupy.text = "Marcar propiedad como ocupada"
                 btnOccupy.setOnAction { run {
                     changePropertyToOccupied()
                 }}
+                btnSuspend.text = "Marcar propiedad como supendida"
                 btnSuspend.setOnAction { run {
                     changePropertyToSuspended()
                 }}
             }
             PropertyState.occupied -> {
+                btnOccupy.text = "Marcar propiedad como disponible"
                 btnOccupy.setOnAction { run {
                     changePropertyToAvailable()
                 }}
@@ -71,6 +74,7 @@ class ModifyProperty {
             }
             PropertyState.suspended -> {
                 btnOccupy.isDisable = true
+                btnSuspend.text = "Marcar propiedad como disponible"
                 btnSuspend.setOnAction { run {
                     changePropertyToAvailable()
                 } }
@@ -92,6 +96,8 @@ class ModifyProperty {
             is PropertyResult.WrongProperty -> PopUpAlert.showAlert("Los datos ingresados para la propiedad son incorrectos", Alert.AlertType.WARNING)
             else -> PopUpAlert.showAlert("Ocurrió un error inesperado, intente de nuevo", Alert.AlertType.ERROR)
         }
+
+        updateButtons()
     }
 
     private fun createProperty (): Property? {
@@ -129,7 +135,31 @@ class ModifyProperty {
     }
 
     private fun changePropertyToSuspended () {
-        TODO()
+        when (this.property.state) {
+            PropertyState.occupied -> {
+                PopUpAlert.showAlert("No puede suspender la propiedad mientras está ocupada", Alert.AlertType.WARNING)
+            }
+            PropertyState.suspended -> {
+                PopUpAlert.showAlert("La propiedad ya se encuentra suspendida", Alert.AlertType.WARNING)
+            }
+            else -> {
+                property.state = PropertyState.suspended
+                val dao = PropertyDAO()
+
+                val result = dao.modify(this.property)
+
+                when (result) {
+                    is PropertyResult.DBError -> PopUpAlert.showAlert("No pudimos conectarnos con nuestros servicios, intentelo de nuevo más tarde", Alert.AlertType.ERROR)
+                    is PropertyResult.Failure -> PopUpAlert.showAlert("No se pudo modificar la propiedad, intente de nuevo", Alert.AlertType.ERROR)
+                    is PropertyResult.NotFound -> PopUpAlert.showAlert("Hubo un error al buscar la propiedad a modificar", Alert.AlertType.ERROR)
+                    is PropertyResult.Success -> PopUpAlert.showAlert("Se modificaron los datos correctamente", Alert.AlertType.INFORMATION)
+                    is PropertyResult.WrongProperty -> PopUpAlert.showAlert("Los datos ingresados para la propiedad son incorrectos", Alert.AlertType.WARNING)
+                    else -> PopUpAlert.showAlert("Ocurrió un error inesperado, intente de nuevo", Alert.AlertType.ERROR)
+                }
+            }
+        }
+
+        updateButtons()
     }
 
     private fun changePropertyToOccupied () {

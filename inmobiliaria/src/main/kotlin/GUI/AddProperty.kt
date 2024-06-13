@@ -30,7 +30,7 @@ class AddProperty : Application() {
     private lateinit var previousWindow: Pane;
     private lateinit var headerText: Label;
 
-    private var propertyImages = ArrayList<File>()
+    private var propertyImage: File? = null
 
     @FXML
     private lateinit var cbPropertyAction: ComboBox<PropertyAction>
@@ -49,7 +49,7 @@ class AddProperty : Application() {
     @FXML
     private lateinit var tfPrice: TextField
     @FXML
-    private lateinit var pnImages: GridPane
+    private lateinit var pnImage: ImageView
 
     override fun start(primaryStage: Stage) {
         try {
@@ -95,18 +95,14 @@ class AddProperty : Application() {
             val imagePath = imageFile.toURI().toURL().toString()
             val image = Image(imagePath)
 
-            propertyImages.add(imageFile)
-
-            val imageView = ImageView(image)
-            imageView.fitWidth = 80.0;
-            imageView.fitHeight = 80.0;
-
-            pnImages.children.add(imageView)
+            this.propertyImage = imageFile
+            pnImage.image = image
         }
     }
 
     fun removeImages () {
-        pnImages.children.removeAll()
+        propertyImage = null
+        pnImage.image = null
     }
 
      fun createProperty (): Property? {
@@ -132,7 +128,6 @@ class AddProperty : Application() {
 
     fun registerProperty () {
         var property = createProperty() ?: return
-        print("creada propiedad")
         val dao = PropertyDAO()
 
         var result = dao.add(property)
@@ -180,8 +175,8 @@ class AddProperty : Application() {
             }
         }
 
-        for (image in propertyImages) {
-            result = dao.addImage(property.id!!, image)
+        if (propertyImage != null) {
+            result = dao.addImage(propertyImage!!)
 
             when (result) {
                 is PropertyResult.DBError -> {
@@ -189,7 +184,7 @@ class AddProperty : Application() {
                     return
                 }
                 is PropertyResult.Failure -> {
-                    PopUpAlert.showAlert("No se pudo agregar la propiedad, intente de nuevo.", Alert.AlertType.ERROR)
+                    PopUpAlert.showAlert("No se pudo agregar la imagen, intente de nuevo.", Alert.AlertType.ERROR)
                     return
                 }
                 is PropertyResult.Success -> {
