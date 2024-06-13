@@ -13,40 +13,55 @@ import javafx.stage.Stage
 import java.io.IOException
 
 class MainMenu {
-    private lateinit var account: Account
+    lateinit var account: Account
     private lateinit var bpMain: BorderPane
     private lateinit var lbHeader: Label
 
     @FXML
     private lateinit var mainPane: Pane
+
     @FXML
     private lateinit var cbPropertyType: ComboBox<String>
+
     @FXML
     private lateinit var tfSearchQuery: TextField
+
     @FXML
     private lateinit var btnAgregarPropiedad: Button
 
+    @FXML
+    private lateinit var btnAgenda: Button
+
+    @FXML
+    private lateinit var btnLogout: Button
 
     fun initialize(bpMain: BorderPane, account: Account, lbHeader: Label) {
         this.bpMain = bpMain
         this.account = account
         this.lbHeader = lbHeader
 
-        cbPropertyType.items.addAll(PropertyType.all.toString(), PropertyType.building.toString(), PropertyType.house.toString(), PropertyType.apartment.toString(), PropertyType.premises.toString())
+        cbPropertyType.items.addAll(
+            PropertyType.all.toString(),
+            PropertyType.building.toString(),
+            PropertyType.house.toString(),
+            PropertyType.apartment.toString(),
+            PropertyType.premises.toString()
+        )
         cbPropertyType.value = PropertyType.all.toString()
 
         if (account.type == AccountType.CLIENT) {
             btnAgregarPropiedad.isVisible = false
+        } else if (account.type == AccountType.AGENT) {
+            btnAgenda.isVisible = false
         }
     }
 
-    fun openProperties () {
+    fun openProperties() {
         val fxmlLoader = FXMLLoader(javaClass.getResource("/FXML/PropertyList.fxml"))
-        var bpPropertyList : BorderPane? = null
+        var bpPropertyList: BorderPane? = null
         try {
             bpPropertyList = fxmlLoader.load()
-        }
-        catch (error : IOException) {
+        } catch (error: IOException) {
             PopUpAlert.showAlert("Error al cargar la ventana de registro", Alert.AlertType.WARNING)
         }
         if (bpPropertyList != null) {
@@ -54,18 +69,24 @@ class MainMenu {
             this.lbHeader.text = "Lista de propiedades"
             this.bpMain.center = bpPropertyList
             val stage = bpMain.scene.window as Stage
-            propertyListController.initialize(this.bpMain, this.mainPane, account, this.lbHeader, tfSearchQuery.text, PropertyType.valueOf(cbPropertyType.value))
+            propertyListController.initialize(
+                this.bpMain,
+                this.mainPane,
+                account,
+                this.lbHeader,
+                tfSearchQuery.text,
+                PropertyType.valueOf(cbPropertyType.value)
+            )
             stage.title = "Lista propiedades"
         }
     }
 
-    fun openAddProperty () {
+    fun openAddProperty() {
         val fxmlLoader = FXMLLoader(javaClass.getResource("/FXML/AddProperty.fxml"))
-        var bpAddProperty : Pane? = null
+        var bpAddProperty: Pane? = null
         try {
             bpAddProperty = fxmlLoader.load()
-        }
-        catch (error : IOException) {
+        } catch (error: IOException) {
             PopUpAlert.showAlert("Error al cargar la ventana de registro", Alert.AlertType.WARNING)
         }
         if (bpAddProperty != null) {
@@ -78,13 +99,12 @@ class MainMenu {
         }
     }
 
-    fun openEditProfile () {
+    fun openEditProfile() {
         val fxmlLoader = FXMLLoader(javaClass.getResource("/FXML/EditAccount.fxml"))
-        var pnEditAccount : Pane? = null
+        var pnEditAccount: Pane? = null
         try {
             pnEditAccount = fxmlLoader.load()
-        }
-        catch (error : IOException) {
+        } catch (error: IOException) {
             PopUpAlert.showAlert("Error al cargar la ventana de registro", Alert.AlertType.WARNING)
         }
         if (pnEditAccount != null) {
@@ -96,4 +116,46 @@ class MainMenu {
             stage.title = "Lista propiedades"
         }
     }
+
+
+    @FXML
+    fun openVisitSchedule() {
+        val fxmlLoader = FXMLLoader(javaClass.getResource("/FXML/VisitsSchedule.fxml"))
+        var pnVisitSchedule: Pane? = null
+        try {
+            pnVisitSchedule = fxmlLoader.load()
+        } catch (error: IOException) {
+            PopUpAlert.showAlert("Error al cargar la agenda", Alert.AlertType.WARNING)
+        }
+        if (pnVisitSchedule != null) {
+            val visitScheduleController = fxmlLoader.getController<VisitScheduleController>()
+            this.lbHeader.text = "Agenda"
+            this.bpMain.center = pnVisitSchedule
+            val stage = bpMain.scene.window as Stage
+            visitScheduleController.initialize(bpMain, mainPane, account, lbHeader)
+            stage.title = "Agenda de visitas"
+        }
+    }
+
+    @FXML
+    fun logout() {
+        var isOk = PopUpAlert.showConfirmationDialog("¿Seguro que desea cerrar sesión?")
+        if (isOk) {
+            val fxmlLoader = FXMLLoader(javaClass.getResource("/FXML/Login.fxml"))
+            var paneLogin: BorderPane? = null
+            try {
+                paneLogin = fxmlLoader.load()
+            } catch (error: IOException) {
+                print(error.message)
+                PopUpAlert.showAlert("Error al cargar el login", Alert.AlertType.WARNING)
+            }
+
+            if (paneLogin != null) {
+                val stage = bpMain.scene.window as Stage
+                stage.scene.root = paneLogin
+                stage.title = "Login"
+            }
+        }
+    }
+
 }

@@ -15,8 +15,6 @@ import javafx.scene.layout.Pane
 import javafx.stage.Stage
 import java.io.IOException
 import GUI.Utility.PopUpAlert
-import javafx.scene.layout.AnchorPane
-import java.util.*
 
 fun main (args: Array<String>) {
     Application.launch(Login::class.java)
@@ -79,7 +77,7 @@ class Login : Application() {
 
     @FXML
     fun handleSession () {
-        if (validateCredentials())
+        if (validateData())
             openViewForType()
     }
 
@@ -99,7 +97,7 @@ class Login : Application() {
         }
     }
 
-    private fun validateCredentials(): Boolean {
+    private fun validateData(): Boolean {
         val email = tfEmail.text
         val password = pwPassword.text
         val accountDAO = AccountDAO()
@@ -149,7 +147,8 @@ class Login : Application() {
             mainMenuController.initialize(bpMain, account, lbHeader)
             stage.title = "Menu principal"
         }
-
     }
+
+
 
 }

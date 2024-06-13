@@ -81,6 +81,45 @@ class AccountDAO {
         }
     }
 
+    fun delete(account: Account): AccountResult {
+        if (!account.isValid()) {
+            return AccountResult.WrongAccount()
+        } else if (account.id == null) {
+            return AccountResult.NotFound()
+        }
+
+        return try {
+            val dbConnection = DataBaseConnection().connection
+            dbConnection.autoCommit = false
+
+            try {
+                val deleteVisitsQuery = dbConnection.prepareStatement("DELETE FROM visit WHERE clientId = ?;")
+                deleteVisitsQuery.setInt(1, account.id.toInt())
+                deleteVisitsQuery.executeUpdate()
+
+                val deleteAccountQuery = dbConnection.prepareStatement("DELETE FROM account WHERE id = ?;")
+                deleteAccountQuery.setInt(1, account.id.toInt())
+
+                if (deleteAccountQuery.executeUpdate() > 0) {
+                    dbConnection.commit()
+                    AccountResult.Success()
+                } else {
+                    dbConnection.rollback()
+                    AccountResult.Failure()
+                }
+            } catch (error: SQLException) {
+                dbConnection.rollback()
+                AccountResult.DBError(error.message.toString())
+            } finally {
+                dbConnection.autoCommit = true
+            }
+        } catch (error: SQLException) {
+            AccountResult.DBError(error.message.toString())
+        }
+    }
+
+
+
     fun getById (accountId: UInt): AccountResult {
         if (accountId < 1u) {
             return AccountResult.WrongAccount()
