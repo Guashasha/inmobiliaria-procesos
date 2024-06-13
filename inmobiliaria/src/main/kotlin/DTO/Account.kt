@@ -28,8 +28,9 @@ data class Account(
             val type = AccountType.valueOf(result.getString(3).uppercase(Locale.getDefault()))
             val email = result.getString(4)
             val phone = result.getString(5)
+            val password = result.getString(6)
 
-            return Account(id, email, type, name, phone, null)
+            return Account(id, email, type, name, phone, password)
         }
     }
 }

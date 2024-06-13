@@ -62,7 +62,7 @@ class AccountDAO {
             val dbConnection = DataBaseConnection().connection
 
             val query =
-                dbConnection.prepareStatement("UPDATE account SET name=?, type=?, email=?, phone=? where id=?;")
+                dbConnection.prepareStatement("UPDATE account SET name=?, type=?, email=?, phone=?, password=? where id=?;")
 
             query.setString(1, account.name)
             query.setString(2, account.type.toString())
@@ -233,4 +233,6 @@ class AccountDAO {
             AccountResult.DBError(error.message.toString())
         }
     }
+
+
 }
