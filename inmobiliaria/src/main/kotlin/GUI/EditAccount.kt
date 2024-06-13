@@ -55,6 +55,7 @@ class EditAccount {
             if (!pwPassword.text.equals(pwReapeatPassword.text)) {
                 throw IllegalArgumentException("Las contraseñas no son iguales")
             }
+            validatePasswordSecurity(pwPassword.text)
             password = pwPassword.text
         }
 
@@ -71,6 +72,13 @@ class EditAccount {
             type = this.account.type,
             password = password
         )
+    }
+
+    private fun validatePasswordSecurity(password: String) {
+        val passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,}$".toRegex()
+        if (!password.matches(passwordRegex)) {
+            throw IllegalArgumentException("La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un carácter especial")
+        }
     }
 
     private fun configurePhoneNumberField() {
