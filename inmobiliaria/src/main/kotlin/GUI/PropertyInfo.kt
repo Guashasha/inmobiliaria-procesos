@@ -28,8 +28,6 @@ class PropertyInfo {
     private lateinit var lbHeader: Label
 
     @FXML
-    private lateinit var hboxImages: HBox
-    @FXML
     private lateinit var imgPrincipal: ImageView
     @FXML
     private lateinit var lbTitle: Text
@@ -92,17 +90,15 @@ class PropertyInfo {
             return
         }
 
-        val result = dao.getImages(property.id!!)
+        val result = dao.getImage(property.id!!)
 
-        property.images = when (result) {
+        property.image = when (result) {
             is PropertyResult.DBError -> {
-                PopUpAlert.showAlert("No se pudo conectar con la base de datos, intente de nuevo más tarde", Alert.AlertType.ERROR)
+                PopUpAlert.showAlert("No se pudo conectar con la base de datos, intente de nuevo más tarde: " + result.message, Alert.AlertType.ERROR)
                 null
             }
-            is PropertyResult.FoundList<*> -> {
-                val images = ArrayList<Image>()
-                result.list.forEach { images.add(it as Image) }
-                images
+            is PropertyResult.FoundImage -> {
+                result.image
             }
             is PropertyResult.NotFound -> {
                 null
@@ -121,7 +117,7 @@ class PropertyInfo {
     private fun setPropertyData () {
         getPropertyData()
 
-        imgPrincipal.image = property.images?.first()
+        imgPrincipal.image = property.image
 
         lbTitle.text = property.title
         lbFullDescription.text = property.fullDescription

@@ -176,7 +176,7 @@ class AddProperty : Application() {
         }
 
         if (propertyImage != null) {
-            result = dao.addImage(propertyImage!!)
+            result = dao.addImage(propertyImage!!, property.id!!.toInt())
 
             when (result) {
                 is PropertyResult.DBError -> {
@@ -189,7 +189,6 @@ class AddProperty : Application() {
                 }
                 is PropertyResult.Success -> {
                     return
-
                 }
                 else -> {
                     PopUpAlert.showAlert("Ocurrió un error inesperado", Alert.AlertType.ERROR)
@@ -197,6 +196,8 @@ class AddProperty : Application() {
                 }
             }
         }
+
+        returnToMainMenu()
     }
 
     private fun getOwner (email: String): HouseOwner? {

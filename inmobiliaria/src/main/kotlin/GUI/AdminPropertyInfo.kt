@@ -87,17 +87,15 @@ class AdminPropertyInfo {
             return
         }
 
-        val result = dao.getImages(property.id!!)
+        val result = dao.getImage(property.id!!)
 
-        property.images = when (result) {
+        property.image = when (result) {
             is PropertyResult.DBError -> {
                 PopUpAlert.showAlert("No se pudo conectar con la base de datos, intente de nuevo más tarde", Alert.AlertType.ERROR)
                 null
             }
-            is PropertyResult.FoundList<*> -> {
-                val images = ArrayList<Image>()
-                result.list.forEach { images.add(it as Image) }
-                images
+            is PropertyResult.FoundImage -> {
+                result.image
             }
             is PropertyResult.NotFound -> {
                 null
@@ -116,7 +114,7 @@ class AdminPropertyInfo {
     private fun setPropertyData () {
         getPropertyData()
 
-        imgPrincipal.image = property.images?.first()
+        imgPrincipal.image = property.image
 
         lbTitle.text = property.title
         lbFullDescription.text = property.fullDescription

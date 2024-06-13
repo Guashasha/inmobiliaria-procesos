@@ -131,7 +131,7 @@ class ModifyProperty {
             return null
         }
 
-        return Property(this.property.id, title, shortDescription, fullDescription, this.property.type, priceNum, this.property.state, this.property.direction, this.property.houseOwner, action, this.property.images)
+        return Property(this.property.id, title, shortDescription, fullDescription, this.property.type, priceNum, this.property.state, this.property.direction, this.property.houseOwner, action, this.property.image)
     }
 
     private fun changePropertyToSuspended () {
