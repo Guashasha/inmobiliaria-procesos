@@ -13,6 +13,7 @@ import javafx.scene.layout.Pane
 import javafx.stage.Stage
 import java.io.IOException
 
+
 class EditAccount {
     @FXML
     private lateinit var tfEmail: TextField
@@ -25,6 +26,12 @@ class EditAccount {
 
     @FXML
     private lateinit var btnEliminar: Button
+
+    @FXML
+    private lateinit var pwPassword: PasswordField
+
+    @FXML
+    private lateinit var pwReapeatPassword: PasswordField
 
     private lateinit var account: Account
     private lateinit var bpMain: BorderPane
@@ -43,6 +50,13 @@ class EditAccount {
         val name = if (tfName.text.isNullOrBlank()) this.account.name else tfName.text
         val numberPhone = if (tfNumber.text.isNullOrBlank()) this.account.phone else tfNumber.text
         val email = if (tfEmail.text.isNullOrBlank()) this.account.email else tfEmail.text
+        var password = this.account.password
+        if (pwPassword.text.isNullOrBlank()) {
+            if (!pwPassword.text.equals(pwReapeatPassword.text)) {
+                throw IllegalArgumentException("Las contraseñas no son iguales")
+            }
+            password = pwPassword.text
+        }
 
         val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$".toRegex()
         if (!email.matches(emailRegex)) {
@@ -55,7 +69,7 @@ class EditAccount {
             phone = numberPhone,
             email = email,
             type = this.account.type,
-            password = null
+            password = password
         )
     }
 
