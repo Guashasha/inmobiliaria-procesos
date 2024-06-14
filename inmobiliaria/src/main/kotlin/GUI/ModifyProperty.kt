@@ -163,11 +163,35 @@ class ModifyProperty {
     }
 
     private fun changePropertyToOccupied () {
-        TODO()
+        property.state = PropertyState.occupied
+        val dao = PropertyDAO()
+
+        val result = dao.modify(this.property)
+
+        when (result) {
+            is PropertyResult.DBError -> PopUpAlert.showAlert("No pudimos conectarnos con nuestros servicios, intentelo de nuevo más tarde", Alert.AlertType.ERROR)
+            is PropertyResult.Failure -> PopUpAlert.showAlert("No se pudo modificar la propiedad, intente de nuevo", Alert.AlertType.ERROR)
+            is PropertyResult.NotFound -> PopUpAlert.showAlert("Hubo un error al buscar la propiedad a modificar", Alert.AlertType.ERROR)
+            is PropertyResult.Success -> PopUpAlert.showAlert("Se modificaron los datos correctamente", Alert.AlertType.INFORMATION)
+            is PropertyResult.WrongProperty -> PopUpAlert.showAlert("Los datos ingresados para la propiedad son incorrectos", Alert.AlertType.WARNING)
+            else -> PopUpAlert.showAlert("Ocurrió un error inesperado, intente de nuevo", Alert.AlertType.ERROR)
+        }
     }
 
     private fun changePropertyToAvailable () {
-        TODO()
+        property.state = PropertyState.available
+        val dao = PropertyDAO()
+
+        val result = dao.modify(this.property)
+
+        when (result) {
+            is PropertyResult.DBError -> PopUpAlert.showAlert("No pudimos conectarnos con nuestros servicios, intentelo de nuevo más tarde", Alert.AlertType.ERROR)
+            is PropertyResult.Failure -> PopUpAlert.showAlert("No se pudo modificar la propiedad, intente de nuevo", Alert.AlertType.ERROR)
+            is PropertyResult.NotFound -> PopUpAlert.showAlert("Hubo un error al buscar la propiedad a modificar", Alert.AlertType.ERROR)
+            is PropertyResult.Success -> PopUpAlert.showAlert("Se modificaron los datos correctamente", Alert.AlertType.INFORMATION)
+            is PropertyResult.WrongProperty -> PopUpAlert.showAlert("Los datos ingresados para la propiedad son incorrectos", Alert.AlertType.WARNING)
+            else -> PopUpAlert.showAlert("Ocurrió un error inesperado, intente de nuevo", Alert.AlertType.ERROR)
+        }
     }
 
     fun volverAInformacion () {
