@@ -5,6 +5,7 @@ import DTO.AccountType
 import DAO.AccountDAO
 import DAO.AccountResult
 import GUI.Utility.PopUpAlert
+import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.scene.control.*
 import javafx.scene.layout.BorderPane
@@ -25,6 +26,12 @@ class CreateAccount {
     private lateinit var tfName: TextField
     @FXML
     private lateinit var tfPhoneNumber: TextField
+    @FXML
+    private lateinit var tfShowedPassword: TextField
+    @FXML
+    private lateinit var tfShowedRepeatPassword: TextField
+    @FXML
+    private lateinit var tgPassword: ToggleButton
     private lateinit var mainPane: BorderPane
     private lateinit var originalPane: Pane
 
@@ -32,6 +39,9 @@ class CreateAccount {
         this.mainPane = mainPane
         this.originalPane = originalPane
         configurePhoneNumberField()
+        configureNameField()
+        configureLastNameField()
+        syncPasswordFields()
     }
 
     private fun configurePhoneNumberField() {
@@ -44,6 +54,49 @@ class CreateAccount {
             }
         }
     }
+
+    @FXML
+    fun toggleAction(event: ActionEvent) {
+        if (tgPassword.isSelected) {
+            tfShowedPassword.text = pwPassword.text
+            tfShowedRepeatPassword.text = pwRepeatPassword.text
+            pwPassword.isVisible = false
+            pwRepeatPassword.isVisible = false
+            tfShowedPassword.isVisible = true
+            tfShowedRepeatPassword.isVisible = true
+        } else {
+            pwPassword.text = tfShowedPassword.text
+            pwRepeatPassword.text = tfShowedRepeatPassword.text
+            pwPassword.isVisible = true
+            pwRepeatPassword.isVisible = true
+            tfShowedPassword.isVisible = false
+            tfShowedRepeatPassword.isVisible = false
+        }
+    }
+
+    private fun configureTextField(textField: TextField, regex: Regex, maxLength: Int) {
+        textField.textFormatter = TextFormatter<String> { change ->
+            val newText = change.controlNewText
+            if (newText.matches(regex) && newText.length <= maxLength) {
+                change
+            } else {
+                null
+            }
+        }
+    }
+
+    private fun configureNameField() {
+        val nameRegex = Regex("^[A-Za-zÀ-ÿ\\s]*$")
+        val maxLength = 50
+        configureTextField(tfName, nameRegex, maxLength)
+    }
+
+    private fun configureLastNameField() {
+        val lastNameRegex = Regex("^[A-Za-zÀ-ÿ\\s]*$")
+        val maxLength = 50
+        configureTextField(tfLastName, lastNameRegex, maxLength)
+    }
+
 
     private fun validateFields() {
         val fields = mapOf(
@@ -110,7 +163,8 @@ class CreateAccount {
             id = null,
             email = email,
             type = accountType,
-            name = "$name $lastName",
+            name = name,
+            lastName = lastName,
             phone = phoneNumber,
             password = password
         )
@@ -166,4 +220,31 @@ class CreateAccount {
         }
         stage.title = "Inicio de sesión"
     }
+
+    private fun syncPasswordFields() {
+        pwPassword.textProperty().addListener { _, _, newValue ->
+            if (!tgPassword.isSelected) {
+                tfShowedPassword.text = newValue
+            }
+        }
+
+        tfShowedPassword.textProperty().addListener { _, _, newValue ->
+            if (tgPassword.isSelected) {
+                pwPassword.text = newValue
+            }
+        }
+
+        pwRepeatPassword.textProperty().addListener { _, _, newValue ->
+            if (!tgPassword.isSelected) {
+                tfShowedRepeatPassword.text = newValue
+            }
+        }
+
+        tfShowedRepeatPassword.textProperty().addListener { _, _, newValue ->
+            if (tgPassword.isSelected) {
+                pwRepeatPassword.text = newValue
+            }
+        }
+    }
+
 }

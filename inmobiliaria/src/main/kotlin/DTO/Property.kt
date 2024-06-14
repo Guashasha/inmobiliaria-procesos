@@ -15,11 +15,17 @@ data class Property (
   var shortDescription: String,
   var fullDescription: String,
   val type: PropertyType,
-  var price: Float,
+  var price: Long,
   var state: PropertyState,
   val direction: String,
   val houseOwner: UInt,
   var action: PropertyAction,
+  val city: String,
+  val numRooms: Int,
+  val numBathrooms: Int,
+  val garage: Boolean,
+  val garden: Boolean,
+  val size: Long,
   var image: Image?
 ) {
   fun isValid (): Boolean {
@@ -47,6 +53,11 @@ data class Property (
     if (direction != other.direction) return false
     if (houseOwner != other.houseOwner) return false
     if (action != other.action) return false
+    if (city != other.city) return false
+    if (numRooms != other.numRooms) return false
+    if (numBathrooms != other.numBathrooms) return false
+    if (garage != other.garage) return false
+    if (garden != other.garden) return false
 
     return true
   }
@@ -73,13 +84,19 @@ data class Property (
       val shortDescription = result.getString(3)
       val fullDescription = result.getString(4)
       val type = PropertyType.valueOf(result.getString(5))
-      val price = result.getFloat(6)
+      val price = result.getLong(6)
       val state = PropertyState.valueOf(result.getString(7))
       val direction = result.getString(8)
       val houseOwner = result.getInt(9).toUInt()
       val action = PropertyAction.valueOf(result.getString(10))
+      val numRooms = result.getInt(11)
+      val numBathrooms = result.getInt(12)
+      val garage = result.getBoolean(13)
+      val garden = result.getBoolean(14)
+      val city = result.getString(15)
+      val size = result.getLong(16)
 
-      return Property(id, title, shortDescription, fullDescription, type, price, state, direction, houseOwner, action, null)
+      return Property(id, title, shortDescription, fullDescription, type, price, state, direction, houseOwner, action, city, numRooms, numBathrooms, garage, garden, size, null)
     }
   }
 }
