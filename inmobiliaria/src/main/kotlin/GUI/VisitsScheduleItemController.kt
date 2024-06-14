@@ -29,15 +29,15 @@ class VisitsScheduleItemController {
     private lateinit var bpMain: BorderPane
     private lateinit var lastPane: Pane
     private lateinit var lbHeader: Label
-    private lateinit var visitScheduleController: VisitScheduleController
+    private lateinit var visitsScheduleController: VisitsScheduleController
     private lateinit var visit: Visit
 
-    fun initialize (property : Property, visit: Visit, bpMain: BorderPane, lastPane: Pane, lbHeader: Label, visitScheduleController: VisitScheduleController) {
+    fun initialize (property : Property, visit: Visit, bpMain: BorderPane, lastPane: Pane, lbHeader: Label, visitsScheduleController: VisitsScheduleController) {
         this.visit = visit
         this.bpMain = bpMain
         this.lastPane = lastPane
         this.lbHeader = lbHeader
-        this.visitScheduleController = visitScheduleController
+        this.visitsScheduleController = visitsScheduleController
         loadInformation(visit,property)
         verifyValidity()
     }
@@ -97,7 +97,7 @@ class VisitsScheduleItemController {
             try {
                 val editVisitPane: BorderPane = fxmlLoader.load()
                 val editVisitController = fxmlLoader.getController<EditVisitController>()
-                editVisitController.initialize(this.visit,this.bpMain,this.lastPane,this.lbHeader,this.visitScheduleController)
+                editVisitController.initialize(this.visit,this.bpMain,this.lastPane,this.lbHeader,this.visitsScheduleController)
                 this.bpMain.center = editVisitPane
             } catch (error: IOException) {
                 showAlert("Archivos corrompidos. Inténtelo de nuevo más tarde", Alert.AlertType.ERROR)

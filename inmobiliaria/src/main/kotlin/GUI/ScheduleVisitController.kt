@@ -59,7 +59,7 @@ class ScheduleVisitController {
 
         if (selectedDate != null) {
             when (val visitResult = visitDao.getUnavailableVisits(propertyId,Date.valueOf(selectedDate))) {
-                is VisitResult.FoundList -> showSchedule(visitResult.visits)
+                is VisitResult.FoundList -> showSchedule(visitResult.visits,Date.valueOf(selectedDate))
                 is VisitResult.DBError -> showAlert("Error al establecer conexión con la base de datos",AlertType.ERROR)
                 is VisitResult.Failure -> showAlert(visitResult.message,AlertType.ERROR)
                 else -> showAlert("Algo salió mal. Contacte a un técnico",AlertType.ERROR)
@@ -68,7 +68,7 @@ class ScheduleVisitController {
         else showAlert("Debe seleccionar una fecha",AlertType.WARNING)
     }
 
-    private fun showSchedule (unavailableVisits : List<Visit>) {
+    private fun showSchedule (unavailableVisits : List<Visit>, date: Date) {
         val availableSchedule = mutableListOf("08:00:00","09:00:00","10:00:00","11:00:00","12:00:00","13:00:00","14:00:00","15:00:00","16:00:00")
 
         for (visit in unavailableVisits) {
@@ -88,17 +88,13 @@ class ScheduleVisitController {
             val fxmlLoader = FXMLLoader(javaClass.getResource("/FXML/ScheduleVisitItem.fxml"))
 
             try {
-                val panetime: BorderPane = fxmlLoader.load()
+                val paneTime: BorderPane = fxmlLoader.load()
                 val scheduleVisitItemController = fxmlLoader.getController<ScheduleVisitItemController>()
-                scheduleVisitItemController.lbTime.text = time
-                scheduleVisitItemController.propertyId = propertyId
-                scheduleVisitItemController.clientId = clientId
-                scheduleVisitItemController.date = Date.valueOf(dpDate.value)
-                scheduleVisitItemController.parentController = this
-                gpSchedule.add(panetime,column,row)
+                scheduleVisitItemController.initialize(this.propertyId,this.clientId,date,time,this)
+                gpSchedule.add(paneTime,column,row)
             }
             catch (error: IOException) {
-                showAlert("Archivos corrompidos. Intentelo de nuevo más tarde",AlertType.ERROR)
+                showAlert("Archivos corrompidos. Inténtelo de nuevo más tarde",AlertType.ERROR)
                 break
             }
 

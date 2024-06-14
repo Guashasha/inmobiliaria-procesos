@@ -4,15 +4,16 @@ import DataAccess.DataBaseConnection
 import DTO.Visit
 import java.sql.Date
 import java.sql.SQLException
+import java.sql.Time
 
 sealed class VisitResult (val message: String) {
     class Success(successMessage: String): VisitResult(successMessage)
-    class Failure: VisitResult("La operación no se pudo realizar")
     class FoundList(val visits: List<Visit>): VisitResult("Se encontraron multiples visitas")
     class FoundVisit(val visit: Visit): VisitResult("Se encontró la visita")
     class NotFound: VisitResult("La visita a buscar no existe")
-    class DBError(errorMessage: String): VisitResult(errorMessage)
+    class Failure: VisitResult("La operación no se pudo realizar")
     class WrongVisit: VisitResult("Ha ocurrido un error al agendar la visita")
+    class DBError(errorMessage: String): VisitResult(errorMessage)
 }
 
 class VisitDAO {
@@ -101,6 +102,25 @@ class VisitDAO {
             val dbConnection = DataBaseConnection().connection
             val query = dbConnection.prepareStatement("SELECT * FROM visit WHERE id = ?")
             query.setInt(1,visitId.toInt())
+
+            val result = query.executeQuery()
+
+            if (result.next()) VisitResult.FoundVisit(Visit.fromResultSet(result)) else VisitResult.NotFound()
+        }
+        catch (error: SQLException) {
+            VisitResult.DBError("Error al establecer conexión con la base de datos")
+        }
+    }
+
+    fun getVisit (idClient: UInt, date: Date, time: Time): VisitResult {
+        if (idClient == 0U) return VisitResult.Failure()
+
+        return try {
+            val dbConnection = DataBaseConnection().connection
+            val query = dbConnection.prepareStatement("SELECT * FROM visit WHERE clientId = ? AND date = ? AND time = ? AND visitStatus = 'scheduled'")
+            query.setInt(1,idClient.toInt())
+            query.setDate(2,date)
+            query.setTime(3,time)
 
             val result = query.executeQuery()
 

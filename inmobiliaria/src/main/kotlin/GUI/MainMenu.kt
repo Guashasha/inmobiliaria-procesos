@@ -128,11 +128,11 @@ class MainMenu {
             PopUpAlert.showAlert("Error al cargar la agenda", Alert.AlertType.WARNING)
         }
         if (pnVisitSchedule != null) {
-            val visitScheduleController = fxmlLoader.getController<VisitScheduleController>()
+            val visitsScheduleController = fxmlLoader.getController<VisitsScheduleController>()
             this.lbHeader.text = "Agenda"
             this.bpMain.center = pnVisitSchedule
             val stage = bpMain.scene.window as Stage
-            visitScheduleController.initialize(bpMain, mainPane, account, lbHeader)
+            visitsScheduleController.initialize(bpMain, mainPane, account, lbHeader)
             stage.title = "Agenda de visitas"
         }
     }
