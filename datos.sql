@@ -203,8 +203,8 @@ INSERT INTO city (name) VALUES
 ('Jaltipan'),
 ('San Andrés Tuxtla');
 
-insert into account (name, type, email, phone, password) values ("admin", "agent", "david@hotmail.com", "2255447788", "contrasena");
-insert into account (name, type, email, phone, password) values ("pale molina", "client", "pale@hotmail.com", "2255447788", "habitacionDeVuelo");
+insert into account (name, lastName, type, email, phone, password) values ("admin", "Perez", "agent", "david@hotmail.com", "2255447788", "contrasena");
+insert into account (name, lastName, type, email, phone, password) values ("pale", "molina", "client", "pale@hotmail.com", "2255447788", "habitacionDeVuelo");
 
 insert into houseOwner (name, email, phone) values ("david carrion", "davidcarrion@hotmail.com", "2288554477");
 

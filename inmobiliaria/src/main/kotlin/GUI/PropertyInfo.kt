@@ -135,9 +135,9 @@ class PropertyInfo {
         lbFullDescription.text = property.fullDescription
         lbPrice.text = property.price.toString()
         lbCity.text = property.city
-        lbSize.text = property.size.toString()
-        lbNumRooms.text = property.numRooms.toString()
-        lbNumBathrooms.text = property.numBathrooms.toString()
+        lbSize.text = "Tamaño de propiedad: " + property.size.toString() + "m2"
+        lbNumRooms.text = "Numero de cuartos: " + property.numRooms.toString()
+        lbNumBathrooms.text = "Numero de baños: " + property.numBathrooms.toString()
 
         lbGarden.isVisible = property.garden
         lbGarage.isVisible = property.garage

@@ -41,6 +41,18 @@ class AdminPropertyInfo {
     private lateinit var lbPrice: Text
     @FXML
     private lateinit var apRoot: AnchorPane
+    @FXML
+    private lateinit var lbCity: Text
+    @FXML
+    private lateinit var lbNumRooms: Text
+    @FXML
+    private lateinit var lbNumBathrooms: Text
+    @FXML
+    private lateinit var lbGarage: Text
+    @FXML
+    private lateinit var lbGarden: Text
+    @FXML
+    private lateinit var lbSize: Text
 
     private lateinit var property: Property
 
@@ -119,6 +131,13 @@ class AdminPropertyInfo {
         lbTitle.text = property.title
         lbFullDescription.text = property.fullDescription
         lbPrice.text = property.price.toString()
+        lbCity.text = property.city
+        lbSize.text = "Tamaño de propiedad: " + property.size.toString() + "m2"
+        lbNumRooms.text = "Numero de cuartos: " + property.numRooms.toString()
+        lbNumBathrooms.text = "Numero de baños: " + property.numBathrooms.toString()
+
+        lbGarden.isVisible = property.garden
+        lbGarage.isVisible = property.garage
 
         lbPropertyAction.text = when (property.action) {
             PropertyAction.sell -> "venta"
