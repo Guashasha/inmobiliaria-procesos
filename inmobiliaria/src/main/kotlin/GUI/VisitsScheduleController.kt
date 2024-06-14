@@ -15,7 +15,7 @@ import main.kotlin.DAO.PropertyResult
 import DTO.Visit
 import java.io.IOException
 
-class VisitScheduleController {
+class VisitsScheduleController {
     @FXML lateinit var vboxVisitsSchedule: VBox
     @FXML lateinit var bpActual: BorderPane
 

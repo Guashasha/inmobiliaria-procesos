@@ -12,31 +12,41 @@ import java.sql.Time
 
 class ScheduleVisitItemController {
     @FXML lateinit var lbTime : Label
-    var propertyId : UInt = 0U
-    var clientId : UInt = 0U
-    var date : Date? = null
-    var parentController : ScheduleVisitController? = null
+    private var propertyId: UInt = 0U
+    private var clientId : UInt = 0U
+    private lateinit var date : Date
+    private lateinit var time: Time
+    private lateinit var parentController: ScheduleVisitController
+
+    fun initialize (propertyId: UInt, clientId: UInt, date: Date, time: String, parentController: ScheduleVisitController) {
+        this.propertyId = propertyId
+        this.clientId = clientId
+        this.date = date
+        this.time = Time.valueOf(time)
+        this.lbTime.text = time
+        this.parentController = parentController
+    }
 
     @FXML fun agendar () {
         if (hasAVisitAlready()) showAlert("Ya tiene una visita agendada en esta propiedad.\nDiríjase a la sección de Agenda",Alert.AlertType.INFORMATION)
-        else if (date != null && parentController != null) {
+        else if (hasAVisitAtTheSameTime()) showAlert("Ya tiene una visita agendada a esa hora y día. Elija otra fecha",Alert.AlertType.WARNING)
+        else if (hasAVisitWithinTheLimit()) showAlert("Ya tiene una visita agendada una hora antes.\nLe recomendamos calcular sus tiempos o reagendar si es necesario",Alert.AlertType.WARNING)
+        else {
             val visitDao = VisitDAO()
-            val time = Time.valueOf(lbTime.text)
-
-            when (val visitResult = visitDao.add(Visit(clientId = clientId, propertyId = propertyId, date = date!!, time = time, visitStatus = VisitStatus.scheduled))) {
+            when (val visitResult = visitDao.add(Visit(clientId = clientId, propertyId = propertyId, date = date, time = time, visitStatus = VisitStatus.scheduled))) {
                 is VisitResult.Success -> {
                     showAlert(visitResult.message,Alert.AlertType.INFORMATION)
-                    parentController!!.searchSchedule()
+                    parentController.searchSchedule()
                 }
                 is VisitResult.DBError -> showAlert("Error al establecer conexión con la base de datos",Alert.AlertType.ERROR)
                 is VisitResult.Failure -> showAlert(visitResult.message,Alert.AlertType.ERROR)
                 is VisitResult.WrongVisit -> showAlert(visitResult.message,Alert.AlertType.WARNING)
                 else -> showAlert("Algo salió mal. Intentalo de nuevo más tarde",Alert.AlertType.ERROR)
             }
-        } else showAlert("Algo salió mal. Contacte a un técnico",Alert.AlertType.ERROR)
+        }
     }
 
-    private fun hasAVisitAlready () : Boolean {
+    private fun hasAVisitAlready (): Boolean {
         val visitDao = VisitDAO()
         return when (visitDao.getVisit(this.clientId,this.propertyId)) {
             is VisitResult.FoundVisit -> true
@@ -50,6 +60,31 @@ class ScheduleVisitItemController {
                 false
             }
             else -> false
+        }
+    }
+
+    private fun hasAVisitAtTheSameTime (): Boolean {
+        val visitDao = VisitDAO()
+        return when (val visitResult = visitDao.getVisit(this.clientId,this.date,this.time)) {
+            is VisitResult.NotFound -> false
+            is VisitResult.FoundVisit -> true
+            else -> {
+                showAlert(visitResult.message,Alert.AlertType.ERROR)
+                true
+            }
+        }
+    }
+
+    private fun hasAVisitWithinTheLimit (): Boolean {
+        val limitTime = Time.valueOf(this.time.toLocalTime().minusHours(1))
+        val visitDao = VisitDAO()
+        return when (val visitResult = visitDao.getVisit(this.clientId,this.date,limitTime)) {
+            is VisitResult.NotFound -> false
+            is VisitResult.FoundVisit -> true
+            else -> {
+                showAlert(visitResult.message,Alert.AlertType.ERROR)
+                true
+            }
         }
     }
 

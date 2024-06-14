@@ -30,7 +30,9 @@ class EditVisitItemController {
 
     @FXML fun reagendar () {
         verifyValidity()
-        if (this.visit.visitStatus == VisitStatus.scheduled) {
+        if (hasAVisitAtTheSameTime()) showAlert("Ya tiene una visita agendada a esa hora y día. Elija otra fecha",Alert.AlertType.WARNING)
+        else if (hasAVisitWithinTheLimit()) showAlert("Ya tiene una visita agendada una hora antes.\nLe recomendamos calcular sus tiempos o reagendar si es necesario",Alert.AlertType.WARNING)
+        else if (this.visit.visitStatus == VisitStatus.scheduled) {
             val visitDao = VisitDAO()
             this.visit.date = this.date
             this.visit.time = this.time
@@ -45,7 +47,6 @@ class EditVisitItemController {
                 else -> showAlert("Ah ocurrido un error. Contacte a un técnico",Alert.AlertType.ERROR)
             }
         }
-
     }
 
     private fun verifyValidity () {
@@ -62,7 +63,7 @@ class EditVisitItemController {
     private fun changeExpiredVisit () {
         this.visit.visitStatus = VisitStatus.expired
         val visitDao = VisitDAO()
-        when (val visitResult = visitDao.edit(this.visit)) {
+        when (visitDao.edit(this.visit)) {
             is VisitResult.Success -> {
                 showAlert("La visita ha expirado. No puedes reagendarla",Alert.AlertType.INFORMATION)
                 this.editVisitController.exit()
@@ -71,6 +72,32 @@ class EditVisitItemController {
             is VisitResult.Failure -> showAlert("Ah ocurrido un error. Reinicie la aplicación",Alert.AlertType.ERROR)
             is VisitResult.DBError -> showAlert("Error al establecer conexión con la base de datos", Alert.AlertType.ERROR)
             else -> showAlert("Ah ocurrido un error. Contacte a un técnico",Alert.AlertType.ERROR)
+        }
+    }
+
+    private fun hasAVisitAtTheSameTime (): Boolean {
+        val visitDao = VisitDAO()
+        return when (val visitResult = visitDao.getVisit(this.visit.clientId,this.date,this.time)) {
+            is VisitResult.NotFound -> false
+            is VisitResult.FoundVisit -> true
+            else -> {
+                showAlert(visitResult.message,Alert.AlertType.ERROR)
+                true
+            }
+        }
+    }
+
+    private fun hasAVisitWithinTheLimit (): Boolean {
+        val limitTime = Time.valueOf(this.time.toLocalTime().minusHours(1))
+        val visitDao = VisitDAO()
+        return if (limitTime == this.visit.time) false
+        else when (val visitResult = visitDao.getVisit(this.visit.clientId,this.date,limitTime)) {
+            is VisitResult.NotFound -> false
+            is VisitResult.FoundVisit -> true
+            else -> {
+                showAlert(visitResult.message,Alert.AlertType.ERROR)
+                true
+            }
         }
     }
 

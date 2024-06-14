@@ -33,16 +33,16 @@ class EditVisitController {
     private lateinit var bpMain: BorderPane
     private lateinit var lastPane: Pane
     private lateinit var lbHeader: Label
-    private lateinit var visitScheduleController: VisitScheduleController
+    private lateinit var visitsScheduleController: VisitsScheduleController
     private lateinit var visit: Visit
 
-    fun initialize (visit: Visit, bpMain: BorderPane, lastPane: Pane, lbHeader: Label, visitScheduleController: VisitScheduleController) {
+    fun initialize (visit: Visit, bpMain: BorderPane, lastPane: Pane, lbHeader: Label, visitsScheduleController: VisitsScheduleController) {
         this.visit = visit
         this.bpMain = bpMain
         this.lastPane = lastPane
         this.lbHeader = lbHeader
         this.lbHeader.text = "Configuraciones de visita"
-        this.visitScheduleController = visitScheduleController
+        this.visitsScheduleController = visitsScheduleController
         limitDateOnDatePicker()
         loadPropertyInformation()
         loadVisitInformation()
@@ -91,7 +91,7 @@ class EditVisitController {
     @FXML fun exit () {
         this.lbHeader.text = "Agenda"
         this.bpMain.center = lastPane
-        this.visitScheduleController.loadScheduleVisits()
+        this.visitsScheduleController.loadScheduleVisits()
     }
 
     private fun verifyValidity () {
