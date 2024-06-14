@@ -4,18 +4,28 @@ CREATE DATABASE IF NOT EXISTS PXNGAgency;
 
 USE PXNGAgency;
 
+CREATE TABLE city (
+  name varchar(50) NOT NULL PRIMARY KEY
+);
+
 CREATE TABLE `property` (
   `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `title` varchar(150) NOT NULL,
   `shortDescription` varchar(200) NOT NULL,
   `fullDescription` varchar(500) NOT NULL,
   `type` ENUM ('building', 'house', 'apartment', 'premises') NOT NULL,
-  `price` float NOT NULL,
+  `price` long NOT NULL,
   `state` ENUM ('available', 'occupied', 'suspended') NOT NULL,
   `direction` varchar(400) NOT NULL,
   `houseOwner` int NOT NULL,
   `action` ENUM ('sell', 'rent') NOT NULL,
-  image blob
+  numRooms int,
+  numBathrooms int,
+  garage boolean,
+  garden boolean,
+  city varchar(50) NOT NULL,
+  size long NOT NULL,
+  image blob NULL
 );
 
 CREATE TABLE `houseOwner` (
@@ -62,6 +72,8 @@ CREATE TABLE `visit` (
 );
 
 ALTER TABLE `property` ADD FOREIGN KEY (`houseOwner`) REFERENCES `houseOwner` (`id`);
+
+ALTER TABLE `property` ADD FOREIGN KEY (`city`) REFERENCES `city` (`name`);
 
 ALTER TABLE `agent` ADD FOREIGN KEY (`accountId`) REFERENCES `account` (`id`);
 

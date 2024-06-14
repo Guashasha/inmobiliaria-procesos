@@ -16,9 +16,9 @@
             <Font name="System Bold" size="28.0" />
          </font>
       </Text>
-      <HBox layoutX="200.0" layoutY="115.0" prefHeight="507.0" prefWidth="616.0" spacing="50.0" styleClass="informationPane">
+      <HBox layoutX="200.0" layoutY="115.0" prefHeight="538.0" prefWidth="872.0" spacing="50.0" styleClass="informationPane">
          <children>
-            <VBox prefHeight="371.0" prefWidth="372.0" spacing="10.0">
+            <VBox prefHeight="498.0" prefWidth="271.0" spacing="10.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Titulo" />
                   <TextField fx:id="tfTitle" prefHeight="26.0" prefWidth="280.0">
@@ -37,13 +37,19 @@
                      </VBox.margin>
                   </TextField>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Descripcion completa" />
-                  <TextArea fx:id="tfFullDescription" prefHeight="145.0" prefWidth="288.0">
+                  <TextArea fx:id="tfFullDescription" prefHeight="80.0" prefWidth="282.0" wrapText="true">
                      <VBox.margin>
                         <Insets bottom="15.0" />
                      </VBox.margin>
                   </TextArea>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Municipio" />
+                  <ComboBox fx:id="cbCity" prefWidth="150.0">
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </ComboBox>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Direccion" />
-                  <TextField fx:id="tfDirection" minHeight="50.0" prefHeight="46.0" prefWidth="297.0">
+                  <TextField fx:id="tfDirection" minHeight="40.0" prefHeight="40.0" prefWidth="271.0">
                      <VBox.margin>
                         <Insets bottom="15.0" />
                      </VBox.margin>
@@ -52,10 +58,13 @@
                   <TextField fx:id="tfPrice" maxWidth="150.0" prefHeight="26.0" prefWidth="150.0" />
                </children>
             </VBox>
-            <VBox prefHeight="467.0" prefWidth="330.0" spacing="10.0">
+            <VBox prefHeight="498.0" prefWidth="243.0" spacing="10.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email del dueño" />
-                  <TextField fx:id="tfOwnerEmail" />
+                  <TextField fx:id="tfOwnerEmail">
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin></TextField>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo de inmueble" />
                   <ChoiceBox fx:id="cbPropertyType" prefHeight="26.0" prefWidth="200.0">
                      <VBox.margin>
@@ -67,21 +76,64 @@
                         <Insets bottom="30.0" />
                      </VBox.margin>
                   </ComboBox>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Imagen">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Text>
-                  <ImageView fx:id="pnImage" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="18.0">
+                  <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" styleClass="agencyInformation">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#addImage" prefHeight="28.0" prefWidth="86.0" styleClass="btnPrincipal" stylesheets="@../Style/ButtonStyle.css" text="Agregar" />
-                        <Button mnemonicParsing="false" onAction="#removeImages" prefHeight="28.0" prefWidth="131.0" styleClass="btnSecondary" stylesheets="@../Style/ButtonStyle.css" text="Borrar imagenes" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Imagen">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Text>
+                        <ImageView fx:id="pnImage" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="18.0">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#addImage" prefHeight="28.0" prefWidth="86.0" styleClass="btnPrincipal" stylesheets="@../Style/ButtonStyle.css" text="Agregar" />
+                              <Button mnemonicParsing="false" onAction="#removeImages" prefHeight="28.0" prefWidth="131.0" styleClass="btnSecondary" stylesheets="@../Style/ButtonStyle.css" text="Borrar imagen" />
+                           </children>
+                           <padding>
+                              <Insets left="3.0" />
+                           </padding>
+                        </HBox>
                      </children>
                      <padding>
-                        <Insets left="3.0" />
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
-                  </HBox>
+                  </VBox>
+               </children>
+            </VBox>
+            <VBox prefHeight="498.0" prefWidth="225.0" spacing="10.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tamaño (en metros cuadrados)" />
+                  <TextField fx:id="tfPropertySize">
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Numero de habitaciones" />
+                  <TextField fx:id="tfNumRooms">
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Numero de baños" />
+                  <TextField fx:id="tfNumBathrooms">
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <CheckBox fx:id="ckbGarage" mnemonicParsing="false" text="Garage" />
+                  <CheckBox fx:id="ckbGarden" mnemonicParsing="false" text="Jardin">
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </CheckBox>
+                  <Button defaultButton="true" mnemonicParsing="false" onAction="#registerProperty" prefHeight="38.0" prefWidth="157.0" styleClass="btnPrincipal" stylesheets="@../Style/ButtonStyle.css" text="Registrar propiedad">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <VBox.margin>
+                        <Insets left="30.0" top="150.0" />
+                     </VBox.margin>
+                  </Button>
                </children>
             </VBox>
          </children>
@@ -89,21 +141,5 @@
             <Insets bottom="20.0" left="20.0" right="25.0" top="20.0" />
          </padding>
       </HBox>
-      <Button layoutX="918.0" layoutY="320.0" mnemonicParsing="false" onAction="#registerProperty" prefHeight="38.0" prefWidth="157.0" styleClass="btnPrincipal" stylesheets="@../Style/ButtonStyle.css" text="Registrar propiedad">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor></Button>
-      <AnchorPane layoutX="863.0" layoutY="116.0" prefHeight="171.0" prefWidth="262.0" styleClass="agencyInformation">
-         <children>
-            <ImageView fitHeight="50.0" fitWidth="57.0" layoutX="190.0" layoutY="129.0" pickOnBounds="true" preserveRatio="true" y="-30.0">
-               <image>
-                  <Image url="@../Image/PXNG-removebg.png" />
-               </image>
-            </ImageView>
-            <Text layoutX="10.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Propiedades Xalapa Nueva Generacion" />
-            <Text layoutX="25.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2288445577" />
-            <Text layoutX="25.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="info@PXalapaNG.com" />
-         </children>
-      </AnchorPane>
    </children>
 </AnchorPane>

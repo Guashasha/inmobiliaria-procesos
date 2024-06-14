@@ -11,7 +11,7 @@ import java.io.FileInputStream
 import javax.imageio.ImageIO
 import java.sql.SQLException
 
-sealed class PropertyResult (val message: String) {
+sealed class PropertyResult (var message: String) {
     class Success: PropertyResult("La operación se realizó correctamente")
     class Failure: PropertyResult("La operación no se pudo realizar")
     class OwnerFound(val houseOwner: HouseOwner): PropertyResult("Se encontró el propietario")
@@ -33,17 +33,23 @@ class PropertyDAO {
         }
 
         return try {
-            val query = dbConnection.prepareStatement("INSERT INTO property (title, shortDescription, fullDescription, type, price, state, direction, houseOwner, action) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);")
+            val query = dbConnection.prepareStatement("INSERT INTO property (title, shortDescription, fullDescription, type, price, state, direction, houseOwner, action, numRooms, numBathrooms, garage, garden, city, size) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")
 
             query.setString(1, property.title)
             query.setString(2, property.shortDescription)
             query.setString(3, property.fullDescription)
             query.setString(4, property.type.toString())
-            query.setFloat(5, property.price)
+            query.setLong(5, property.price)
             query.setString(6, property.state.toString())
             query.setString(7, property.direction)
             query.setInt(8, property.houseOwner.toInt())
             query.setString(9, property.action.toString())
+            query.setInt(10, property.numRooms)
+            query.setInt(11, property.numBathrooms)
+            query.setBoolean(12, property.garage)
+            query.setBoolean(13, property.garden)
+            query.setString(14, property.city)
+            query.setLong(15, property.size)
 
             if (query.executeUpdate() > 0) {
                 PropertyResult.Success()
@@ -72,7 +78,7 @@ class PropertyDAO {
             query.setString(2, property.shortDescription)
             query.setString(3, property.fullDescription)
             query.setString(4, property.type.toString())
-            query.setFloat(5, property.price)
+            query.setLong(5, property.price)
             query.setString(6, property.state.toString())
             query.setString(7, property.action.toString())
             query.setInt(8, property.id.toInt())
@@ -112,7 +118,7 @@ class PropertyDAO {
     }
 
     fun getByQuery (query: String, propertyType: PropertyType): PropertyResult {
-        val unsafeString = Regex("""[-*/\"'#]+""")
+        val unsafeString = Regex("""[*/\"']+""")
 
         if (unsafeString.containsMatchIn(query)) {
             return PropertyResult.WrongQuery()
@@ -121,12 +127,12 @@ class PropertyDAO {
         return try {
             val result = if (propertyType == PropertyType.all) {
                 val dbQuery =
-                    dbConnection.prepareStatement("SELECT * FROM property WHERE state=\"available\" AND (fullDescription LIKE \"%$query%\" OR shortDescription LIKE \"%$query%\" OR title LIKE \"%$query%\" OR direction LIKE \"%$query%\");")
+                    dbConnection.prepareStatement("SELECT * FROM property WHERE state=\"available\" AND (fullDescription LIKE \"%$query%\" OR shortDescription LIKE \"%$query%\" OR title LIKE \"%$query%\" OR direction LIKE \"%$query%\" OR city LIKE \"%$query%\");")
 
                 dbQuery.executeQuery()
             } else {
                 val dbQuery =
-                    dbConnection.prepareStatement("SELECT * FROM property WHERE type=\"$propertyType\" AND state=\"available\" AND (fullDescription LIKE \"%$query%\" OR shortDescription LIKE \"%$query%\" OR title LIKE \"%$query%\" OR direction LIKE \"%$query%\");")
+                    dbConnection.prepareStatement("SELECT * FROM property WHERE type=\"$propertyType\" AND state=\"available\" AND (fullDescription LIKE \"%$query%\" OR shortDescription LIKE \"%$query%\" OR title LIKE \"%$query%\" OR direction LIKE \"%$query%\" OR city LIKE \"%$query%\");")
 
                 dbQuery.executeQuery()
             }
@@ -216,6 +222,29 @@ class PropertyDAO {
         }
     }
 
+    fun getCities (): PropertyResult {
+        return try {
+            val result = dbConnection.prepareStatement("SELECT * FROM city;").executeQuery()
+            val list = ArrayList<String>()
+
+            while (result.next()) {
+                list.add(result.getString(1))
+            }
+
+            if (list.isNotEmpty()) {
+                PropertyResult.FoundList(list)
+            }
+            else {
+                val result = PropertyResult.NotFound()
+                result.message = "No se pudieron recuperar las ciudades"
+                result
+            }
+        }
+        catch (error: SQLException) {
+            PropertyResult.DBError(error.message.toString())
+        }
+    }
+
     fun addImage (image: File, propertyId: Int): PropertyResult {
         val imageStream = FileInputStream(image)
 
@@ -233,7 +262,12 @@ class PropertyDAO {
             }
         }
         catch (error: SQLException) {
-            PropertyResult.DBError(error.message.toString())
+            if (error.errorCode == 1406) {
+                PropertyResult.DBError("Tamaño de imagen demasiado grande, no se pudo agregar")
+            }
+            else {
+                PropertyResult.DBError(error.message.toString())
+            }
         }
     }
 

@@ -87,13 +87,15 @@ class PropertyList : Application() {
         for (property in properties) {
             val pane = HBox()
             pane.style = "-fx-background-color: linear-gradient(to bottom, #AFA9F3 29.8%, #AFA9F3 50%, #9F99E3 90%); -fx-background-radius: 25px;"
-            pane.prefWidth(1200.0)
+            pane.prefWidth = 1200.0
+            pane.maxHeight = 100.0
             pane.padding = Insets(15.0)
             pane.spacing = 20.0
 
             getImages(property)
             val image = ImageView()
             image.image = property.image
+            image.maxHeight(90.0)
 
             val info = VBox()
             info.spacing = 10.0

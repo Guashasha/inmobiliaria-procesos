@@ -106,10 +106,10 @@ class ModifyProperty {
         val fullDescription = tfFullDescription.text.trim()
         val price = tfPrice.text.trim()
         val action = PropertyAction.valueOf(cbAction.value.trim())
-        val priceNum: Float
+        val priceNum: Long
 
         try {
-            priceNum = price.toFloat()
+            priceNum = price.toLong()
         }
         catch (error: NumberFormatException) {
             PopUpAlert.showAlert("El precio es un numero incorrecto", Alert.AlertType.ERROR)
@@ -131,7 +131,7 @@ class ModifyProperty {
             return null
         }
 
-        return Property(this.property.id, title, shortDescription, fullDescription, this.property.type, priceNum, this.property.state, this.property.direction, this.property.houseOwner, action, this.property.image)
+        return Property(this.property.id, title, shortDescription, fullDescription, this.property.type, priceNum, this.property.state, this.property.direction, this.property.houseOwner, action, this.property.city, this.property.numRooms, this.property.numBathrooms, this.property.garage, this.property.garden, this.property.size, this.property.image)
     }
 
     private fun changePropertyToSuspended () {
