@@ -35,8 +35,11 @@ class Login : Application() {
     @FXML
     private lateinit var bpMain: BorderPane
     @FXML
-
     private lateinit var pnMain: Pane
+    @FXML
+    private lateinit var tfShowedPassword: TextField
+    @FXML
+    private lateinit var tgPassword: ToggleButton
     private lateinit var account: Account
 
     @FXML
@@ -58,6 +61,18 @@ class Login : Application() {
         }
     }
 
+    @FXML
+    fun toggleAction() {
+        if (tgPassword.isSelected) {
+            tfShowedPassword.text = pwPassword.text
+            pwPassword.isVisible = false
+            tfShowedPassword.isVisible = true
+        } else {
+            pwPassword.text = tfShowedPassword.text
+            pwPassword.isVisible = true
+            tfShowedPassword.isVisible = false
+        }
+    }
 
     override fun start (primaryStage: Stage) {
         try {
@@ -148,6 +163,26 @@ class Login : Application() {
             stage.title = "Menu principal"
         }
     }
+
+    @FXML
+    fun initialize() {
+        syncPasswordFields()
+    }
+
+    private fun syncPasswordFields() {
+        pwPassword.textProperty().addListener { _, _, newValue ->
+            if (!tgPassword.isSelected) {
+                tfShowedPassword.text = newValue
+            }
+        }
+
+        tfShowedPassword.textProperty().addListener { _, _, newValue ->
+            if (tgPassword.isSelected) {
+                pwPassword.text = newValue
+            }
+        }
+    }
+
 
 
 

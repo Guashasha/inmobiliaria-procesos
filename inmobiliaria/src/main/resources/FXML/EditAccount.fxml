@@ -2,7 +2,9 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
@@ -28,29 +30,50 @@
       </Pane>
       <Pane layoutX="36.0" layoutY="109.0" prefHeight="495.0" prefWidth="1089.0" styleClass="informationPane" stylesheets="@../Style/Pane.css">
          <children>
-            <Label layoutX="69.0" layoutY="77.0" text="Nombre completo">
+            <Label layoutX="43.0" layoutY="32.0" text="Nombre completo">
                <font>
                   <Font name="Arial Rounded MT Bold" size="16.0" />
                </font>
             </Label>
-            <Label layoutX="67.0" layoutY="204.0" text="Número telefónico">
+            <Label layoutX="40.0" layoutY="166.0" text="Número telefónico">
                <font>
                   <Font name="Arial Rounded MT Bold" size="16.0" />
                </font>
             </Label>
-            <Label layoutX="396.0" layoutY="204.0" text="Correo electrónico">
+            <Label layoutX="222.0" layoutY="166.0" text="Correo electrónico">
                <font>
                   <Font name="Arial Rounded MT Bold" size="16.0" />
                </font>
             </Label>
-            <TextField fx:id="tfName" layoutX="67.0" layoutY="124.0" prefHeight="51.0" prefWidth="986.0" promptText="Nombre completo" styleClass="textFieldDataAccount" stylesheets="@../Style/Pane.css" />
-            <TextField fx:id="tfNumber" layoutX="67.0" layoutY="248.0" prefHeight="51.0" prefWidth="165.0" promptText="2288557788" styleClass="textFieldDataAccount" />
-            <TextField fx:id="tfEmail" layoutX="396.0" layoutY="248.0" prefHeight="51.0" prefWidth="661.0" promptText="correo@ejemplo.com" styleClass="textFieldDataAccount" />
-            <Button layoutX="880.0" layoutY="352.0" mnemonicParsing="false" onAction="#HandleSave" prefHeight="47.0" prefWidth="176.0" styleClass="btnPrincipal" stylesheets="@../Style/ButtonStyle.css" text="Guardar cambios">
+            <TextField fx:id="tfName" layoutX="41.0" layoutY="79.0" prefHeight="51.0" prefWidth="348.0" promptText="Nombre completo" styleClass="textFieldDataAccount" stylesheets="@../Style/Pane.css" />
+            <TextField fx:id="tfNumber" layoutX="39.0" layoutY="199.0" prefHeight="51.0" prefWidth="165.0" promptText="2288557788" styleClass="textFieldDataAccount" />
+            <TextField fx:id="tfEmail" layoutX="222.0" layoutY="199.0" prefHeight="51.0" prefWidth="841.0" promptText="correo@ejemplo.com" styleClass="textFieldDataAccount" />
+            <Button layoutX="887.0" layoutY="404.0" mnemonicParsing="false" onAction="#HandleSave" prefHeight="47.0" prefWidth="176.0" styleClass="btnPrincipal" stylesheets="@../Style/ButtonStyle.css" text="Guardar cambios">
                <font>
                   <Font size="16.0" />
                </font></Button>
-            <Button fx:id="btnEliminar" layoutX="70.0" layoutY="429.0" mnemonicParsing="false" onAction="#deleteAccount" prefHeight="38.0" prefWidth="102.0" style="-fx-background-color: transparent;" styleClass="btnSecondary" stylesheets="@../Style/ButtonStyle.css" text="Eliminar cuenta" textAlignment="CENTER" />
+            <Button fx:id="btnEliminar" layoutX="43.0" layoutY="427.0" mnemonicParsing="false" onAction="#deleteAccount" prefHeight="38.0" prefWidth="102.0" style="-fx-background-color: transparent;" styleClass="btnSecondary" stylesheets="@../Style/ButtonStyle.css" text="Eliminar cuenta" textAlignment="CENTER" />
+            <Label layoutX="416.0" layoutY="34.0" text="Apellidos">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfLastName" layoutX="406.0" layoutY="79.0" prefHeight="51.0" prefWidth="661.0" styleClass="textFieldDataAccount" stylesheets="@../Style/Pane.css" />
+            <PasswordField fx:id="pwPassword" layoutX="43.0" layoutY="333.0" prefHeight="51.0" prefWidth="359.0" promptText="Contraseña" styleClass="textFieldDataAccount" stylesheets="@../Style/Pane.css" />
+            <PasswordField fx:id="pwReapeatPassword" layoutX="435.0" layoutY="333.0" prefHeight="51.0" prefWidth="359.0" promptText="Repite la contraseña" styleClass="textFieldDataAccount" stylesheets="@../Style/Pane.css" />
+            <Label layoutX="43.0" layoutY="298.0" text="Contraseña">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="438.0" layoutY="300.0" text="Repetir contraseña">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfshowedPassword" layoutX="41.0" layoutY="333.0" prefHeight="50.0" prefWidth="365.0" styleClass="textFieldDataAccount" stylesheets="@../Style/Pane.css" visible="false" />
+            <TextField fx:id="tfShowedRepeatPassword" layoutX="435.0" layoutY="333.0" prefHeight="51.0" prefWidth="365.0" styleClass="textFieldDataAccount" stylesheets="@../Style/Pane.css" visible="false" />
+            <ToggleButton fx:id="tgPassword" layoutX="822.0" layoutY="343.0" mnemonicParsing="false" onAction="#toggleAction" prefHeight="30.0" prefWidth="50.0" stylesheets="@../Style/ButtonStyle.css" />
          </children>
       </Pane>
    </children>
