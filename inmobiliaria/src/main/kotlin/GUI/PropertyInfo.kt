@@ -38,6 +38,18 @@ class PropertyInfo {
     @FXML
     private lateinit var lbPrice: Text
     @FXML
+    private lateinit var lbCity: Text
+    @FXML
+    private lateinit var lbNumRooms: Text
+    @FXML
+    private lateinit var lbNumBathrooms: Text
+    @FXML
+    private lateinit var lbGarage: Text
+    @FXML
+    private lateinit var lbGarden: Text
+    @FXML
+    private lateinit var lbSize: Text
+    @FXML
     private lateinit var apRoot: AnchorPane
 
     private lateinit var property: Property
@@ -122,6 +134,13 @@ class PropertyInfo {
         lbTitle.text = property.title
         lbFullDescription.text = property.fullDescription
         lbPrice.text = property.price.toString()
+        lbCity.text = property.city
+        lbSize.text = property.size.toString()
+        lbNumRooms.text = property.numRooms.toString()
+        lbNumBathrooms.text = property.numBathrooms.toString()
+
+        lbGarden.isVisible = property.garden
+        lbGarage.isVisible = property.garage
 
         lbPropertyAction.text = when (property.action) {
             PropertyAction.sell -> "venta"
