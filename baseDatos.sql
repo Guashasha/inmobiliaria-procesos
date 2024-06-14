@@ -28,11 +28,12 @@ CREATE TABLE `houseOwner` (
 CREATE TABLE `account` (
   `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
+  `lastName` varchar(50) NOT NULL, 
   `type` ENUM ('client', 'agent') NOT NULL,
   `email` varchar(70) NOT NULL,
   `phone` char(10) NOT NULL,
   `password` varchar(300) NOT NULL
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 CREATE TABLE `agent` (
   `accountId` int PRIMARY KEY NOT NULL,

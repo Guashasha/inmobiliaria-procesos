@@ -5,6 +5,7 @@ import DAO.AccountResult
 import DTO.Account
 import DTO.AccountType
 import GUI.Utility.PopUpAlert
+import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
 import javafx.scene.control.*
@@ -17,45 +18,76 @@ import java.io.IOException
 class EditAccount {
     @FXML
     private lateinit var tfEmail: TextField
-
     @FXML
     private lateinit var tfName: TextField
-
+    @FXML
+    private lateinit var tfLastName: TextField
     @FXML
     private lateinit var tfNumber: TextField
-
     @FXML
     private lateinit var btnEliminar: Button
-
     @FXML
     private lateinit var pwPassword: PasswordField
-
     @FXML
     private lateinit var pwReapeatPassword: PasswordField
-
+    @FXML
+    private lateinit var tfShowedRepeatPassword: TextField
+    @FXML
+    private lateinit var tfshowedPassword: TextField
+    @FXML
+    private lateinit var tgPassword: ToggleButton
     private lateinit var account: Account
     private lateinit var bpMain: BorderPane
     private lateinit var mainAnchorPaneMenu: Pane
     private lateinit var lbHeader: Label
 
     fun setLabel() {
+        tfName.text = this.account.name
+        tfLastName.text = this.account.lastName
+        tfEmail.text = this.account.email
+        tfNumber.text = this.account.phone
         tfName.promptText = this.account.name
+        tfLastName.promptText = this.account.lastName
         tfEmail.promptText = this.account.email
         tfNumber.promptText = this.account.phone
         configurePhoneNumberField()
+        configureNameField()
+        configureLastNameField()
     }
 
+    private fun configureTextField(textField: TextField, regex: Regex, maxLength: Int) {
+        textField.textFormatter = TextFormatter<String> { change ->
+            val newText = change.controlNewText
+            if (newText.matches(regex) && newText.length <= maxLength) {
+                change
+            } else {
+                null
+            }
+        }
+    }
+
+    private fun configureNameField() {
+        val nameRegex = Regex("^[A-Za-zÀ-ÿ\\s]*$")
+        val maxLength = 50
+        configureTextField(tfName, nameRegex, maxLength)
+    }
+
+    private fun configureLastNameField() {
+        val lastNameRegex = Regex("^[A-Za-zÀ-ÿ\\s]*$")
+        val maxLength = 50
+        configureTextField(tfLastName, lastNameRegex, maxLength)
+    }
 
     private fun getData(): Account {
         val name = if (tfName.text.isNullOrBlank()) this.account.name else tfName.text
+        val lastname = if (tfLastName.text.isNullOrBlank()) this.account.name else tfLastName.text
         val numberPhone = if (tfNumber.text.isNullOrBlank()) this.account.phone else tfNumber.text
         val email = if (tfEmail.text.isNullOrBlank()) this.account.email else tfEmail.text
 
-//        if (pwPassword.text.equals(pwReapeatPassword)) {
-//            throw IllegalArgumentException("Las contraseñas no son iguales");
-//        }
-//        val password = if (pwPassword.text.isNullOrBlank()) this.account.password else pwPassword.text
-
+        if (!pwPassword.text.equals(pwReapeatPassword.text)) {
+            throw IllegalArgumentException("Las contraseñas no son iguales")
+        }
+        val password = if (pwPassword.text.isNullOrBlank()) this.account.password else pwPassword.text
 
         val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$".toRegex()
         if (!email.matches(emailRegex)) {
@@ -65,11 +97,31 @@ class EditAccount {
         return Account(
             id = this.account.id,
             name = name,
+            lastName = lastname,
             phone = numberPhone,
             email = email,
             type = this.account.type,
-            password = null
+            password = password
         )
+    }
+
+    @FXML
+    fun toggleAction(event: ActionEvent) {
+        if (tgPassword.isSelected) {
+            tfshowedPassword.text = pwPassword.text
+            tfShowedRepeatPassword.text = pwReapeatPassword.text
+            pwPassword.isVisible = false
+            pwReapeatPassword.isVisible = false
+            tfshowedPassword.isVisible = true
+            tfShowedRepeatPassword.isVisible = true
+        } else {
+            pwPassword.text = tfshowedPassword.text
+            pwReapeatPassword.text = tfShowedRepeatPassword.text
+            pwPassword.isVisible = true
+            pwReapeatPassword.isVisible = true
+            tfshowedPassword.isVisible = false
+            tfShowedRepeatPassword.isVisible = false
+        }
     }
 
     private fun validatePasswordSecurity(password: String) {
@@ -141,6 +193,10 @@ class EditAccount {
         }
         this.lbHeader = lbHeader
         setLabel()
+        syncPasswordFields()
+        if (this.account.type == AccountType.AGENT) {
+            this.btnEliminar.isVisible = false
+        }
     }
 
     @FXML
@@ -223,6 +279,32 @@ class EditAccount {
             val stage = bpMain.scene.window as Stage
             stage.scene.root = paneLogin
             stage.title = "Login"
+        }
+    }
+
+    private fun syncPasswordFields() {
+        pwPassword.textProperty().addListener { _, _, newValue ->
+            if (!tgPassword.isSelected) {
+                tfshowedPassword.text = newValue
+            }
+        }
+
+        tfshowedPassword.textProperty().addListener { _, _, newValue ->
+            if (tgPassword.isSelected) {
+                pwPassword.text = newValue
+            }
+        }
+
+        pwReapeatPassword.textProperty().addListener { _, _, newValue ->
+            if (!tgPassword.isSelected) {
+                tfShowedRepeatPassword.text = newValue
+            }
+        }
+
+        tfShowedRepeatPassword.textProperty().addListener { _, _, newValue ->
+            if (tgPassword.isSelected) {
+                pwReapeatPassword.text = newValue
+            }
         }
     }
 }

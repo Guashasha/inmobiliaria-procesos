@@ -28,12 +28,13 @@ class AccountDAO {
             val dbConnection = DataBaseConnection().connection
 
             val query =
-                dbConnection.prepareStatement("INSERT INTO account (name, type, email, phone, password) VALUES (?, ?, ?, ?, ?);")
+                dbConnection.prepareStatement("INSERT INTO account (name, lastName, type, email, phone, password) VALUES (?, ?, ?, ?, ?, ?);")
             query.setString(1, account.name)
-            query.setString(2, account.type.toString())
-            query.setString(3, account.email)
-            query.setString(4, account.phone)
-            query.setString(5, account.password)
+            query.setString(2, account.lastName)
+            query.setString(3, account.type.toString())
+            query.setString(4, account.email)
+            query.setString(5, account.phone)
+            query.setString(6, account.password)
 
             if (query.executeUpdate() > 0) {
                 AccountResult.Success()
@@ -62,14 +63,15 @@ class AccountDAO {
             val dbConnection = DataBaseConnection().connection
 
             val query =
-                dbConnection.prepareStatement("UPDATE account SET name=?, type=?, email=?, phone=? where id=?;")
+                dbConnection.prepareStatement("UPDATE account SET name=?, lastname =?, type=?, email=?, phone=?, password=? where id=?;")
 
             query.setString(1, account.name)
-            query.setString(2, account.type.toString())
-            query.setString(3, account.email)
-            query.setString(4, account.phone)
-            query.setInt(5, account.id.toInt())
-            //query.setString(6, account.password)
+            query.setString(2, account.lastName)
+            query.setString(3, account.type.toString())
+            query.setString(4, account.email)
+            query.setString(5, account.phone)
+            query.setString(6, account.password)
+            query.setInt(7, account.id.toInt())
 
             if (query.executeUpdate() > 0) {
                 AccountResult.Success()

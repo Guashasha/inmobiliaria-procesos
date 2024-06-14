@@ -15,7 +15,7 @@ object PopUpAlert {
         val width = text.layoutBounds.width
 
         val dialogPane = alert.dialogPane
-        dialogPane.prefWidth = width + 10
+        dialogPane.prefWidth = width + 50
         alert.showAndWait()
     }
 
