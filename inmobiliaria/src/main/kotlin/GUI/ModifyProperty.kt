@@ -56,16 +56,19 @@ class ModifyProperty {
     private fun updateButtons () {
         when (property.state) {
             PropertyState.available -> {
+                btnOccupy.isDisable = false
                 btnOccupy.text = "Marcar propiedad como ocupada"
                 btnOccupy.setOnAction { run {
                     changePropertyToOccupied()
                 }}
+                btnSuspend.isDisable = false
                 btnSuspend.text = "Marcar propiedad como supendida"
                 btnSuspend.setOnAction { run {
                     changePropertyToSuspended()
                 }}
             }
             PropertyState.occupied -> {
+                btnOccupy.isDisable = false
                 btnOccupy.text = "Marcar propiedad como disponible"
                 btnOccupy.setOnAction { run {
                     changePropertyToAvailable()
@@ -74,6 +77,7 @@ class ModifyProperty {
             }
             PropertyState.suspended -> {
                 btnOccupy.isDisable = true
+                btnSuspend.isDisable = false
                 btnSuspend.text = "Marcar propiedad como disponible"
                 btnSuspend.setOnAction { run {
                     changePropertyToAvailable()
@@ -131,7 +135,7 @@ class ModifyProperty {
             return null
         }
 
-        return Property(this.property.id, title, shortDescription, fullDescription, this.property.type, priceNum, this.property.state, this.property.direction, this.property.houseOwner, action, this.property.city, this.property.numRooms, this.property.numBathrooms, this.property.garage, this.property.garden, this.property.size, this.property.image)
+        return Property(this.property.id, this.property.cuv, title, shortDescription, fullDescription, this.property.type, priceNum, this.property.state, this.property.direction, this.property.houseOwner, action, this.property.city, this.property.numRooms, this.property.numBathrooms, this.property.garage, this.property.garden, this.property.size, this.property.image)
     }
 
     private fun changePropertyToSuspended () {
@@ -152,7 +156,7 @@ class ModifyProperty {
                     is PropertyResult.DBError -> PopUpAlert.showAlert("No pudimos conectarnos con nuestros servicios, intentelo de nuevo más tarde", Alert.AlertType.ERROR)
                     is PropertyResult.Failure -> PopUpAlert.showAlert("No se pudo modificar la propiedad, intente de nuevo", Alert.AlertType.ERROR)
                     is PropertyResult.NotFound -> PopUpAlert.showAlert("Hubo un error al buscar la propiedad a modificar", Alert.AlertType.ERROR)
-                    is PropertyResult.Success -> PopUpAlert.showAlert("Se modificaron los datos correctamente", Alert.AlertType.INFORMATION)
+                    is PropertyResult.Success -> PopUpAlert.showAlert("La propiedad ahora se encuentra suspendida.", Alert.AlertType.INFORMATION)
                     is PropertyResult.WrongProperty -> PopUpAlert.showAlert("Los datos ingresados para la propiedad son incorrectos", Alert.AlertType.WARNING)
                     else -> PopUpAlert.showAlert("Ocurrió un error inesperado, intente de nuevo", Alert.AlertType.ERROR)
                 }
@@ -172,10 +176,12 @@ class ModifyProperty {
             is PropertyResult.DBError -> PopUpAlert.showAlert("No pudimos conectarnos con nuestros servicios, intentelo de nuevo más tarde", Alert.AlertType.ERROR)
             is PropertyResult.Failure -> PopUpAlert.showAlert("No se pudo modificar la propiedad, intente de nuevo", Alert.AlertType.ERROR)
             is PropertyResult.NotFound -> PopUpAlert.showAlert("Hubo un error al buscar la propiedad a modificar", Alert.AlertType.ERROR)
-            is PropertyResult.Success -> PopUpAlert.showAlert("Se modificaron los datos correctamente", Alert.AlertType.INFORMATION)
+            is PropertyResult.Success -> PopUpAlert.showAlert("La propiedad ahora se encuentra ocupada.", Alert.AlertType.INFORMATION)
             is PropertyResult.WrongProperty -> PopUpAlert.showAlert("Los datos ingresados para la propiedad son incorrectos", Alert.AlertType.WARNING)
             else -> PopUpAlert.showAlert("Ocurrió un error inesperado, intente de nuevo", Alert.AlertType.ERROR)
         }
+
+        updateButtons()
     }
 
     private fun changePropertyToAvailable () {
@@ -188,10 +194,12 @@ class ModifyProperty {
             is PropertyResult.DBError -> PopUpAlert.showAlert("No pudimos conectarnos con nuestros servicios, intentelo de nuevo más tarde", Alert.AlertType.ERROR)
             is PropertyResult.Failure -> PopUpAlert.showAlert("No se pudo modificar la propiedad, intente de nuevo", Alert.AlertType.ERROR)
             is PropertyResult.NotFound -> PopUpAlert.showAlert("Hubo un error al buscar la propiedad a modificar", Alert.AlertType.ERROR)
-            is PropertyResult.Success -> PopUpAlert.showAlert("Se modificaron los datos correctamente", Alert.AlertType.INFORMATION)
+            is PropertyResult.Success -> PopUpAlert.showAlert("La propiedad ahora está disponible para rentar o comprar.", Alert.AlertType.INFORMATION)
             is PropertyResult.WrongProperty -> PopUpAlert.showAlert("Los datos ingresados para la propiedad son incorrectos", Alert.AlertType.WARNING)
             else -> PopUpAlert.showAlert("Ocurrió un error inesperado, intente de nuevo", Alert.AlertType.ERROR)
         }
+
+        updateButtons()
     }
 
     fun volverAInformacion () {

@@ -31,7 +31,7 @@ class AccountDAO {
                 dbConnection.prepareStatement("INSERT INTO account (name, lastName, type, email, phone, password) VALUES (?, ?, ?, ?, ?, ?);")
             query.setString(1, account.name)
             query.setString(2, account.lastName)
-            query.setString(3, account.type.toString())
+            query.setString(3, account.type.toString().lowercase())
             query.setString(4, account.email)
             query.setString(5, account.phone)
             query.setString(6, account.password)

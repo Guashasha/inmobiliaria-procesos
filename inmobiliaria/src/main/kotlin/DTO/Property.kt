@@ -5,12 +5,13 @@ import java.sql.ResultSet
 
 enum class PropertyState {available, occupied, suspended}
 
-enum class PropertyType {all, building, house, apartment, premises}
+enum class PropertyType {all, building, house, apartment, office, retail, cabin, industrial, farm}
 
 enum class PropertyAction {sell, rent}
 
 data class Property (
   val id: UInt?,
+  val cuv: String,
   var title: String,
   var shortDescription: String,
   var fullDescription: String,
@@ -44,22 +45,7 @@ data class Property (
 
     other as Property
 
-    if (title != other.title) return false
-    if (shortDescription != other.shortDescription) return false
-    if (fullDescription != other.fullDescription) return false
-    if (type != other.type) return false
-    if (price != other.price) return false
-    if (state != other.state) return false
-    if (direction != other.direction) return false
-    if (houseOwner != other.houseOwner) return false
-    if (action != other.action) return false
-    if (city != other.city) return false
-    if (numRooms != other.numRooms) return false
-    if (numBathrooms != other.numBathrooms) return false
-    if (garage != other.garage) return false
-    if (garden != other.garden) return false
-
-    return true
+    return this.cuv == other.cuv
   }
 
   override fun hashCode (): Int {
@@ -80,23 +66,24 @@ data class Property (
   companion object {
     fun fromResultSet (result: ResultSet): Property {
       val id: UInt = result.getInt(1).toUInt()
-      val title = result.getString(2)
-      val shortDescription = result.getString(3)
-      val fullDescription = result.getString(4)
-      val type = PropertyType.valueOf(result.getString(5))
-      val price = result.getLong(6)
-      val state = PropertyState.valueOf(result.getString(7))
-      val direction = result.getString(8)
-      val houseOwner = result.getInt(9).toUInt()
-      val action = PropertyAction.valueOf(result.getString(10))
-      val numRooms = result.getInt(11)
-      val numBathrooms = result.getInt(12)
-      val garage = result.getBoolean(13)
-      val garden = result.getBoolean(14)
-      val city = result.getString(15)
-      val size = result.getLong(16)
+      val cuv = result.getString(2)
+      val title = result.getString(3)
+      val shortDescription = result.getString(4)
+      val fullDescription = result.getString(5)
+      val type = PropertyType.valueOf(result.getString(6))
+      val price = result.getLong(7)
+      val state = PropertyState.valueOf(result.getString(8))
+      val direction = result.getString(9)
+      val houseOwner = result.getInt(10).toUInt()
+      val action = PropertyAction.valueOf(result.getString(11))
+      val numRooms = result.getInt(12)
+      val numBathrooms = result.getInt(13)
+      val garage = result.getBoolean(14)
+      val garden = result.getBoolean(15)
+      val city = result.getString(16)
+      val size = result.getLong(17)
 
-      return Property(id, title, shortDescription, fullDescription, type, price, state, direction, houseOwner, action, city, numRooms, numBathrooms, garage, garden, size, null)
+      return Property(id, cuv, title, shortDescription, fullDescription, type, price, state, direction, houseOwner, action, city, numRooms, numBathrooms, garage, garden, size, null)
     }
   }
 }

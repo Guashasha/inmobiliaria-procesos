@@ -4,7 +4,6 @@ import DTO.*
 import GUI.Utility.PopUpAlert
 import javafx.application.Application
 import javafx.application.Application.launch
-import javafx.collections.FXCollections
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
 import javafx.scene.Parent
@@ -13,7 +12,6 @@ import javafx.scene.control.*
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
 import javafx.scene.layout.BorderPane
-import javafx.scene.layout.GridPane
 import javafx.scene.layout.Pane
 import javafx.stage.FileChooser
 import javafx.stage.Stage
@@ -33,10 +31,12 @@ class AddProperty : Application() {
 
     private var propertyImage: File? = null
 
+    private var propertyTypes = HashMap<String, PropertyType>()
+
     @FXML
-    private lateinit var cbPropertyAction: ComboBox<PropertyAction>
+    private lateinit var cbPropertyAction: ComboBox<String>
     @FXML
-    private lateinit var cbPropertyType: ChoiceBox<PropertyType>
+    private lateinit var cbPropertyType: ChoiceBox<String>
     @FXML
     private lateinit var tfTitle: TextField
     @FXML
@@ -55,6 +55,8 @@ class AddProperty : Application() {
     private lateinit var tfNumBathrooms: TextField
     @FXML
     private lateinit var tfPropertySize: TextField
+    @FXML
+    private lateinit var tfCuv: TextField
     @FXML
     private lateinit var cbCity: ComboBox<String>
     @FXML
@@ -86,10 +88,22 @@ class AddProperty : Application() {
         this.mainWindow = mainWindow
         this.headerText = headerText
 
-        cbPropertyType.items.addAll(PropertyType.house, PropertyType.building, PropertyType.premises, PropertyType.apartment)
-        cbPropertyType.value = PropertyType.house
-        cbPropertyAction.items.addAll(PropertyAction.sell, PropertyAction.rent)
-        cbPropertyAction.value = PropertyAction.sell
+        propertyTypes.put("casa", PropertyType.house)
+        propertyTypes.put("edificio", PropertyType.building)
+        propertyTypes.put("apartamento", PropertyType.apartment)
+        propertyTypes.put("comercial", PropertyType.retail)
+        propertyTypes.put("oficina", PropertyType.office)
+        propertyTypes.put("industrial", PropertyType.industrial)
+        propertyTypes.put("granja", PropertyType.farm)
+        propertyTypes.put("cabaña", PropertyType.cabin)
+
+        for (type in propertyTypes) {
+            cbPropertyType.items.add(type.key)
+        }
+
+        cbPropertyType.value = "casa"
+        cbPropertyAction.items.addAll("vender", "rentar")
+        cbPropertyAction.value = "vender"
 
         val dao = PropertyDAO()
         val cities = dao.getCities()
@@ -147,51 +161,48 @@ class AddProperty : Application() {
     }
 
      private fun createProperty (): Property? {
-        if (emptyTextFields()) {
-            PopUpAlert.showAlert("Por favor llene todos los campos.", Alert.AlertType.WARNING)
-            return null
-        }
-        else if (wrongFieldsValues()) {
-            return null
-        }
-        else if (fieldValuesTooLong()) {
+         if (emptyTextFields()) {
+             PopUpAlert.showAlert("Por favor llene todos los campos.", Alert.AlertType.WARNING)
              return null
-        }
+         }
+         else if (wrongFieldsValues()) {
+             return null
+         }
+         else if (fieldValuesTooLong()) {
+             return null
+         }
 
-        val title = tfTitle.text.trim()
-        val shortDescription = tfShortDescription.text.trim()
-        val fullDescription = tfFullDescription.text.trim()
-        val price = tfPrice.text.toLong()
-        val direction = tfDirection.text.trim()
-        val propertyType = cbPropertyType.value
-        val propertyAction = cbPropertyAction.value
-        val houseOwner = getOwner(tfOwnerEmail.text.trim()) ?: return null
+         val title = tfTitle.text.trim()
+         val cuv = tfCuv.text.trim()
+         val shortDescription = tfShortDescription.text.trim()
+         val fullDescription = tfFullDescription.text.trim()
+         val price = tfPrice.text.toLong()
+         val direction = tfDirection.text.trim()
+         val propertyType = propertyTypes[cbPropertyType.value]
+         val propertyAction = if (cbPropertyAction.value == "rentar") PropertyAction.rent else PropertyAction.sell
+         val houseOwner = getOwner(tfOwnerEmail.text.trim()) ?: return null
          val numRooms = tfNumRooms.text.trim().toInt()
          val numBathrooms = tfNumBathrooms.text.trim().toInt()
          val garage = ckbGarage.isSelected
          val garden = ckbGarden.isSelected
-        val city = cbCity.value
+         val city = cbCity.value
          val size = tfPropertySize.text.trim().toLong()
 
-        return Property(null, title, shortDescription, fullDescription, propertyType, price, PropertyState.available, direction, houseOwner.id!!, propertyAction, city, numRooms, numBathrooms, garage, garden, size, null)
+         return Property(null, cuv, title, shortDescription, fullDescription, propertyType!!, price, PropertyState.available, direction, houseOwner.id!!, propertyAction, city, numRooms, numBathrooms, garage, garden, size, null)
     }
 
     private fun existingProperty (property: Property): Boolean {
         val dao = PropertyDAO()
-        val otherProperties = dao.getByHouseOwner(property.houseOwner.toInt())
+        val result = dao.getByCuv(property.cuv)
 
-        when (otherProperties) {
+        when (result) {
             is PropertyResult.DBError -> {
-                PopUpAlert.showAlert(otherProperties.message, Alert.AlertType.ERROR)
+                PopUpAlert.showAlert(result.message, Alert.AlertType.ERROR)
                 return true
             }
-            is PropertyResult.FoundList<*> -> {
-                for (other in otherProperties.list) {
-                    if (property.equals(other as Property)) {
-                        PopUpAlert.showAlert("La propiedad ya existe, no puede agregar la misma propiedad más de una vez", Alert.AlertType.WARNING)
-                        return true;
-                    }
-                }
+            is PropertyResult.Found -> {
+                PopUpAlert.showAlert("Ya existe la propiedad en el sistema", Alert.AlertType.WARNING)
+                return true
             }
             is PropertyResult.NotFound -> return false
             else -> {
@@ -199,8 +210,6 @@ class AddProperty : Application() {
                 return true
             }
         }
-
-        return false;
     }
 
     fun registerProperty () {
@@ -308,14 +317,20 @@ class AddProperty : Application() {
                 tfOwnerEmail.text.isBlank() ||
                 tfPropertySize.text.isBlank() ||
                 tfNumRooms.text.isBlank() ||
-                tfNumBathrooms.text.isBlank()
+                tfNumBathrooms.text.isBlank() ||
+                tfCuv.text.isBlank()
     }
 
     private fun wrongFieldsValues (): Boolean {
         val unsafeString = Regex("""[*/\"']+""")
         val number = Regex("""[0-9]+""")
         val email = Regex("""[A-z0-9\.\-_+*]+@[A-z]+\.[A-z]+""")
+        val cuv = Regex("[0-9]{16}")
 
+        if (!cuv.matches(tfCuv.text.trim())) {
+            PopUpAlert.showAlert("La Clave Unica de Propiedad debe ser de 16 digitos, solo numeros", Alert.AlertType.WARNING)
+            return true
+        }
         if (unsafeString.containsMatchIn(tfTitle.text.trim())) {
             PopUpAlert.showAlert("El campo *Titulo contiene caracteres no soportados: *, /, \", \'", Alert.AlertType.WARNING)
             return true

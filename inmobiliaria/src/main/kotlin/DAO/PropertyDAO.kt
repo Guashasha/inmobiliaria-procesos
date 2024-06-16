@@ -33,23 +33,24 @@ class PropertyDAO {
         }
 
         return try {
-            val query = dbConnection.prepareStatement("INSERT INTO property (title, shortDescription, fullDescription, type, price, state, direction, houseOwner, action, numRooms, numBathrooms, garage, garden, city, size) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")
+            val query = dbConnection.prepareStatement("INSERT INTO property (cuv, title, shortDescription, fullDescription, type, price, state, direction, houseOwner, action, numRooms, numBathrooms, garage, garden, city, size) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")
 
-            query.setString(1, property.title)
-            query.setString(2, property.shortDescription)
-            query.setString(3, property.fullDescription)
-            query.setString(4, property.type.toString())
-            query.setLong(5, property.price)
-            query.setString(6, property.state.toString())
-            query.setString(7, property.direction)
-            query.setInt(8, property.houseOwner.toInt())
-            query.setString(9, property.action.toString())
-            query.setInt(10, property.numRooms)
-            query.setInt(11, property.numBathrooms)
-            query.setBoolean(12, property.garage)
-            query.setBoolean(13, property.garden)
-            query.setString(14, property.city)
-            query.setLong(15, property.size)
+            query.setString(1, property.cuv)
+            query.setString(2, property.title)
+            query.setString(3, property.shortDescription)
+            query.setString(4, property.fullDescription)
+            query.setString(5, property.type.toString())
+            query.setLong(6, property.price)
+            query.setString(7, property.state.toString())
+            query.setString(8, property.direction)
+            query.setInt(9, property.houseOwner.toInt())
+            query.setString(10, property.action.toString())
+            query.setInt(11, property.numRooms)
+            query.setInt(12, property.numBathrooms)
+            query.setBoolean(13, property.garage)
+            query.setBoolean(14, property.garden)
+            query.setString(15, property.city)
+            query.setLong(16, property.size)
 
             if (query.executeUpdate() > 0) {
                 PropertyResult.Success()
@@ -103,6 +104,29 @@ class PropertyDAO {
             val query = dbConnection.prepareStatement("SELECT * FROM property WHERE id=?;")
 
             query.setInt(1, propertyId.toInt())
+
+            val result = query.executeQuery()
+
+            if (result.next()) {
+                PropertyResult.Found(Property.fromResultSet(result))
+            } else {
+                PropertyResult.NotFound()
+            }
+        }
+        catch (error: SQLException) {
+            PropertyResult.DBError(error.message.toString())
+        }
+    }
+
+    fun getByCuv (propertyCuv: String): PropertyResult {
+        if (!Regex("""[0-9]{16}""").matches(propertyCuv)) {
+            return PropertyResult.WrongProperty()
+        }
+
+        return try {
+            val query = dbConnection.prepareStatement("SELECT * FROM property WHERE cuv=?;")
+
+            query.setString(1, propertyCuv)
 
             val result = query.executeQuery()
 
