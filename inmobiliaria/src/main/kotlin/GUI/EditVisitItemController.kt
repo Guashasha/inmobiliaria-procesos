@@ -31,7 +31,8 @@ class EditVisitItemController {
     @FXML fun reagendar () {
         verifyValidity()
         if (hasAVisitAtTheSameTime()) showAlert("Ya tiene una visita agendada a esa hora y día. Elija otra fecha",Alert.AlertType.WARNING)
-        else if (hasAVisitWithinTheLimit()) showAlert("Ya tiene una visita agendada una hora antes.\nLe recomendamos calcular sus tiempos o reagendar si es necesario",Alert.AlertType.WARNING)
+        else if (hasAVisitWithinTheLimit(1)) showAlert("Ya tiene una visita agendada una hora después.\nLe recomendamos calcular sus tiempos o reagendar si es necesario",Alert.AlertType.WARNING)
+        else if (hasAVisitWithinTheLimit(-1)) showAlert("Ya tiene una visita agendada una hora antes.\nLe recomendamos calcular sus tiempos o reagendar si es necesario",Alert.AlertType.WARNING)
         else if (this.visit.visitStatus == VisitStatus.scheduled) {
             val visitDao = VisitDAO()
             this.visit.date = this.date
@@ -87,8 +88,8 @@ class EditVisitItemController {
         }
     }
 
-    private fun hasAVisitWithinTheLimit (): Boolean {
-        val limitTime = Time.valueOf(this.time.toLocalTime().minusHours(1))
+    private fun hasAVisitWithinTheLimit (range: Long): Boolean {
+        val limitTime = Time.valueOf(this.time.toLocalTime().plusHours(range))
         val visitDao = VisitDAO()
         return if (limitTime == this.visit.time) false
         else when (val visitResult = visitDao.getVisit(this.visit.clientId,this.date,limitTime)) {

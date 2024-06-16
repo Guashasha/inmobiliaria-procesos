@@ -137,7 +137,7 @@ class VisitDAO {
         val visitsList = ArrayList<Visit>()
         return try {
             val dbConnection = DataBaseConnection().connection
-            val query = dbConnection.prepareStatement("SELECT * FROM visit WHERE clientId = ?")
+            val query = dbConnection.prepareStatement("SELECT * FROM visit WHERE clientId = ? ORDER BY visitStatus")
             query.setInt(1,idClient.toInt())
 
             val result = query.executeQuery()

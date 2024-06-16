@@ -30,7 +30,8 @@ class ScheduleVisitItemController {
     @FXML fun agendar () {
         if (hasAVisitAlready()) showAlert("Ya tiene una visita agendada en esta propiedad.\nDiríjase a la sección de Agenda",Alert.AlertType.INFORMATION)
         else if (hasAVisitAtTheSameTime()) showAlert("Ya tiene una visita agendada a esa hora y día. Elija otra fecha",Alert.AlertType.WARNING)
-        else if (hasAVisitWithinTheLimit()) showAlert("Ya tiene una visita agendada una hora antes.\nLe recomendamos calcular sus tiempos o reagendar si es necesario",Alert.AlertType.WARNING)
+        else if (hasAVisitWithinTheLimit(1)) showAlert("Ya tiene una visita agendada una hora después.\nLe recomendamos calcular sus tiempos o reagendar si es necesario",Alert.AlertType.WARNING)
+        else if (hasAVisitWithinTheLimit(-1)) showAlert("Ya tiene una visita agendada una hora antes.\nLe recomendamos calcular sus tiempos o reagendar si es necesario",Alert.AlertType.WARNING)
         else {
             val visitDao = VisitDAO()
             when (val visitResult = visitDao.add(Visit(clientId = clientId, propertyId = propertyId, date = date, time = time, visitStatus = VisitStatus.scheduled))) {
@@ -75,8 +76,8 @@ class ScheduleVisitItemController {
         }
     }
 
-    private fun hasAVisitWithinTheLimit (): Boolean {
-        val limitTime = Time.valueOf(this.time.toLocalTime().minusHours(1))
+    private fun hasAVisitWithinTheLimit (range: Long): Boolean {
+        val limitTime = Time.valueOf(this.time.toLocalTime().plusHours(range))
         val visitDao = VisitDAO()
         return when (val visitResult = visitDao.getVisit(this.clientId,this.date,limitTime)) {
             is VisitResult.NotFound -> false
