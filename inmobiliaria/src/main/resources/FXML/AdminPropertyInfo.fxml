@@ -8,21 +8,9 @@
 
 <AnchorPane fx:id="apRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" styleClass="mainPane" stylesheets="@../Style/Pane.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AdminPropertyInfo">
    <children>
-      <SplitPane dividerPositions="0.7414330218068536" layoutX="136.0" layoutY="118.0" orientation="VERTICAL" prefHeight="323.0" prefWidth="472.0" styleClass="informationPane">
+      <SplitPane layoutX="136.0" layoutY="118.0" orientation="VERTICAL" prefHeight="323.0" prefWidth="472.0" styleClass="informationPane">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="235.0" prefWidth="448.0">
-               <children>
-                  <ImageView fx:id="imgPrincipal" fitHeight="226.0" fitWidth="346.0" layoutX="62.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true" />
-               </children>
-            </AnchorPane>
-            <BorderPane prefHeight="200.0" prefWidth="200.0">
-               <top>
-                  <HBox fx:id="hboxImages" alignment="CENTER" focusTraversable="true" prefHeight="60.0" prefWidth="470.0" BorderPane.alignment="CENTER" />
-               </top>
-               <bottom>
-                  <ScrollBar fx:id="scrollImages" BorderPane.alignment="CENTER" />
-               </bottom>
-            </BorderPane>
+            <ImageView fx:id="imgPrincipal" fitHeight="285.0" fitWidth="415.0" pickOnBounds="true" preserveRatio="true" />
         </items>
       </SplitPane>
       <VBox alignment="CENTER" layoutX="827.0" layoutY="126.0" prefHeight="177.0" prefWidth="272.0" spacing="6.0" styleClass="informationPane">
@@ -64,11 +52,21 @@
             <Font name="System Bold" size="40.0" />
          </font>
       </Text>
-      <Text fx:id="lbFullDescription" layoutX="110.0" layoutY="520.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="915.1300010681152">
+      <Text fx:id="lbFullDescription" layoutX="110.0" layoutY="550.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="915.1300010681152">
          <font>
             <Font size="16.0" />
          </font>
       </Text>
       <Button layoutX="34.0" layoutY="37.0" mnemonicParsing="false" onAction="#returnToList" styleClass="btnSecondary" stylesheets="@../Style/ButtonStyle.css" text="Regresar" />
+      <Text fx:id="lbCity" layoutX="110.0" layoutY="517.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <Text fx:id="lbSize" layoutX="634.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="lbNumRooms" layoutX="634.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="lbNumBathrooms" layoutX="634.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="lbGarage" layoutX="634.0" layoutY="276.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Garage disponible" />
+      <Text fx:id="lbGarden" layoutX="634.0" layoutY="308.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Jardin disponible" />
    </children>
 </AnchorPane>

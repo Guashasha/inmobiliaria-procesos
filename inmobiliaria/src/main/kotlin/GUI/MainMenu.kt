@@ -45,7 +45,11 @@ class MainMenu {
             PropertyType.building.toString(),
             PropertyType.house.toString(),
             PropertyType.apartment.toString(),
-            PropertyType.premises.toString()
+            PropertyType.farm.toString(),
+            PropertyType.cabin.toString(),
+            PropertyType.industrial.toString(),
+            PropertyType.office.toString(),
+            PropertyType.retail.toString()
         )
         cbPropertyType.value = PropertyType.all.toString()
 

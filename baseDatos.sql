@@ -10,10 +10,11 @@ CREATE TABLE city (
 
 CREATE TABLE `property` (
   `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  cuv char(16) NOT NULL,
   `title` varchar(150) NOT NULL,
   `shortDescription` varchar(200) NOT NULL,
   `fullDescription` varchar(500) NOT NULL,
-  `type` ENUM ('building', 'house', 'apartment', 'premises') NOT NULL,
+  `type` ENUM ('building', 'house', 'apartment', 'farm', 'cabin', 'industrial', 'office', 'retail') NOT NULL,
   `price` long NOT NULL,
   `state` ENUM ('available', 'occupied', 'suspended') NOT NULL,
   `direction` varchar(400) NOT NULL,

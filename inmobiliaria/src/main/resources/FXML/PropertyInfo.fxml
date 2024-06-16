@@ -8,14 +8,10 @@
 
 <AnchorPane fx:id="apRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" styleClass="mainPane" stylesheets="@../Style/Pane.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.PropertyInfo">
    <children>
-      <SplitPane layoutX="136.0" layoutY="118.0" orientation="VERTICAL" prefHeight="323.0" prefWidth="472.0" styleClass="informationPane">
-        <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="235.0" prefWidth="448.0">
-               <children>
-                  <ImageView fx:id="imgPrincipal" fitHeight="294.0" fitWidth="447.0" layoutX="11.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
-               </children>
-            </AnchorPane>
-        </items>
+      <SplitPane layoutX="65.0" layoutY="118.0" orientation="VERTICAL" prefHeight="323.0" prefWidth="472.0" styleClass="informationPane">
+         <items>
+            <ImageView fx:id="imgPrincipal" fitHeight="270.0" fitWidth="428.0" pickOnBounds="true" preserveRatio="true" />
+         </items>
       </SplitPane>
       <VBox alignment="CENTER" layoutX="827.0" layoutY="126.0" prefHeight="177.0" prefWidth="272.0" spacing="6.0" styleClass="informationPane">
          <children>
@@ -56,11 +52,20 @@
             <Font name="System Bold" size="40.0" />
          </font>
       </Text>
-      <Text fx:id="lbFullDescription" layoutX="110.0" layoutY="520.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="915.1300010681152">
+      <Text fx:id="lbFullDescription" layoutX="110.0" layoutY="548.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="915.1300010681152">
          <font>
             <Font size="16.0" />
          </font>
       </Text>
       <Button layoutX="34.0" layoutY="37.0" mnemonicParsing="false" onAction="#returnToList" styleClass="btnPrincipal" stylesheets="@../Style/ButtonStyle.css" text="Regresar" />
+      <Text fx:id="lbCity" layoutX="110.0" layoutY="517.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+         <font>
+            <Font size="16.0" />
+         </font></Text>
+      <Text fx:id="lbNumRooms" layoutX="568.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="lbNumBathrooms" layoutX="568.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="lbSize" layoutX="568.0" layoutY="248.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="lbGarage" layoutX="568.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Garage disponible" />
+      <Text fx:id="lbGarden" layoutX="568.0" layoutY="324.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Jardin disponible" />
    </children>
 </AnchorPane>
