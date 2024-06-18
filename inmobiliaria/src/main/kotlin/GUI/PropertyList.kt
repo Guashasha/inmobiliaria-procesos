@@ -7,8 +7,6 @@ import DTO.PropertyType
 import GUI.Utility.PopUpAlert
 import javafx.application.Application
 import javafx.application.Application.launch
-import javafx.beans.value.ChangeListener
-import javafx.beans.value.ObservableValue
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
 import javafx.geometry.Insets
@@ -95,7 +93,8 @@ class PropertyList : Application() {
             getImages(property)
             val image = ImageView()
             image.image = property.image
-            image.maxHeight(90.0)
+            image.isPreserveRatio = true;
+            image.fitHeight = 90.0
 
             val info = VBox()
             info.spacing = 10.0
